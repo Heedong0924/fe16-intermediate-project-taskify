@@ -1,0 +1,53 @@
+name: PR Title Convention Check
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened] # PR이 열리거나, 수정되거나, 새로운 커밋이 푸시될 때, 다시 열릴 때 실행
+
+jobs:
+  check_pr_title:
+    runs-on: ubuntu-latest # 워크플로우가 실행될 환경
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4 # 레포지토리 코드 체크아웃 (PR 제목 접근에 필요)
+
+      - name: Validate PR Title with Custom Regex
+        run: |
+          # PR 제목 가져오기
+          PR_TITLE="${{ github.event.pull_request.title }}"
+
+          # 정규식 정의
+          # 설명:
+          # ^                     : 문자열 시작
+          # ([A-Z]+-[0-9]+)       : Linear Issue ID (예: TASK-001, LIN-123) - 대문자 알파벳 1개 이상, 하이픈, 숫자 1개 이상
+          # \/                    : 리터럴 슬래시 (escaped)
+          # (feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert) : 허용된 type
+          # (\([^)]+\))?          : 선택적인 scope (괄호 안의 모든 문자, 괄호는 이스케이프)
+          # :                     : 리터럴 콜론
+          # \s+                   : 하나 이상의 공백
+          # .+\S                  : 하나 이상의 주제 (공백이 아닌 문자로 끝남)
+          # $                     : 문자열 끝
+          REGEX="^([A-Z]+-[0-9]+)\/(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([^)]+\))?: .+\S$"
+
+          # 정규식 매칭 확인
+          if ! [[ "$PR_TITLE" =~ $REGEX ]]; then
+            echo "❌ Invalid Pull Request title format."
+            echo ""
+            echo "Your PR title must follow this convention:"
+            echo "  <Linear-Issue-ID>/<type>(<scope>): <subject>"
+            echo ""
+            echo "Examples:"
+            echo "  TASK-001/feat: Implement login feature"
+            echo "  LIN-123/fix(auth): Resolve authentication issue"
+            echo "  BUG-042/docs: Update README for installation"
+            echo ""
+            echo "Guidelines:"
+            echo "  - Linear-Issue-ID: e.g., LIN-001, TASK-042 (PROJECT_KEY-ISSUE_NUMBER)"
+            echo "  - Type: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert"
+            echo "  - Scope: Optional, e.g., (login), (utils)"
+            echo "  - Subject: Concise description, must not be empty and should end with a non-whitespace character."
+            exit 1 # 실패 시 워크플로우 종료
+          else
+            echo "✅ Pull Request title format is valid."
+          fi

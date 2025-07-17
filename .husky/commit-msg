@@ -1,0 +1,27 @@
+COMMIT_MSG_FILE="$1"
+COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+
+# 지정된 커밋 메시지 양식 검사:
+# <Linear-Issue-ID> <type>(<scope>): <subject>
+# 예시: LIN-001 feat: 로그인 기능 추가
+# Linear ID (LIN-001): 반드시 영문 대문자-숫자 형식이어야 합니다. (예: LIN-001)
+# Type (feat): feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert 중 하나
+# Scope ((<scope>)): 선택 사항
+# Subject: 1글자 이상, 50자 이하 권장
+if ! echo "$COMMIT_MSG" | grep -Eq '^[A-Z]+-[0-9]+ (feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(.+\))?: .{1,50}$'; then
+  echo "❌ Invalid commit message format."
+  echo ""
+  echo "Commit message must follow the format:"
+  echo "  <Linear-Issue-ID> <type>(<scope>): <subject>"
+  echo ""
+  echo "Example:"
+  echo "  LIN-001 feat: Add user authentication"
+  echo "  LIN-002 fix(auth): Correct login redirect issue"
+  echo ""
+  echo "Linear-Issue-ID: e.g., LIN-001 (Uses your project's single Project Key)"
+  echo "Allowed types: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert"
+  echo "Subject should be concise (max 50 chars recommended)."
+  exit 1
+fi
+
+echo "✅ Commit message format is valid."

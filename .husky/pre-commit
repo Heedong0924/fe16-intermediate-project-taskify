@@ -1,0 +1,39 @@
+echo "Running pre-commit checks..."
+
+# --- 1. 브랜치 이름 컨벤션 검사 ---
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+# 브랜치 이름 컨벤션: <type>/<Linear-Issue-ID>-<subject>
+# 예시: feat/LIN-001-login
+# type: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert 중 하나
+# Linear-Issue-ID: 영문 대문자-숫자 (예: LIN-001)
+# subject: 1글자 이상 (하이픈으로 구분)
+# main, develop 브랜치는 예외 처리
+if ! echo "$CURRENT_BRANCH" | grep -Eq '^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)\/[A-Z]+-[0-9]+-.+$|^(main|develop)$'; then
+  echo "❌ Invalid branch name format."
+  echo ""
+  echo "Branch name must follow one of these conventions:"
+  echo "  - <type>/<Linear-Issue-ID>-<subject>"
+  echo "    Example: feat/LIN-001-login"
+  echo "    Example: fix/LIN-002-fix-login-error"
+  echo "  - main or develop"
+  echo ""
+  echo "Allowed types: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert"
+  echo "Linear-Issue-ID: e.g., LIN-001 (Uses your project's single Project Key)"
+  echo "Subject: must be present and separated by hyphen(s)."
+  echo ""
+  echo "Please rename your branch to match the convention."
+  exit 1
+fi
+echo "✅ Branch name format is valid."
+
+# --- 2. ESLint 및 Prettier 검사 (기존 로직 유지) ---
+pnpm format
+pnpm lint --max-warnings=0 --fix
+
+if [ $? -ne 0 ]; then
+  echo "❌ ESLint or Prettier errors detected. Aborting commit."
+  exit 1
+fi
+
+echo "✅ Pre-commit checks passed!"

@@ -1,0 +1,122 @@
+{
+  "extends": [
+    "next/core-web-vitals", // Next.js의 기본 설정 (TypeScript, React Hooks 포함)
+    "next/typescript", // Next.js의 공식 TypeScript 린팅 규칙
+    "airbnb", // Airbnb의 JavaScript/React 규칙
+    "prettier", // Prettier와 충돌하는 ESLint 규칙 끄기
+    "plugin:prettier/recommended", // Prettier 규칙을 ESLint 규칙으로 통합
+    "plugin:tailwindcss/recommended" // Tailwind CSS 특정 규칙을 ESLint에 통합합니다.
+  ],
+  "plugins": [
+    "react",
+    "jsx-a11y",
+    "import",
+    "@typescript-eslint",
+    "prettier",
+    "tailwindcss",
+    "@tanstack/query"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json" // TypeScript 프로젝트를 위한 파서 설정
+  },
+  "globals": {
+    "React": "writable" // "writable"은 이 전역 변수가 재할당될 수 있음을 의미합니다.
+    // 보통 "readonly"를 사용하지만, React의 JSX Transform 고려 시 "writable"이 더 안전할 수 있습니다.
+  },
+  "settings": {
+    "tailwindcss": {
+      "callees": ["cn", "clsx", "cva", "tv"],
+      "config": "tailwind.config.ts"
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      },
+      "typescript": {
+        "alwaysTryTypes": true
+      }
+    }
+  },
+  "rules": {
+    "react/react-in-jsx-scope": "off", // Next.js 13+에서는 JSX transform이 자동으로 React를 가져오므로 필요 없음
+    "react/jsx-props-no-spreading": "off", // props 스프레딩 허용 (선택 사항, 필요에 따라 on)
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "**/*.test.ts",
+          "**/*.test.tsx",
+          "**/*.spec.ts",
+          "**/*.spec.tsx"
+        ]
+      }
+    ],
+    "import/prefer-default-export": "off", // default export 강제하지 않음 (선택 사항, 필요에 따라 on)
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["Link"],
+        "specialLink": ["hrefLeft", "hrefRight"],
+        "aspects": ["invalidHref"]
+      }
+    ],
+    "no-underscore-dangle": "off", // private 변수 _var 허용 (선택 사항, 필요에 따라 on)
+    "no-param-reassign": ["error", { "props": false }], // 파라미터 재할당 허용 (선택 사항, 필요에 따라 on)
+    "react/function-component-definition": [
+      "error",
+      {
+        "namedComponents": ["function-declaration", "arrow-function"],
+        "unnamedComponents": "arrow-function"
+      }
+    ],
+    "prettier/prettier": "error", // Prettier 규칙 위반 시 ESLint 에러
+
+    // 규칙들을 추가할 수 있음
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          ["parent", "sibling", "index"]
+        ],
+        "pathGroups": [
+          {
+            "pattern": "{@/components/**, @/hooks/**, @/utils/**, @/lib/**, @/styles/**, @/types/**}", // 프로젝트 구조에 따라 경로 조정
+            "group": "internal"
+          }
+        ],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
+    "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".tsx"] }],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "next.config.mjs",
+        "next.config.js",
+        "postcss.config.mjs",
+        "postcss.config.js"
+      ],
+      "parserOptions": {
+        "project": null // TypeScript 파서 옵션을 비활성화합니다.
+      }
+    }
+  ]
+}
