@@ -4,42 +4,42 @@ import localFont from 'next/font/local';
 const pretendard = localFont({
   src: [
     {
-      path: './Pretendard-Thin.woff2', // Thin
+      path: '../../../../../public/fonts/Pretendard-Thin.woff2', // Thin
       weight: '100',
       style: 'normal',
     },
     {
-      path: './Pretendard-ExtraLight.woff2', // ExtraLight
+      path: '../../../../../public/fonts/Pretendard-ExtraLight.woff2', // ExtraLight
       weight: '200',
       style: 'normal',
     },
     {
-      path: './Pretendard-Regular.woff2', // Regular
+      path: '../../../../../public/fonts/Pretendard-Regular.woff2', // Regular
       weight: '400', // 기본 굵기
       style: 'normal',
     },
     {
-      path: './Pretendard-Medium.woff2', // Medium
+      path: '../../../../../public/fonts/Pretendard-Medium.woff2', // Medium
       weight: '500',
       style: 'normal',
     },
     {
-      path: './Pretendard-SemiBold.woff2', // SemiBold
+      path: '../../../../../public/fonts/Pretendard-SemiBold.woff2', // SemiBold
       weight: '600',
       style: 'normal',
     },
     {
-      path: './Pretendard-Bold.woff2', // Bold
+      path: '../../../../../public/fonts/Pretendard-Bold.woff2', // Bold
       weight: '700',
       style: 'normal',
     },
     {
-      path: './Pretendard-ExtraBold.woff2', // ExtraBold
+      path: '../../../../../public/fonts/Pretendard-ExtraBold.woff2', // ExtraBold
       weight: '800',
       style: 'normal',
     },
     {
-      path: './Pretendard-Black.woff2', // Black
+      path: '../../../../../public/fonts/Pretendard-Black.woff2', // Black
       weight: '900',
       style: 'normal',
     },
