@@ -34,6 +34,9 @@
     }
   },
   "rules": {
+    "react/require-default-props": [
+      "off" // 기본 props를 강제하지 않음
+    ],
     "react/react-in-jsx-scope": "off", // Next.js 13+에서는 JSX transform이 자동으로 React를 가져오므로 필요 없음
     "react/jsx-props-no-spreading": "off", // props 스프레딩 허용 (선택 사항, 필요에 따라 on)
     "import/no-extraneous-dependencies": [
