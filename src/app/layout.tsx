@@ -2,7 +2,7 @@
 import type { Metadata } from 'next';
 
 import './globals.css';
-import pretendard from './fonts/pretendard';
+import pretendard from './lib/utils/fonts/pretendard';
 
 export const metadata: Metadata = {
   title: 'My Next.js App',
