@@ -5,7 +5,7 @@
     "airbnb", // Airbnb의 JavaScript/React 규칙
     "prettier", // Prettier와 충돌하는 ESLint 규칙 끄기
     "plugin:prettier/recommended", // Prettier 규칙을 ESLint 규칙으로 통합
-    "plugin:tailwindcss/recommended" // Tailwind CSS 특정 규칙을 ESLint에 통합합니다.
+    "plugin:better-tailwindcss/recommended" // Tailwind v4를 지원하는 ESLint 플러그인
   ],
   "plugins": [
     "react",
@@ -13,7 +13,7 @@
     "import",
     "@typescript-eslint",
     "prettier",
-    "tailwindcss",
+    "better-tailwindcss",
     "@tanstack/query"
   ],
   "parserOptions": {
@@ -24,10 +24,6 @@
     // 보통 "readonly"를 사용하지만, React의 JSX Transform 고려 시 "writable"이 더 안전할 수 있습니다.
   },
   "settings": {
-    "tailwindcss": {
-      "callees": ["cn", "clsx", "cva", "tv"],
-      "config": "tailwind.config.ts"
-    },
     "import/resolver": {
       "node": {
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
@@ -107,7 +103,8 @@
         "ts": "never",
         "tsx": "never"
       }
-    ]
+    ],
+    "better-tailwindcss/enforce-consistent-line-wrapping": "off"
   },
   "overrides": [
     {
