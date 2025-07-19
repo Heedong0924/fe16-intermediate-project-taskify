@@ -28,8 +28,7 @@ fi
 echo "✅ Branch name format is valid."
 
 # --- 2. ESLint 및 Prettier 검사 (기존 로직 유지) ---
-pnpm format
-pnpm lint --max-warnings=0 --fix
+pnpm exec lint-staged
 
 if [ $? -ne 0 ]; then
   echo "❌ ESLint or Prettier errors detected. Aborting commit."
