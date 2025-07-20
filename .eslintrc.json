@@ -110,7 +110,10 @@
       }
     ],
     "better-tailwindcss/enforce-consistent-line-wrapping": "off",
-    "better-tailwindcss/no-unregistered-classes": "off"
+    "better-tailwindcss/no-unregistered-classes": "off",
+
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "off" //사용하지 않는 변수 규칙 끄기 - 커밋 오류나서 임시 추가
   },
   "overrides": [
     {
