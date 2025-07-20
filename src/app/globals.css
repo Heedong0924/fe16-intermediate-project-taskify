@@ -79,17 +79,17 @@
    */
   .btn-bass-color {
     /** 보라바탕 흰 글씨 */
-    @apply flex cursor-pointer items-center justify-center bg-violet-600 text-white hover:bg-violet-700 disabled:bg-gray-400;
+    @apply flex cursor-pointer items-center justify-center bg-violet-600 text-white hover:bg-violet-700 disabled:cursor-default disabled:bg-gray-400;
   }
 
   .btn-bass-white-violet {
     /** 흰 바탕 보라 글씨 */
-    @apply flex cursor-pointer items-center justify-center bg-white text-violet-700 hover:bg-gray-200 disabled:bg-gray-400;
+    @apply flex cursor-pointer items-center justify-center bg-white text-violet-700 hover:bg-gray-200 disabled:cursor-default disabled:bg-gray-400;
   }
 
   .btn-bass-white-black {
     /** 흰 바탕 검은 글씨*/
-    @apply flex cursor-pointer items-center justify-center gap-3 bg-white text-black hover:bg-gray-200 disabled:bg-gray-400;
+    @apply flex cursor-pointer items-center justify-center gap-3 bg-white text-black hover:bg-gray-200 disabled:cursor-default disabled:bg-gray-400;
   }
 
   /**--------- ▲ 기본 스타일 ---------- ▼ 세부 스타일 사용은 여기 ------------*/
