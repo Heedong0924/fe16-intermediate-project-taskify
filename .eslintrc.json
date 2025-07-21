@@ -4,8 +4,7 @@
     "next/typescript", // Next.js의 공식 TypeScript 린팅 규칙
     "airbnb", // Airbnb의 JavaScript/React 규칙
     "prettier", // Prettier와 충돌하는 ESLint 규칙 끄기
-    "plugin:prettier/recommended", // Prettier 규칙을 ESLint 규칙으로 통합
-    "plugin:better-tailwindcss/recommended" // Tailwind v4를 지원하는 ESLint 플러그인
+    "plugin:prettier/recommended" // Prettier 규칙을 ESLint 규칙으로 통합
   ],
   "plugins": [
     "react",
@@ -13,7 +12,6 @@
     "import",
     "@typescript-eslint",
     "prettier",
-    "better-tailwindcss",
     "@tanstack/query"
   ],
   "parserOptions": {
@@ -108,12 +106,6 @@
         "ts": "never",
         "tsx": "never"
       }
-    ],
-    "better-tailwindcss/enforce-consistent-line-wrapping": "off",
-    "better-tailwindcss/no-unregistered-classes": "off",
-
-    "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": "off" //사용하지 않는 변수 규칙 끄기 - 커밋 오류나서 임시 추가
   },
   "overrides": [
     {

@@ -3,19 +3,166 @@
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  /* --- chromatic color palette --- */
+  --color-taskify-violet-primary: var(--violet-5534DA);
+  --color-taskify-violet-light: var(--violet-F1EFFD);
+  --color-taskify-red: var(--red-D6173A);
+  --color-taskify-green: var(--green-7AC555);
+  --color-taskify-purple: var(--purple-760DDE);
+  --color-taskify-orange: var(--orange-FFA500);
+  --color-taskify-blue: var(--blue-76A6EA);
+  --color-taskify-pink: var(--pink-E876EA);
+
+  /* --- neutral color palette --- */
+  --color-taskify-neutral-900: var(--black-000000);
+  --color-taskify-neutral-800: var(--black-171717);
+  --color-taskify-neutral-700: var(--black-333236);
+  --color-taskify-neutral-600: var(--black-4B4B4B);
+  --color-taskify-neutral-500: var(--gray-787486);
+  --color-taskify-neutral-400: var(--gray-9FA6B2);
+  --color-taskify-neutral-300: var(--gray-D9D9D9);
+  --color-taskify-neutral-200: var(--gray-EEEEEE);
+  --color-taskify-neutral-100: var(--gray-FAFAFA);
+  --color-taskify-neutral-0: var(--white-FFFFFF);
+}
+
+/*
+  여기에 프로젝트에서 자주 사용하는 사용자 정의 유틸리티 클래스를 추가할 수 있습니다.
+  예:
+  @utility flex-center {
+    @apply flex items-center justify-center;
+  }
+*/
+
+/* --- xs (12px/18px) xs-semibold (12px/20px) --- */
+@utility text-taskify-xs-normal {
+  @apply text-xs leading-4.5 font-normal; /* 18px = leading-4.5 */
+}
+
+@utility text-taskify-xs-medium {
+  @apply text-xs leading-4.5 font-medium;
+}
+
+@utility text-taskify-xs-semibold {
+  @apply text-xs leading-5 font-semibold; /* 20px = leading-5 */
+}
+
+/* --- sm (13px/22px) --- */
+@utility text-taskify-sm-medium {
+  @apply text-[13px] leading-[22px] font-medium;
+}
+
+@utility text-taskify-sm-semibold {
+  @apply text-[13px] leading-[22px] font-semibold;
+}
+
+/* --- md (14px/24px) --- */
+@utility text-taskify-md-regular {
+  @apply text-sm leading-6 font-normal; /* 24px = leading-6 */
+}
+
+@utility text-taskify-md-medium {
+  @apply text-sm leading-6 font-medium;
+}
+
+@utility text-taskify-md-semibold {
+  @apply text-sm leading-6 font-semibold;
+}
+
+@utility text-taskify-md-bold {
+  @apply text-sm leading-6 font-bold;
+}
+
+/* --- lg (16px/26px) --- */
+@utility text-taskify-lg-regular {
+  @apply text-base leading-[26px] font-normal; /* 16px = text-base */
+}
+
+@utility text-taskify-lg-medium {
+  @apply text-base leading-[26px] font-medium;
+}
+
+@utility text-taskify-lg-semibold {
+  @apply text-base leading-[26px] font-semibold;
+}
+
+@utility text-taskify-lg-bold {
+  @apply text-base leading-[26px] font-bold;
+}
+
+/* --- 2lg (18px/26px) --- */
+@utility text-taskify-2lg-regular {
+  @apply text-[18px] leading-[26px] font-normal;
+}
+
+@utility text-taskify-2lg-medium {
+  @apply text-[18px] leading-[26px] font-medium;
+}
+
+@utility text-taskify-2lg-semibold {
+  @apply text-[18px] leading-[26px] font-semibold;
+}
+
+@utility text-taskify-2lg-bold {
+  @apply text-[18px] leading-[26px] font-bold;
+}
+
+/* --- xl (20px/32px) --- */
+@utility text-taskify-xl-regular {
+  @apply text-xl leading-8 font-normal; /* 20px = text-xl, 32px = leading-8 */
+}
+
+@utility text-taskify-xl-medium {
+  @apply text-xl leading-8 font-medium;
+}
+
+@utility text-taskify-xl-semibold {
+  @apply text-xl leading-8 font-semibold;
+}
+
+@utility text-taskify-xl-bold {
+  @apply text-xl leading-8 font-bold;
+}
+
+/* --- 2xl (24px/32px) --- */
+@utility text-taskify-2xl-regular {
+  @apply text-2xl leading-8 font-normal; /* 24px = text-2xl, 32px = leading-8 */
+}
+
+@utility text-taskify-2xl-medium {
+  @apply text-2xl leading-8 font-medium;
+}
+
+@utility text-taskify-2xl-semibold {
+  @apply text-2xl leading-8 font-semibold;
+}
+
+@utility text-taskify-2xl-bold {
+  @apply text-2xl leading-8 font-bold;
+}
+
+/* --- 3xl (32px/42px) --- */
+@utility text-taskify-3xl-semibold {
+  @apply text-3xl leading-[42px] font-semibold; /* 32px = text-3xl */
+}
+
+@utility text-taskify-3xl-bold {
+  @apply text-3xl leading-[42px] font-bold;
 }
 
 @utility text-balance {
   /* 텍스트 줄바꿈 균등 분배 (Next.js 기본 템플릿 포함) */
   text-wrap: balance;
+}
 
-  /*
-    여기에 프로젝트에서 자주 사용하는 사용자 정의 유틸리티 클래스를 추가할 수 있습니다.
-    예:
-    .flex-center {
-      @apply flex items-center justify-center;
-    }
-  */
+/* --- 컴포넌트 기본 스타일 (필요시 추가) --- */
+@layer components {
+  /*   
+  .btn-primary {
+    @apply bg-primary text-background px-4 py-2 rounded-md hover:opacity-90;
+  }
+   */
 }
 
 @layer utilities {
@@ -25,6 +172,26 @@
   :root {
     --background: #ffffff;
     --foreground: #171717;
+
+    --violet-5534DA: #5534da;
+    --violet-F1EFFD: #f1effd;
+    --red-D6173A: #d6173a;
+    --green-7AC555: #7ac555;
+    --purple-760DDE: #760dde;
+    --orange-FFA500: #ffa500;
+    --blue-76A6EA: #76a6ea;
+    --pink-E876EA: #e876ea;
+
+    --black-000000: #000000;
+    --black-171717: #171717;
+    --black-333236: #333236;
+    --black-4B4B4B: #4b4b4b;
+    --gray-787486: #787486;
+    --gray-9FA6B2: #9fa6b2;
+    --gray-D9D9D9: #d9d9d9;
+    --gray-EEEEEE: #eeeeee;
+    --gray-FAFAFA: #fafafa;
+    --white-FFFFFF: #ffffff;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -66,7 +233,6 @@
     max-width: 100%;
     height: auto;
   }
-
   /* --- Tailwind @layer 유틸리티 (필요시 추가) --- */
 }
 
