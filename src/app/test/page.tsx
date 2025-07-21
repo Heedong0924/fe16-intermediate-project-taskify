@@ -12,51 +12,51 @@ const TestPage = () => {
 
   return (
     <div className="flex flex-col gap-4 p-4">
-      <Button className="btn-login" type="button">
+      <Button color="violet-white" purpose="login" type="button">
         로그인
       </Button>
-      <Button className="btn-login" type="button" disabled>
-        로그인
+      <Button color="violet-white" purpose="login" type="button" disabled>
+        가입하기
       </Button>
 
       <div className="flex gap-4">
-        <Button className="btn-accept-color" type="button">
+        <Button color="violet-white" purpose="db" type="button">
           수락
         </Button>
-        <Button className="btn-accept-white" type="button">
+        <Button color="white-violet" purpose="db" type="button">
           거절
         </Button>
       </div>
 
       <div className="flex gap-4">
-        <Button className="btn-modal-color" type="button">
-          모달버튼
+        <Button color="violet-white" purpose="modal-db" type="button">
+          모달긍정
         </Button>
-        <Button className="btn-modal-white" type="button">
-          모달버튼
+        <Button color="modal-cancel" purpose="modal-db" type="button">
+          모달부정
         </Button>
       </div>
 
-      <Button className="btn-add-column" type="button">
-        새로운 컬럼 추가하기
+      <Button color="white-black" purpose="addCol" type="button">
+        새로운 컬럼 추가하기(chip)
       </Button>
 
-      <Button className="btn-add-dash-board" type="button">
+      <Button color="white-black" purpose="addDash" type="button">
         대시보드 추가버튼
       </Button>
-      <Button className="btn-delete-dash-board" type="button">
+      <Button color="white-black" purpose="removeDash" type="button">
         대시보드 삭제버튼
       </Button>
 
-      <Button className="btn-add-todo" type="button">
+      <Button color="white-black" purpose="addTodo" type="button">
         투두 추가(칩)
       </Button>
 
-      <Button className="btn-card-dash-board" type="button">
+      <Button color="white-black" purpose="dash" type="button">
         대시보드 카드
       </Button>
 
-      <Button className="btn-delete-member" type="button">
+      <Button color="white-black" purpose="one" type="button">
         삭제
       </Button>
 
