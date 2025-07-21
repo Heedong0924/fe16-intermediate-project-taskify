@@ -151,14 +151,6 @@
   @apply text-3xl leading-[42px] font-bold;
 }
 
-@theme {
-  /* neutral 컬러 */
-  --color-neutral-100: #fafafa;
-  /* 메인 컬러 */
-  --color-violet-primary: #5534da;
-  --color-violet-secondary: #f1effd;
-}
-
 @utility text-balance {
   /* 텍스트 줄바꿈 균등 분배 (Next.js 기본 템플릿 포함) */
   text-wrap: balance;

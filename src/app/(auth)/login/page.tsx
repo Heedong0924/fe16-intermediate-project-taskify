@@ -15,8 +15,11 @@ const LoginPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<FormValues>();
+    formState: { errors, dirtyFields },
+  } = useForm<FormValues>({
+    mode: 'onChange',
+    reValidateMode: 'onBlur',
+  });
 
   const onSubmit = (data: FormValues) => {
     console.log(data); // 사용자가 입력한 값
@@ -32,18 +35,24 @@ const LoginPage = () => {
           <Input
             label="이메일"
             type="email"
+            autoComplete="email"
             isError={!!errors.email}
+            isSuccess={dirtyFields.email && !errors.email}
+            errorMessage={errors.email?.message}
             {...register('email', emailValidation)}
           />
           <Input
             label="비밀번호"
             type="password"
+            autoComplete="current-password"
             isError={!!errors.password}
+            isSuccess={dirtyFields.password && !errors.password}
+            errorMessage={errors.password?.message}
             {...register('password', passwordValidation)}
           />
         </div>
         <button
-          className="bg-violet-primary w-full rounded-lg py-2 text-white"
+          className="bg-taskify-violet-primary w-full rounded-lg py-2 text-white"
           type="submit"
         >
           로그인
@@ -51,7 +60,7 @@ const LoginPage = () => {
       </form>
       <p className="">
         회원이 아니신가요?{' '}
-        <Link href="/auth/register" className="text-violet-primary">
+        <Link href="/auth/register" className="text-taskify-violet-primary">
           회원가입
         </Link>
       </p>

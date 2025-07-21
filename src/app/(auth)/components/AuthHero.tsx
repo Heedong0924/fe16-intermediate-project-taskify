@@ -12,6 +12,7 @@ const AuthHero = () => {
             width={200}
             height={200}
             priority
+            className="h-auto w-auto"
           />
           <Image
             src="/images/Taskify.svg"
@@ -19,6 +20,7 @@ const AuthHero = () => {
             width={200}
             height={50}
             priority
+            className="h-auto w-auto"
           />
         </div>
         <h3 className="text-center text-xl">오늘도 만나서 반가워요 !</h3>
