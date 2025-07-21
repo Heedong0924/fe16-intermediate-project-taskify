@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { getTextBasedColorClasses } from '@/lib/utils/ColorUtils';
+import { getTextBasedColorClasses } from '@/lib/utils/colorUtils';
 
 type AvatarProfileProps = {
   profileImg?: string | null;

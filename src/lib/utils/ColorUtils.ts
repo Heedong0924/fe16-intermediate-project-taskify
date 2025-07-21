@@ -2,7 +2,7 @@ import {
   allBackgroundClassesProfile,
   allBackgroundClassesChip,
   allTextClassesChip,
-} from '@/lib/constants/ColorArrays';
+} from '@/lib/constants/colorArrays';
 
 type Mode = 'profile' | 'chip';
 

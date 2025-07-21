@@ -1,4 +1,4 @@
-import { getTextBasedColorClasses } from '@/lib/utils/ColorUtils';
+import { getTextBasedColorClasses } from '@/lib/utils/colorUtils';
 
 type ChipProps = {
   children: string;
