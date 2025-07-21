@@ -151,7 +151,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 'absolute top-1/2 left-3 z-10 -translate-y-1/2 transform',
                 'rounded p-1 transition-transform',
                 onLeftIconClick && !disabled
-                  ? 'cursor-pointer hover:scale-110 focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:outline-none'
+                  ? 'cursor-pointer'
                   : 'cursor-default',
                 disabled && 'opacity-50',
                 !onLeftIconClick && 'pointer-events-none',
@@ -193,7 +193,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 'absolute top-1/2 right-3 z-10 -translate-y-1/2 transform',
                 'rounded p-1 transition-transform',
                 onRightIconClick && !disabled
-                  ? 'cursor-pointer hover:scale-110 focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:outline-none'
+                  ? 'cursor-pointer'
                   : 'cursor-default',
                 disabled && 'opacity-50',
                 !onRightIconClick && 'pointer-events-none',

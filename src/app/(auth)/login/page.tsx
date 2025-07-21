@@ -1,6 +1,8 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Input from '@/components/common/Input';
@@ -20,6 +22,9 @@ const LoginPage = () => {
     mode: 'onChange',
     reValidateMode: 'onBlur',
   });
+  // 비밀번호 표시 토글 상태
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePassword = () => setShowPassword((prev) => !prev);
 
   const onSubmit = (data: FormValues) => {
     console.log(data); // 사용자가 입력한 값
@@ -43,8 +48,21 @@ const LoginPage = () => {
           />
           <Input
             label="비밀번호"
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             autoComplete="current-password"
+            rightIcon={
+              <Image
+                src={
+                  showPassword
+                    ? '/images/icon/visibility.svg'
+                    : '/images/icon/visibility_off.svg'
+                }
+                alt="비밀번호 보기"
+                width={24}
+                height={24}
+              />
+            }
+            onRightIconClick={togglePassword}
             isError={!!errors.password}
             isSuccess={dirtyFields.password && !errors.password}
             errorMessage={errors.password?.message}
