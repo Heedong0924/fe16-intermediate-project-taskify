@@ -29,6 +29,11 @@
       "typescript": {
         "alwaysTryTypes": true
       }
+    },
+    "better-tailwindcss": {
+      // 'postcss.config.mjs' 파일의 경로를 정확하게 지정해주세요.
+      // 프로젝트 루트에 있다면 이렇게 설정합니다.
+      "tailwindCssConfig": "./postcss.config.mjs"
     }
   },
   "rules": {
@@ -101,7 +106,6 @@
         "ts": "never",
         "tsx": "never"
       }
-    ]
   },
   "overrides": [
     {
