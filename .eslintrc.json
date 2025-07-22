@@ -67,6 +67,14 @@
         "unnamedComponents": "arrow-function"
       }
     ],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "args": "all",
+        "argsIgnorePattern": "^_", // _로 시작하는 args는 무시
+        "varsIgnorePattern": "^_" // _로 시작하는 변수도 무시
+      }
+    ],
     "prettier/prettier": "error", // Prettier 규칙 위반 시 ESLint 에러
 
     // 규칙들을 추가할 수 있음

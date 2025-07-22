@@ -1,5 +1,7 @@
 // src/api/auth.ts
 
+import { User } from '@/types/User.type';
+
 import axiosInstance from '../axiosInstance';
 
 /**
@@ -11,20 +13,24 @@ import axiosInstance from '../axiosInstance';
  *  - "message": "이미 사용중인 이메일입니다."
  *
  */
+
+// 사용자 정보 인터페이스(서버에서 오는 데이터 구조)
+// 사용자 정보와 생성/수정 날짜 포함
+interface ServeUser extends User {
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// 회원가입 요청 바디 인터페이스
 export interface SignupRequest {
   email: string;
   username: string;
   password: string;
 }
 
-export interface SignupResponse {
-  id: number;
-  email: string;
-  nickname: string;
-  profileImageUrl: string;
-  createdAt: string;
-  updatedAt: string;
-}
+// 회원가입 응답 인터페이스
+// 사용자 정보와 생성/수정 날짜 포함
+export type SignupResponse = ServeUser;
 
 export const postSignup = async (
   data: SignupRequest,
@@ -39,18 +45,20 @@ export const postSignup = async (
  * @returns 로그인 성공 시 사용자 정보
  *
  */
+
+// 로그인 요청 바디 인터페이스
 export interface LoginRequest {
   email: string;
   password: string;
 }
+
+// 로그인 응답 인터페이스
 export interface LoginResponse {
   accessToken: string;
-  user: {
-    id: number;
-    email: string;
-    nickname: string;
-    profileImageUrl: string;
-    createdAt: Date;
-    updatedAt: Date;
-  };
+  user: ServeUser;
 }
+
+export const postLogin = async (data: LoginRequest): Promise<LoginResponse> => {
+  const res = await axiosInstance.post<LoginResponse>('/auth/login', data);
+  return res.data;
+};
