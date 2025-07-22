@@ -32,6 +32,8 @@
     }
   },
   "rules": {
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "error",
     "react/require-default-props": [
       "off" // 기본 props를 강제하지 않음
     ],
