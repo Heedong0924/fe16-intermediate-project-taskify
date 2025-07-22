@@ -8,10 +8,10 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 import addIcon from '@/../public/images/icon/addBox.svg';
-import crownIcon from '@/../public/images/icon/crown.svg';
 import { mockDashboardData } from '@/mock/mockDashboardData';
 import Dashboard from '@/types/Dashboard';
 
+import DashboardCard from './DashboardCrad';
 import { LogoMd } from '../ui/SVGLogo';
 
 const Sidebar = () => {
@@ -77,24 +77,10 @@ const Sidebar = () => {
             ㅇㅇ 내 대시보드 리스트랑 같음 맡기자 이건 여기도 무한스크롤? ㄴㄴ
             페이지네이션 시안상으론 15개씩 */}
             {dashboards.map((dashboard) => (
-              <Link
-                key={dashboard.id}
-                href={`/dashboard/${dashboard.id}`}
-                className="hover:bg-taskify-neutral-200 flex h-[42px] items-center justify-between px-[10px] py-[7px] transition-colors duration-20"
-              >
-                <div className="flex min-w-0 items-center gap-4">
-                  <div
-                    className="bg- h-2 w-2 shrink-0 rounded-full"
-                    style={{ backgroundColor: dashboard.color }}
-                  />
-                  <span className="text-taskify-lg-medium overflow-hidden text-ellipsis whitespace-nowrap">
-                    {dashboard.title}
-                  </span>
-                  {dashboard.createdByMe && (
-                    <Image src={crownIcon} alt="crown icon - createByMe" />
-                  )}
-                </div>
-              </Link>
+              <DashboardCard
+                dashboard={dashboard}
+                className="hover:bg-taskify-neutral-200 h-[42px]"
+              />
             ))}
           </div>
         </div>
