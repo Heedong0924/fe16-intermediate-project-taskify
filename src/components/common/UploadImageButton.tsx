@@ -6,7 +6,7 @@ import { FaPlus } from 'react-icons/fa';
 import { LuPencilLine } from 'react-icons/lu';
 
 // onUpload로 파일 업로드, onChange로 폼으로 url 전달
-/* eslint-disable no-unused-vars */
+
 type UploadImageButtonProps = {
   onUpload: (file: File) => Promise<string>;
   onChange: (url: string) => void;
@@ -29,7 +29,7 @@ const UploadImageButton = ({ onUpload, onChange }: UploadImageButtonProps) => {
     setImageUrl(uploadedUrl);
     onChange(uploadedUrl);
   };
-
+  console.log('test');
   // 커스텀 UI 클릭 시 숨겨진 파일 input 클릭 유도
   const triggerUpload = () => fileInputRef.current?.click();
 
