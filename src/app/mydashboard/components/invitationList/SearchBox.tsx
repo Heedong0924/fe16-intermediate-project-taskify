@@ -24,13 +24,11 @@ const SearchBox = () => {
         .includes(debouncedSearchTerm.toLowerCase()),
     );
   }, [data, debouncedSearchTerm]);
-
-  // 추후 리스트 렌더링 시 filteredResults 연결하여 활용 예정
   console.log(filteredResults);
-
+  // 추후 리스트 렌더링 시 filteredResults 연결하여 활용 예정
   return (
     <div>
-      <SearchInput value={searchTerm} onChange={setSearchTerm} />
+      <SearchInput val={searchTerm} onChange={setSearchTerm} />
     </div>
   );
 };
