@@ -281,6 +281,6 @@
   }
   .btn-addTodo {
     /**투두 추가 버튼*/
-    @apply h-8 w-[284px] md:h-10 md:w-[544px] xl:w-10;
+    @apply h-8 w-[284px] md:h-10 md:w-[544px] xl:w-[314px];
   }
 }
