@@ -233,4 +233,86 @@
     max-width: 100%;
     height: auto;
   }
+  /* --- Tailwind @layer 유틸리티 (필요시 추가) --- */
+}
+
+/* --- 컴포넌트 기본 스타일 (필요시 추가) --- */
+@layer components {
+  /*   
+  .btn-primary {
+    @apply bg-primary text-background px-4 py-2 rounded-md hover:opacity-90;
+  }
+   */
+  .btn-bass-color {
+    /** 보라바탕 흰 글씨 */
+    @apply flex cursor-pointer items-center justify-center bg-violet-600 text-white hover:bg-violet-700 disabled:cursor-default disabled:bg-gray-400;
+  }
+
+  .btn-bass-white-violet {
+    /** 흰 바탕 보라 글씨 */
+    @apply flex cursor-pointer items-center justify-center bg-white text-violet-700 hover:bg-gray-200 disabled:cursor-default disabled:bg-gray-400;
+  }
+
+  .btn-bass-white-black {
+    /** 흰 바탕 검은 글씨*/
+    @apply flex cursor-pointer items-center justify-center gap-3 bg-white text-black hover:bg-gray-200 disabled:cursor-default disabled:bg-gray-400;
+  }
+
+  /**--------- ▲ 기본 스타일 ---------- ▼ 세부 스타일 사용은 여기 ------------*/
+  /** 아니 근데 만들다가 든 생각인데 width랑 height는 인라인으로 하는게 낫지않나...? */
+
+  .btn-login {
+    /** 보라바탕 흰 글씨 - 로그인 회원가입 전용 */
+    @apply flex h-[50px] w-87.75 cursor-pointer items-center justify-center rounded-lg bg-violet-600 text-white hover:bg-violet-700 disabled:cursor-default disabled:bg-gray-400 md:w-130;
+  }
+
+  .btn-accept-color {
+    /** 보라바탕 흰 글씨 - 수락 버튼 전용*/
+    @apply flex h-8 w-27.25 cursor-pointer items-center justify-center rounded-sm bg-violet-600 text-white hover:bg-violet-700 disabled:bg-gray-400 md:w-18 xl:w-21;
+  }
+
+  .btn-accept-white {
+    /** 흰 바탕 보라 글씨 - 거절 버튼 전용 */
+    @apply flex h-8 w-27.25 cursor-pointer items-center justify-center rounded-sm bg-white text-violet-700 hover:bg-gray-200 disabled:bg-gray-400 md:w-18 xl:w-21;
+  }
+
+  .btn-modal-color {
+    /** 보라바탕 흰 글씨 - 모달 전용 */
+    @apply flex h-16 w-36 cursor-pointer items-center justify-center rounded-lg bg-violet-600 text-white hover:bg-violet-700 disabled:bg-gray-400 md:w-64;
+  }
+
+  .btn-modal-white {
+    /** 흰 바탕 검은 글씨 - 모달 전용 */
+    @apply flex h-16 w-36 cursor-pointer items-center justify-center gap-3 rounded-lg bg-white text-black hover:bg-gray-200 disabled:bg-gray-400 md:w-64;
+  }
+
+  .btn-add-column {
+    /** 흰 바탕 검은 글씨 - 컬럼 추가버튼 전용 */
+    @apply flex h-16.5 w-71 cursor-pointer items-center justify-center gap-3 rounded-lg bg-white text-black hover:bg-gray-200 disabled:bg-gray-400 md:h-17.5 md:w-136 xl:w-88.5;
+  }
+
+  .btn-add-dash-board {
+    /** 흰 바탕 검은 글씨 - 대시보드 추가버튼 전용 */
+    @apply flex h-14.5 w-65 cursor-pointer items-center justify-center gap-3 rounded-lg bg-white text-black hover:bg-gray-200 disabled:bg-gray-400 md:h-17 md:w-61.75 xl:h-17.5 xl:w-83;
+  }
+
+  .btn-delete-dash-board {
+    /** 흰 바탕 검은 글씨 - 대시보드 삭제버튼 전용 */
+    @apply flex h-13 w-71 cursor-pointer items-center justify-center gap-3 rounded-lg bg-white text-black hover:bg-gray-200 disabled:bg-gray-400 md:h-15.5 md:w-80;
+  }
+
+  .btn-add-todo {
+    /** 흰 바탕 검은 글씨 - 투두 추가버튼 전용 */
+    @apply flex h-8 w-71 cursor-pointer items-center justify-center gap-3 rounded-lg bg-white text-black hover:bg-gray-200 disabled:bg-gray-400 md:h-10 md:w-136 xl:w-10;
+  }
+
+  .btn-card-dash-board {
+    /** 흰 바탕 검은 글씨 - 대시보드 카드 버튼 전용 */
+    @apply flex h-14.5 w-65 cursor-pointer items-center justify-center gap-3 rounded-lg bg-white text-black hover:bg-gray-200 disabled:bg-gray-400 md:h-17 md:w-61.75 xl:h-17.5 xl:w-83;
+  }
+
+  .btn-delete-member {
+    /** 구성원 삭제 버튼 전용 */
+    @apply flex h-13 w-32 cursor-pointer items-center justify-center rounded-lg bg-white text-violet-700 hover:bg-gray-200 disabled:bg-gray-400 md:w-21;
+  }
 }
