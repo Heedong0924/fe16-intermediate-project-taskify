@@ -9,6 +9,16 @@ import Input from '@/components/common/Input';
 import { useAuth } from '@/hooks/useAuth';
 import { emailValidation, passwordValidation } from '@/lib/validationRules';
 
+/**
+ * 로그인 페이지 컴포넌트
+ * - 이메일, 비밀번호 입력 필드
+ * - 비밀번호 표시 토글 기능
+ * - 로그인 버튼
+ * - 회원가입 페이지로 이동 링크
+ * - 로그인 성공 시 사용자 정보를 스토어에 저장하고 리다이렉트(useAuth 훅 사용)
+ * - 에러 메시지 표시
+ */
+
 type FormValues = {
   email: string;
   password: string;

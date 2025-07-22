@@ -14,6 +14,17 @@ import {
   confirmPasswordValidation,
 } from '@/lib/validationRules';
 
+/**
+ * 회원가입 페이지 컴포넌트
+ * - 이메일, 닉네임, 비밀번호, 비밀번호 확인 입력 필드
+ * - 비밀번호 표시 토글 기능
+ * - 이용약관 동의 체크박스
+ * - 가입하기 버튼
+ * - 이미 회원인 경우 로그인 페이지로 이동 링크
+ * - 회원가입 성공 시 자동 로그인 처리(useAuth 훅 사용)
+ * - 에러 메시지 표시
+ */
+
 type FormValues = {
   email: string;
   nickname: string;

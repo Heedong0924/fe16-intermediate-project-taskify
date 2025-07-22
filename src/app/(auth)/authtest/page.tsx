@@ -6,6 +6,17 @@ import Link from 'next/link';
 import { useAuth } from '@/hooks/useAuth';
 import { getMyInfo } from '@/lib/api/auth';
 
+/**
+ *
+ * 회원가입 후 사용자 정보를 확인할 수 있는 테스트 페이지
+ * - 로그인 상태 확인
+ * - 사용자 정보 표시
+ * - 로그아웃 버튼
+ * - 내 프로필 조회 버튼 (서버에서 사용자 정보 조회)
+ * - 로그인 페이지로 이동 링크
+ *
+ */
+
 const AuthTestPage = () => {
   const { isAuth, user, logout } = useAuth();
   const [{ data, refetch }] = useQueries({
