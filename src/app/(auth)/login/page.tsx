@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Input from '@/components/common/Input';
+import { useAuth } from '@/hooks/useAuth';
 import { emailValidation, passwordValidation } from '@/lib/validationRules';
 
 type FormValues = {
@@ -25,9 +26,13 @@ const LoginPage = () => {
   // 비밀번호 표시 토글 상태
   const [showPassword, setShowPassword] = useState(false);
   const togglePassword = () => setShowPassword((prev) => !prev);
-
+  const { login, error } = useAuth();
   const onSubmit = (data: FormValues) => {
     console.log(data); // 사용자가 입력한 값
+    login(data);
+    if (error) {
+      console.error('Login error:', error);
+    }
   };
 
   return (

@@ -32,8 +32,10 @@ export const useAuth = () => {
     mutationFn: (requestBody) => postLogin(requestBody),
     onSuccess: (data) => {
       // 로그인 성공 시 스토어에 저장하고 리다이렉트
+      console.log('Login 성공함:', data);
       setToken(data.accessToken);
       setUser(data.user);
+
       router.push('/');
     },
     onError: (err) => {
@@ -49,6 +51,7 @@ export const useAuth = () => {
   } = useMutation<SignupResponse, Error, SignupRequest>({
     mutationFn: (requestBody) => postSignup(requestBody),
     onSuccess: (_data, variables) => {
+      console.log('회원가입 성공함:', _data);
       // 회원가입 성공 후, 회원가입때 입력한 정보로 자동 로그인
       login({
         email: variables.email,

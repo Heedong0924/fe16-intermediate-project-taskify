@@ -17,7 +17,7 @@ export const emailValidation = {
  * - 필수 입력
  * - 최소 2자 이상
  */
-export const usernameValidation = {
+export const nicknameValidation = {
   required: '닉네임을 입력해주세요',
   minLength: { value: 2, message: '2자 이상 입력해주세요' },
 };

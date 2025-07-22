@@ -9,13 +9,19 @@ const axiosInstance = axios.create({
   timeout: 10000,
   // JSON 응답을 Date 객체로 변환
   transformResponse: [
-    (data) =>
-      JSON.parse(data, (key, value) => {
-        if (key === 'createdAt' || key === 'updatedAt') {
-          return new Date(value);
-        }
-        return value;
-      }),
+    (data) => {
+      try {
+        return JSON.parse(data, (key, value) => {
+          if (key === 'createdAt' || key === 'updatedAt') {
+            return new Date(value);
+          }
+          return value;
+        });
+      } catch {
+        // JSON이 아닌 경우(예: "Not Found") 그대로 반환
+        return data;
+      }
+    },
   ],
 });
 

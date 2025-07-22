@@ -24,7 +24,7 @@ interface ServeUser extends User {
 // 회원가입 요청 바디 인터페이스
 export interface SignupRequest {
   email: string;
-  username: string;
+  nickname: string;
   password: string;
 }
 
@@ -35,7 +35,7 @@ export type SignupResponse = ServeUser;
 export const postSignup = async (
   data: SignupRequest,
 ): Promise<SignupResponse> => {
-  const res = await axiosInstance.post<SignupResponse>('/auth/signup', data);
+  const res = await axiosInstance.post<SignupResponse>('users', data);
   return res.data;
 };
 
@@ -59,6 +59,6 @@ export interface LoginResponse {
 }
 
 export const postLogin = async (data: LoginRequest): Promise<LoginResponse> => {
-  const res = await axiosInstance.post<LoginResponse>('/auth/login', data);
+  const res = await axiosInstance.post<LoginResponse>('auth/login', data);
   return res.data;
 };

@@ -6,15 +6,17 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Input from '@/components/common/Input';
+import { useAuth } from '@/hooks/useAuth';
 import {
   emailValidation,
+  nicknameValidation,
   passwordValidation,
   confirmPasswordValidation,
 } from '@/lib/validationRules';
 
 type FormValues = {
   email: string;
-  username: string;
+  nickname: string;
   password: string;
   confirmPassword: string;
 };
@@ -24,7 +26,7 @@ const SignupPage = () => {
     register,
     handleSubmit,
     getValues,
-    formState: { errors, dirtyFields },
+    formState: { errors, dirtyFields, isValid, isSubmitting },
   } = useForm<FormValues>({
     mode: 'onChange',
     reValidateMode: 'onBlur',
@@ -32,9 +34,17 @@ const SignupPage = () => {
   // 비밀번호 표시 토글 상태
   const [showPassword, setShowPassword] = useState(false);
   const togglePassword = (): void => setShowPassword((prev) => !prev);
-
+  const { signup, error, isLoading } = useAuth();
   const onSubmit = (data: FormValues) => {
     console.log(data); // 사용자가 입력한 값
+    signup({
+      email: data.email,
+      nickname: data.nickname,
+      password: data.password,
+    });
+    if (error) {
+      console.error('Signup error:', error);
+    }
   };
 
   return (
@@ -56,11 +66,11 @@ const SignupPage = () => {
           <Input
             label="닉네임"
             type="text"
-            autoComplete="username"
-            isError={!!errors.username}
-            isSuccess={dirtyFields.username && !errors.username}
-            errorMessage={errors.username?.message}
-            {...register('username')}
+            autoComplete="nickname"
+            isError={!!errors.nickname}
+            isSuccess={dirtyFields.nickname && !errors.nickname}
+            errorMessage={errors.nickname?.message}
+            {...register('nickname', nicknameValidation)}
           />
           <Input
             label="비밀번호"
@@ -98,29 +108,29 @@ const SignupPage = () => {
                 alt="비밀번호 보기"
                 width={24}
                 height={24}
-                {...register(
-                  'confirmPassword',
-                  confirmPasswordValidation(getValues),
-                )}
               />
             }
             onRightIconClick={togglePassword}
             isError={!!errors.confirmPassword}
             isSuccess={dirtyFields.confirmPassword && !errors.confirmPassword}
-            errorMessage={errors.password?.message}
-            {...register('password', passwordValidation)}
+            errorMessage={errors.confirmPassword?.message}
+            {...register(
+              'confirmPassword',
+              confirmPasswordValidation(getValues),
+            )}
           />
         </div>
         <button
           className="bg-taskify-violet-primary w-full rounded-lg py-2 text-white"
           type="submit"
+          disabled={!isValid || isSubmitting || isLoading}
         >
           가입하기
         </button>
       </form>
       <p className="">
         이미 회원이신가요?{' '}
-        <Link href="/auth/login" className="text-taskify-violet-primary">
+        <Link href="/login" className="text-taskify-violet-primary">
           로그인
         </Link>
       </p>
