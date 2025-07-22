@@ -1,4 +1,9 @@
 // src/lib/validationRules.ts
+/**
+ * 이메일 유효성 검사 규칙
+ * - 필수 입력
+ * - 올바른 이메일 형식
+ */
 export const emailValidation = {
   required: '이메일을 입력해주세요',
   pattern: {
@@ -7,7 +12,34 @@ export const emailValidation = {
   },
 };
 
+/**
+ * 닉네임 유효성 검사 규칙
+ * - 필수 입력
+ * - 최소 2자 이상
+ */
+export const usernameValidation = {
+  required: '닉네임을 입력해주세요',
+  minLength: { value: 2, message: '2자 이상 입력해주세요' },
+};
+
+/**
+ * 비밀번호 유효성 검사 규칙
+ * - 필수 입력
+ * - 최소 8자 이상
+ */
 export const passwordValidation = {
   required: '비밀번호를 입력해주세요',
   minLength: { value: 8, message: '8자 이상 입력해주세요' },
 };
+
+/**
+ * 비밀번호 확인용 유효성 검사 규칙
+ * @param getValues - useForm에서 제공되는 현재 필드 값 조회 함수
+ */
+export const confirmPasswordValidation = (
+  getValues: () => { password: string },
+) => ({
+  required: '비밀번호 확인을 입력해주세요',
+  validate: (value: string) =>
+    value === getValues().password || '비밀번호가 일치하지 않습니다',
+});
