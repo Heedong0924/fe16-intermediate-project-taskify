@@ -62,3 +62,16 @@ export const postLogin = async (data: LoginRequest): Promise<LoginResponse> => {
   const res = await axiosInstance.post<LoginResponse>('auth/login', data);
   return res.data;
 };
+
+/**
+ * 내 정보 조회 API
+ * @returns 내 정보
+ * @throws 에러 발생 시 에러 메시지
+ *  -
+ */
+export type MyInfoResponse = ServeUser;
+
+export const getMyInfo = async (): Promise<MyInfoResponse> => {
+  const res = await axiosInstance.get<MyInfoResponse>('users/me');
+  return res.data;
+};

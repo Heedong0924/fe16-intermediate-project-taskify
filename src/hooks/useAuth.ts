@@ -20,7 +20,7 @@ export const useAuth = () => {
   const logout = useAuthStore((state) => state.logout);
   const user = useAuthStore((state) => state.user);
   const isAuth = useAuthStore((state) => state.isAuth);
-
+  const accessToken = useAuthStore((state) => state.accessToken);
   const router = useRouter();
 
   // 2) 로그인 mutation 선언
@@ -65,6 +65,7 @@ export const useAuth = () => {
 
   return {
     user,
+    accessToken,
     isAuth,
     // 두 mutation 중 하나라도 로딩 중이면 true
     isLoading: isLoginLoading || isSignupLoading,

@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 
+import { useAuthStore } from '@/stores/useAuthStore';
 // 혹시 환경 변수에 설정 안되어 있는 분들을 위해서..
 const BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL ??
@@ -28,9 +29,10 @@ const axiosInstance = axios.create({
 // 엑세스 토큰을 요청 헤더에 추가하는 인터셉터
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('accessToken'); // 또는 다른 저장소
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`; // JWT 토큰 추가
+    const { accessToken } = useAuthStore.getState();
+
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`; // JWT 토큰 추가
     }
     return config;
   },
