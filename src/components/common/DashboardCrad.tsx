@@ -15,7 +15,7 @@ const DashboardCard = ({
 }: DashboardCardProps) => {
   const baseStyle =
     'flex items-center justify-between px-[10px] py-[7px] transition-all duration-20';
-  const allClass = `${baseStyle} ${className}`;
+  const allClass = `${baseStyle} ${className || ''}`;
 
   return (
     <Link
