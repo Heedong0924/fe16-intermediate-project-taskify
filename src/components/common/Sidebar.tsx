@@ -3,9 +3,12 @@
 // 기능 - 대시보드 생성 버튼 클릭시 생성 모달, 대시보드 리스트 클릭시 link-대시보드 상세 페이지
 // api 받아오기 "BASE_URL/dashboards"
 //      내가만든 대시보드 끝에 왕관?
+import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
+import addIcon from '@/../public/images/icon/addBox.svg';
+import crownIcon from '@/../public/images/icon/crown.svg';
 import { mockDashboardData } from '@/mock/mockDashboardData';
 import Dashboard from '@/types/Dashboard';
 
@@ -67,7 +70,7 @@ const Sidebar = () => {
             <div className="text-taskify-md-semibold my-4 flex justify-between">
               Dash Boards
             </div>
-            <div className="w-5">+</div>
+            <Image src={addIcon} alt="add to dashboard" />
           </button>
           <div className="">
             {/* 대시보드 리스트 - map으로 api 요청받아온 리스트 - 재사용 가능한가?
@@ -81,21 +84,16 @@ const Sidebar = () => {
               >
                 <div className="flex min-w-0 items-center gap-4">
                   <div
-                    className="bg- h-2 w-2 rounded-full"
+                    className="bg- h-2 w-2 shrink-0 rounded-full"
                     style={{ backgroundColor: dashboard.color }}
                   />
                   <span className="text-taskify-lg-medium overflow-hidden text-ellipsis whitespace-nowrap">
                     {dashboard.title}
                   </span>
+                  {dashboard.createdByMe && (
+                    <Image src={crownIcon} alt="crown icon - createByMe" />
+                  )}
                 </div>
-                {dashboard.createdByMe && (
-                  <span
-                    className="ml-auto text-lg text-yellow-300"
-                    title="내가 만든 대시보드"
-                  >
-                    ♛
-                  </span>
-                )}
               </Link>
             ))}
           </div>
