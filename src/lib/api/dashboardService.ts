@@ -1,6 +1,19 @@
 import axiosInstance from '@/lib/axiosInstance';
-import Dashboard from '@/types/Dashboard';
+import {
+  Dashboard,
+  DashboardQueryParams,
+  DashboardResponse,
+} from '@/types/Dashboard';
 import { InvitationResponse } from '@/types/InvitationResponse';
+
+export const getDashboards = async (
+  params: DashboardQueryParams, // 파라미터를 객체로 받음
+): Promise<DashboardResponse> => {
+  const response = await axiosInstance.get<DashboardResponse>('/dashboards', {
+    params,
+  });
+  return response.data;
+};
 
 export const createDashboard = async ({
   title,

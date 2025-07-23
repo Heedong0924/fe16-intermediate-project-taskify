@@ -1,12 +1,14 @@
 'use client';
 
-import { ArrowLeft, ArrowRight } from '../ui/SVGLogo';
+import { ArrowLeft, ArrowRight } from './SVGLogo';
 
 type PaginationProps = {
   page?: number;
   size?: number;
   totalCount?: number;
+  text?: boolean;
   onPageChange: (newPage: number) => void;
+  className?: string;
 };
 
 // onCilck 이벤트가 있기에 CSR로 해주었습니다.
@@ -17,7 +19,9 @@ const PaginationButton = ({
   page = 1,
   size = 4,
   totalCount = 1,
+  text = true,
   onPageChange,
+  className,
 }: PaginationProps) => {
   const currentPage = page;
   const totalPage = Math.ceil(totalCount / size);
@@ -31,15 +35,17 @@ const PaginationButton = ({
     if (currentPage < totalPage) onPageChange(currentPage + 1);
   };
 
-  const thisClassName =
+  const buttonBaseStyle =
     'text-taskify-neutral-700 btn-bass-white-black bg-taskify-neutral-0 disabled:bg-taskify-neutral-0 flex h-9 w-9 items-center justify-center border-1 border-gray-400 disabled:text-gray-400 md:h-10 md:w-10';
 
+  const baseWarraperStyle = `flex flex-row items-center gap-3 md:gap-4 ${className || ''}`;
+
   return (
-    <div className="flex flex-row items-center gap-3 md:gap-4">
-      <p>{`${currentPage} 페이지 중 ${totalPage}`}</p>
+    <div className={baseWarraperStyle}>
+      {text && <p>{`${currentPage} 페이지 중 ${totalPage}`}</p>}
       <div className="flex">
         <button
-          className={`${thisClassName} rounded-l-sm`}
+          className={`${buttonBaseStyle} rounded-l-sm`}
           onClick={handlePrevCilck}
           disabled={isPrevDisabled}
           type="button"
@@ -47,7 +53,7 @@ const PaginationButton = ({
           <ArrowLeft />
         </button>
         <button
-          className={`${thisClassName} rounded-r-sm`}
+          className={`${buttonBaseStyle} rounded-r-sm`}
           onClick={handleNextCilck}
           disabled={isNextDisabled}
           type="button"
