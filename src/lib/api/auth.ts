@@ -35,7 +35,7 @@ export type SignupResponse = ServeUser;
 export const postSignup = async (
   data: SignupRequest,
 ): Promise<SignupResponse> => {
-  const res = await axiosInstance.post<SignupResponse>('users', data);
+  const res = await axiosInstance.post<SignupResponse>('/users', data);
   return res.data;
 };
 
@@ -59,7 +59,7 @@ export interface LoginResponse {
 }
 
 export const postLogin = async (data: LoginRequest): Promise<LoginResponse> => {
-  const res = await axiosInstance.post<LoginResponse>('auth/login', data);
+  const res = await axiosInstance.post<LoginResponse>('/auth/login', data);
   return res.data;
 };
 
@@ -72,6 +72,6 @@ export const postLogin = async (data: LoginRequest): Promise<LoginResponse> => {
 export type MyInfoResponse = ServeUser;
 
 export const getMyInfo = async (): Promise<MyInfoResponse> => {
-  const res = await axiosInstance.get<MyInfoResponse>('users/me');
+  const res = await axiosInstance.get<MyInfoResponse>('/users/me');
   return res.data;
 };

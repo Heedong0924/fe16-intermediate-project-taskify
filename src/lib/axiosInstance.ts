@@ -1,10 +1,12 @@
 import axios, { AxiosError } from 'axios';
 
 import { useAuthStore } from '@/stores/useAuthStore';
+
 // 혹시 환경 변수에 설정 안되어 있는 분들을 위해서..
+const TEAM_NAME = '16-2';
 const BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL ??
-  'https://sp-taskify-api.vercel.app/2/';
+  `https://sp-taskify-api.vercel.app/${TEAM_NAME}`;
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
   timeout: 10000,
