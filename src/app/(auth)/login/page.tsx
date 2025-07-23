@@ -6,7 +6,18 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Input from '@/components/common/Input';
+import { useAuth } from '@/hooks/useAuth';
 import { emailValidation, passwordValidation } from '@/lib/validationRules';
+
+/**
+ * 로그인 페이지 컴포넌트
+ * - 이메일, 비밀번호 입력 필드
+ * - 비밀번호 표시 토글 기능
+ * - 로그인 버튼
+ * - 회원가입 페이지로 이동 링크
+ * - 로그인 성공 시 사용자 정보를 스토어에 저장하고 리다이렉트(useAuth 훅 사용)
+ * - 에러 메시지 표시
+ */
 
 type FormValues = {
   email: string;
@@ -25,9 +36,13 @@ const LoginPage = () => {
   // 비밀번호 표시 토글 상태
   const [showPassword, setShowPassword] = useState(false);
   const togglePassword = () => setShowPassword((prev) => !prev);
-
+  const { login, error } = useAuth();
   const onSubmit = (data: FormValues) => {
     console.log(data); // 사용자가 입력한 값
+    login(data);
+    if (error) {
+      console.error('Login error:', error);
+    }
   };
 
   return (
@@ -40,6 +55,7 @@ const LoginPage = () => {
           <Input
             label="이메일"
             type="email"
+            placeholder="이메일을 입력해 주세요"
             autoComplete="email"
             isError={!!errors.email}
             isSuccess={dirtyFields.email && !errors.email}
@@ -49,6 +65,7 @@ const LoginPage = () => {
           <Input
             label="비밀번호"
             type={showPassword ? 'text' : 'password'}
+            placeholder="비밀번호를 입력해 주세요"
             autoComplete="current-password"
             rightIcon={
               <Image
@@ -78,7 +95,7 @@ const LoginPage = () => {
       </form>
       <p className="">
         회원이 아니신가요?{' '}
-        <Link href="/auth/register" className="text-taskify-violet-primary">
+        <Link href="/signup" className="text-taskify-violet-primary">
           회원가입
         </Link>
       </p>
