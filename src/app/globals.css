@@ -286,6 +286,40 @@
     /**투두 추가 버튼*/
     @apply h-8 w-[284px] md:h-10 md:w-[544px] xl:w-[314px];
   }
+
+  /*  아바타, 프로필 CSS */
+  .profile-avatar {
+    @apply cursor-default border-2 border-solid border-white font-bold text-white;
+  }
+
+  /* 칩 CSS */
+  .chip-add {
+    @apply inline-flex cursor-default items-center justify-center rounded-[4px] bg-[var(--violet-F1EFFD)];
+  }
+
+  .chip-counter {
+    @apply inline-flex cursor-default items-center justify-center rounded-[4px] bg-[var(--gray-EEEEEE)] text-xs font-[500] text-[var(--gray-787486)];
+  }
+
+  .chip-status {
+    @apply inline-flex cursor-default items-center gap-[6px] rounded-[16px] bg-[var(--violet-F1EFFD)] font-[500] text-[var(--violet-5534DA)];
+  }
+
+  .chip-status i {
+    @apply h-[6px] w-[6px] rounded-full bg-[var(--violet-5534DA)];
+  }
+
+  .chip-tag {
+    @apply cursor-default rounded-[4px];
+  }
+
+  .chip-colorPick {
+    @apply flex gap-[10px];
+  }
+
+  .chip-colorPick label {
+    @apply flex cursor-pointer items-center justify-center rounded-full;
+  }
 }
 
 @theme inline {
