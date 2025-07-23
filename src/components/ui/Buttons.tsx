@@ -28,11 +28,11 @@ const Button: React.FC<ButtonProps> = ({
       break;
     case 'white-black':
       colorStyle =
-        'bg-taskify-neutral-0 text-taskify-neutral-700 hover:bg-taskify-neutral-200';
+        'bg-taskify-neutral-0 border-1 border-taskify-neutral-300 text-taskify-neutral-700 hover:bg-taskify-neutral-200';
       break;
     case 'modal-cancel':
       colorStyle =
-        'bg-taskify-neutral-0 text-taskify-neutral-500 hover:bg-taskify-neutral-200';
+        'bg-taskify-neutral-0 border-1 border-taskify-neutral-300 text-taskify-neutral-500 hover:bg-taskify-neutral-200';
       break;
     default:
       colorStyle = ''; // 기본 color 가 없다면 빈 문자열

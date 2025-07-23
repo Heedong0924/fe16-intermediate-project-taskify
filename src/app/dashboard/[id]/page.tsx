@@ -10,10 +10,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 
+import { AddCountChip } from '@/components/common/Chips';
 import Button from '@/components/ui/Buttons';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { getColumn } from '@/lib/api/columnService';
 import { ColumnResponse } from '@/types/Column';
+
+import ColumnComponent from './components/ColumnComponent';
 
 const DashboardIdPage = () => {
   const Prams = useParams();
@@ -44,20 +47,15 @@ const DashboardIdPage = () => {
   const columns = data?.data;
 
   return (
-    <div className="mt-[120px] md:mt-[60px] md:ml-40 xl:ml-[300px]">
+    <div className="flex min-h-screen">
       <ScrollArea className="w-full">
-        <div className="xl:overflow-y-auto">
+        <div className="flex flex-col xl:flex-row xl:overflow-x-auto">
           {columns &&
-            columns.map((column) => (
-              <div className="w-full px-5 pt-[22px] xl:max-w-[354px]">
-                <div>{column.title}</div>
-                <Button color="white-black" className="btn-addTodo" />
-                <span>투두들</span>
-                <span>투두들</span>
-                <span>투두들</span>
-              </div>
-            ))}
-          <Button color="white-black" className="btn-addCol" />
+            columns.map((column) => <ColumnComponent column={column} />)}
+          <Button color="white-black" className="btn-addCol mx-5 my-5 flex">
+            <span className="mr-3">새로운 컬럼 시작하기</span>
+            <AddCountChip size="sm" />
+          </Button>
         </div>
       </ScrollArea>
     </div>
