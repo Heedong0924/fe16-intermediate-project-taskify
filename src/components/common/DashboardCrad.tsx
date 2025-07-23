@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import crownIcon from '@/../public/images/icon/crown.svg';
-import Dashboard from '@/types/Dashboard';
+import { Dashboard } from '@/types/Dashboard';
 
 type DashboardCardProps = {
   dashboard: Dashboard;
