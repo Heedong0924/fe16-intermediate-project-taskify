@@ -5,3 +5,8 @@ export default interface Column {
   createdAt: string; // ISO 8601 형식의 날짜 문자열
   updatedAt: string; // ISO 8601 형식의 날짜 문자열
 }
+
+export interface ColumnResponse {
+  result: string;
+  data: Column[];
+}

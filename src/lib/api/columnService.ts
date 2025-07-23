@@ -1,5 +1,5 @@
 import axiosInstance from '@/lib/axiosInstance';
-import Column from '@/types/Column';
+import Column, { ColumnResponse } from '@/types/Column';
 
 export const createColumn = async ({
   title,
@@ -9,6 +9,15 @@ export const createColumn = async ({
   dashboardId: number;
 }): Promise<Column> => {
   const res = await axiosInstance.post('/columns', { title, dashboardId });
+  return res.data;
+};
+
+export const getColumn = async (
+  dashboardId: number,
+): Promise<ColumnResponse> => {
+  const res = await axiosInstance.get<ColumnResponse>('/columns', {
+    params: { dashboardId },
+  });
   return res.data;
 };
 
