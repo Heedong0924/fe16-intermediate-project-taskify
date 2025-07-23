@@ -12,7 +12,7 @@ import { getDashboards } from '@/lib/api/dashboardService';
 import { Dashboard, DashboardResponse } from '@/types/Dashboard';
 
 import DashboardCard from './DashboardCrad';
-import PaginationButton from './PaginationButton';
+import PaginationButton from '../ui/PaginationButton';
 import { LogoMd } from '../ui/SVGLogo';
 
 const Sidebar = () => {
@@ -83,12 +83,16 @@ const Sidebar = () => {
               />
             ))}
           </div>
-          <PaginationButton
-            page={page}
-            size={itemsSize}
-            totalCount={totalCount}
-            onPageChange={setPage}
-          />
+          {totalCount !== 0 && (
+            <PaginationButton
+              page={page}
+              size={itemsSize}
+              totalCount={totalCount}
+              text={false}
+              onPageChange={setPage}
+              className="mt-6"
+            />
+          )}
         </div>
       </div>
     </aside>
