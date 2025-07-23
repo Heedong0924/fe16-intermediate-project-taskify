@@ -32,6 +32,8 @@
     }
   },
   "rules": {
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "error",
     "react/require-default-props": [
       "off" // 기본 props를 강제하지 않음
     ],
@@ -100,6 +102,13 @@
         "jsx": "never",
         "ts": "never",
         "tsx": "never"
+      }
+    ],
+    "jsx-a11y/label-has-associated-control": [
+      // form label이 form control과 관련이 있는지 (즉, label이 어떤 form input을 설명하고 있는지) 확인
+      2,
+      {
+        "some": ["nesting", "id"] // nesting과 id 중 하나만 만족하면 통과
       }
     ]
   },
