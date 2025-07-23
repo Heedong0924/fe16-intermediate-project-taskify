@@ -246,77 +246,45 @@
     @apply bg-primary text-background px-4 py-2 rounded-md hover:opacity-90;
   }
    */
-  .btn-bass-color {
-    /** 보라바탕 흰 글씨 */
-    @apply flex cursor-pointer items-center justify-center bg-violet-600 text-white hover:bg-violet-700 disabled:cursor-default disabled:bg-gray-400;
-  }
-
-  .btn-bass-white-violet {
-    /** 흰 바탕 보라 글씨 */
-    @apply flex cursor-pointer items-center justify-center bg-white text-violet-700 hover:bg-gray-200 disabled:cursor-default disabled:bg-gray-400;
-  }
-
-  .btn-bass-white-black {
-    /** 흰 바탕 검은 글씨*/
-    @apply flex cursor-pointer items-center justify-center gap-3 bg-white text-black hover:bg-gray-200 disabled:cursor-default disabled:bg-gray-400;
-  }
-
-  /**--------- ▲ 기본 스타일 ---------- ▼ 세부 스타일 사용은 여기 ------------*/
-  /** 아니 근데 만들다가 든 생각인데 width랑 height는 인라인으로 하는게 낫지않나...? */
-
   .btn-login {
-    /** 보라바탕 흰 글씨 - 로그인 회원가입 전용 */
-    @apply flex h-[50px] w-87.75 cursor-pointer items-center justify-center rounded-lg bg-violet-600 text-white hover:bg-violet-700 disabled:cursor-default disabled:bg-gray-400 md:w-130;
+    /**로그인 버튼*/
+    @apply text-taskify-2lg-medium h-[50px] w-[351px] md:w-[500px];
   }
-
-  .btn-accept-color {
-    /** 보라바탕 흰 글씨 - 수락 버튼 전용*/
-    @apply flex h-8 w-27.25 cursor-pointer items-center justify-center rounded-sm bg-violet-600 text-white hover:bg-violet-700 disabled:bg-gray-400 md:w-18 xl:w-21;
+  .btn-modal {
+    /**모달 버튼 1개짜리 (e.x.로그인 실패 모달, 계정관리 비밀번호 변경 실패 모달 / 단순 알림?)*/
+    @apply text-taskify-md-medium md:text-taskify-lg-semibold h-[42px] w-[192px] md:h-12 md:w-60;
   }
-
-  .btn-accept-white {
-    /** 흰 바탕 보라 글씨 - 거절 버튼 전용 */
-    @apply flex h-8 w-27.25 cursor-pointer items-center justify-center rounded-sm bg-white text-violet-700 hover:bg-gray-200 disabled:bg-gray-400 md:w-18 xl:w-21;
+  .btn-modal-db {
+    /**모달 버튼 2개짜리*/
+    @apply text-taskify-lg-semibold h-[54px] w-[144px] md:w-[256px];
   }
-
-  .btn-modal-color {
-    /** 보라바탕 흰 글씨 - 모달 전용 */
-    @apply flex h-16 w-36 cursor-pointer items-center justify-center rounded-lg bg-violet-600 text-white hover:bg-violet-700 disabled:bg-gray-400 md:w-64;
+  .btn-one {
+    /**버튼 1개짜리 (e.x.구성원 삭제, 초대하기 취소 버튼)*/
+    @apply text-taskify-xs-medium md:text-taskify-md-medium h-8 w-[52px] md:w-[84px];
   }
-
-  .btn-modal-white {
-    /** 흰 바탕 검은 글씨 - 모달 전용 */
-    @apply flex h-16 w-36 cursor-pointer items-center justify-center gap-3 rounded-lg bg-white text-black hover:bg-gray-200 disabled:bg-gray-400 md:w-64;
+  .btn-db {
+    /**버튼 2개짜리 (e.x.수락,거절 같이 짝으로 있는 버튼)*/
+    @apply text-taskify-xs-medium md:text-taskify-md-medium h-8 w-[109px] md:w-[72px] xl:w-[84px];
   }
-
-  .btn-add-column {
-    /** 흰 바탕 검은 글씨 - 컬럼 추가버튼 전용 */
-    @apply flex h-16.5 w-71 cursor-pointer items-center justify-center gap-3 rounded-lg bg-white text-black hover:bg-gray-200 disabled:bg-gray-400 md:h-17.5 md:w-136 xl:w-88.5;
+  .btn-addCol {
+    /**칼럼 추가 버튼*/
+    @apply text-taskify-lg-bold md:text-taskify-2lg-bold h-[66px] w-[284px] md:h-[70px] md:w-[544px] xl:w-[534px];
   }
-
-  .btn-add-dash-board {
-    /** 흰 바탕 검은 글씨 - 대시보드 추가버튼 전용 */
-    @apply flex h-14.5 w-65 cursor-pointer items-center justify-center gap-3 rounded-lg bg-white text-black hover:bg-gray-200 disabled:bg-gray-400 md:h-17 md:w-61.75 xl:h-17.5 xl:w-83;
+  .btn-addDash {
+    /**대시보드 추가 버튼*/
+    @apply text-taskify-md-semibold md:text-taskify-lg-semibold h-[58px] w-[260px] md:h-[68px] md:w-[247px] xl:h-[70px] xl:w-[332px];
   }
-
-  .btn-delete-dash-board {
-    /** 흰 바탕 검은 글씨 - 대시보드 삭제버튼 전용 */
-    @apply flex h-13 w-71 cursor-pointer items-center justify-center gap-3 rounded-lg bg-white text-black hover:bg-gray-200 disabled:bg-gray-400 md:h-15.5 md:w-80;
+  .btn-removeDash {
+    /**대시보드 삭제 버튼*/
+    @apply text-taskify-lg-medium md:text-taskify-2lg-medium h-[52px] w-[284px] md:h-[62px] md:w-80;
   }
-
-  .btn-add-todo {
-    /** 흰 바탕 검은 글씨 - 투두 추가버튼 전용 */
-    @apply flex h-8 w-71 cursor-pointer items-center justify-center gap-3 rounded-lg bg-white text-black hover:bg-gray-200 disabled:bg-gray-400 md:h-10 md:w-136 xl:w-10;
+  .btn-dash {
+    /**대시보드 리스트?*/
+    @apply text-taskify-md-semibold md:text-taskify-lg-semibold h-[58px] w-[260px] md:h-[68px] md:w-[247px] xl:h-[70px] xl:w-[332px];
   }
-
-  .btn-card-dash-board {
-    /** 흰 바탕 검은 글씨 - 대시보드 카드 버튼 전용 */
-    @apply flex h-14.5 w-65 cursor-pointer items-center justify-center gap-3 rounded-lg bg-white text-black hover:bg-gray-200 disabled:bg-gray-400 md:h-17 md:w-61.75 xl:h-17.5 xl:w-83;
-  }
-
-  .btn-delete-member {
-    /** 구성원 삭제 버튼 전용 */
-    @apply flex h-13 w-32 cursor-pointer items-center justify-center rounded-lg bg-white text-violet-700 hover:bg-gray-200 disabled:bg-gray-400 md:w-21;
+  .btn-addTodo {
+    /**투두 추가 버튼*/
+    @apply h-8 w-[284px] md:h-10 md:w-[544px] xl:w-[314px];
   }
 }
 

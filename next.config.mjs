@@ -35,42 +35,6 @@ const nextConfig = {
       */
     ];
   },
-  webpack(config, { isServer }) {
-    const fileLoaderRule = config.module.rules.find(
-      (rule) => rule.test instanceof RegExp && rule.test.test('.svg'),
-    );
-    if (fileLoaderRule) {
-      fileLoaderRule.exclude = /\.svg$/;
-    }
-
-    config.module.rules.push({
-      test: /\.svg$/,
-      issuer: {
-        and: [/\.(js|ts|md)x?$/],
-      },
-      use: [
-        {
-          loader: '@svgr/webpack',
-          options: {
-            svgoConfig: {
-              plugins: [
-                {
-                  name: 'preset-default',
-                  params: {
-                    overrides: {
-                      removeViewBox: false,
-                      cleanupIDs: false,
-                    },
-                  },
-                },
-              ],
-            },
-          },
-        },
-      ],
-    });
-    return config;
-  },
 };
 
 export default nextConfig;
