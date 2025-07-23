@@ -10,3 +10,17 @@ export const useGetInvitations = () => {
     queryFn: () => getInvitations({}),
   });
 };
+
+// 테스트용 훅
+
+// import { mockInvitations } from '@/app/mydashboard/components/invitation/mockData';
+
+// export const useGetInvitations = () => {
+//   return {
+//     data: {
+//       invitations: mockInvitations,
+//     },
+//     isLoading: false,
+//     isError: false,
+//   };
+// };
