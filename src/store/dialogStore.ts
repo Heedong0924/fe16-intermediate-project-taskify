@@ -1,17 +1,21 @@
 import { ReactNode } from 'react';
 import { create } from 'zustand';
 
+interface DialogContentData {
+  [key: string]: unknown;
+}
+
 interface DialogStateContent {
   isOpen: boolean;
   dialogComponent: ReactNode | null;
-  data?: Record<string, unknown> | null;
+  data?: DialogContentData | null;
 }
 
 interface DialogState extends DialogStateContent {
   stateHistory: DialogStateContent[];
   openDialog: (params: {
     dialogComponent: ReactNode;
-    data?: Record<string, unknown>;
+    data?: DialogContentData | null;
   }) => void;
   closeDialog: () => void;
   goBack: () => void;
