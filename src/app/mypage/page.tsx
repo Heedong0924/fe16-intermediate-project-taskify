@@ -1,12 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import {
-  ContentSection,
-  ContentSectionWithAction,
-} from '@/components/common/ContentSection';
-import { UserProfile } from '@/components/common/Profile';
-import Button from '@/components/ui/Buttons';
+import { ContentSection } from '@/components/common/ContentSection';
+// import Button from '@/components/ui/Buttons';
 
 export default function MyPage() {
   return (
@@ -23,26 +19,10 @@ export default function MyPage() {
           돌아가기
         </Link>
       </nav>
-      {/* 비브리지 */}
-      <ContentSection title="비브리지">
-        <UserProfile userName="이름" />
-      </ContentSection>
-      {/* 구성원 */}
-      <ContentSectionWithAction title="구성원" titleRight={<div>TEST</div>}>
-        <p>콘텐츠</p>
-      </ContentSectionWithAction>
-      {/* 초대 내역 */}
-      <ContentSectionWithAction title="초대 내역" titleRight={<div>TEST</div>}>
-        <p>콘텐츠</p>
-      </ContentSectionWithAction>
-      {/*  대시보드 삭제하기 */}
-      {/* onClick 넣어야함 */}
-      <Button
-        color="white-black"
-        className="btn-removeDash w-full border border-[#D9D9D9] bg-transparent md:w-[320px]"
-      >
-        대시보드 삭제하기
-      </Button>
+      {/* 프로필 */}
+      <ContentSection title="프로필"> </ContentSection>
+      {/* 비밀번호 변경 */}
+      <ContentSection title="비밀번호 변경"> </ContentSection>
     </div>
   );
 }
