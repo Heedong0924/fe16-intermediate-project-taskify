@@ -1,7 +1,6 @@
 'use client';
 
-import ArrowLeft from '@/../public/images/arrow-left.svg';
-import ArrowRight from '@/../public/images/arrow-right.svg';
+import { ArrowLeft, ArrowRight } from '../ui/SVGLogo';
 
 type PaginationProps = {
   page?: number;
@@ -32,25 +31,28 @@ const PaginationButton = ({
     if (currentPage < totalPage) onPageChange(currentPage + 1);
   };
 
+  const thisClassName =
+    'text-taskify-neutral-700 btn-bass-white-black bg-taskify-neutral-0 disabled:bg-taskify-neutral-0 flex h-9 w-9 items-center justify-center border-1 border-gray-400 disabled:text-gray-400 md:h-10 md:w-10';
+
   return (
     <div className="flex flex-row items-center gap-3 md:gap-4">
       <p>{`${currentPage} 페이지 중 ${totalPage}`}</p>
       <div className="flex">
         <button
-          className="btn-bass-white-black h-9 w-9 rounded-l-sm border-1 border-gray-400 disabled:bg-white disabled:text-gray-400 md:h-10 md:w-10"
+          className={`${thisClassName} rounded-l-sm`}
           onClick={handlePrevCilck}
           disabled={isPrevDisabled}
           type="button"
         >
-          <ArrowLeft alt="arrow left button" />
+          <ArrowLeft />
         </button>
         <button
-          className="btn-bass-white-black h-9 w-9 rounded-r-sm border-1 border-gray-400 disabled:bg-white disabled:text-gray-400 md:h-10 md:w-10"
+          className={`${thisClassName} rounded-r-sm`}
           onClick={handleNextCilck}
           disabled={isNextDisabled}
           type="button"
         >
-          <ArrowRight alt="arrow right button" />
+          <ArrowRight />
         </button>
       </div>
     </div>
