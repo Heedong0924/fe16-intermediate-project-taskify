@@ -2,6 +2,7 @@
 import type { Metadata } from 'next';
 
 import './globals.css';
+import { GlobalDialog } from '@/components/common/dialog/GlobalDialog';
 import QueryProviders from '@/lib/QueryProvider';
 
 import pretendard from '../lib/utils/fonts/pretendard';
@@ -20,6 +21,7 @@ export default function RootLayout({
     <html lang="ko">
       <body className={pretendard.variable}>
         <QueryProviders>{children}</QueryProviders>
+        <GlobalDialog />
       </body>
     </html>
   );
