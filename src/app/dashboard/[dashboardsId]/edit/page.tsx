@@ -2,41 +2,32 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 
-import { ContentSectionWithAction } from '@/components/common/ContentSection';
 import Button from '@/components/ui/Buttons';
 import { useDashboard, useUpdateDashboard } from '@/hooks/useDashboardEdit';
 
-import DashboardMembers from './components/DashboardMembers';
+import DashboardMembers from './components/_DashboardMembers';
+import DashboardInvitations from './components/DashboardInvitations';
 import DashboardUpdate from './components/DashboardUpdate';
 
 export default function DashboardEditPage() {
   const { dashboardsId } = useParams();
 
-  // 임시보드
-  const isTemp = dashboardsId === 'temp';
-  const id = isTemp ? null : Number(dashboardsId);
+  // ID 체크
+  const id = Number(dashboardsId);
+  if (Number.isNaN(id)) {
+    notFound();
+  }
 
-  const dashboardQuery = useDashboard(id!);
+  const { data: dashboardData, isLoading, isError } = useDashboard(id);
 
-  console.log(dashboardQuery);
+  // 서버 에러 404 처리
+  if (isError) {
+    notFound();
+  }
 
-  // http://localhost:3000/dashboard/temp/edit 임시 보드
-  const tempDashboard = {
-    id: '-1',
-    title: '새 대시보드123',
-    color: '#76A5EA', // 기본 색상
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  };
-
-  // 조건 분기: 임시 보드면 훅 호출 X
-  const queryResult = isTemp
-    ? { data: tempDashboard, isLoading: false, isError: false }
-    : dashboardQuery;
-
-  const mutation = useUpdateDashboard(id ?? 0);
+  const mutation = useUpdateDashboard(id);
 
   return (
     <div className="min-h-screen bg-[var(--gray-FAFAFA)] p-[20px]">
@@ -56,11 +47,11 @@ export default function DashboardEditPage() {
         </Link>
       </nav>
 
-      {/* 대시보드 수정 */}
+      {/* 대시보드 타이틀, 컬러 수정 */}
       <DashboardUpdate
-        dashboard={queryResult.data}
-        isLoading={queryResult.isLoading}
-        isError={queryResult.isError}
+        dashboard={dashboardData}
+        isLoading={isLoading}
+        // isError={dashboardQuery.isError}
         onUpdate={(data) => mutation.mutate(data)}
       />
 
@@ -68,9 +59,8 @@ export default function DashboardEditPage() {
       <DashboardMembers />
 
       {/* 초대 내역 */}
-      <ContentSectionWithAction title="초대 내역" titleRight={<div>TEST</div>}>
-        <p>콘텐츠</p>
-      </ContentSectionWithAction>
+      <DashboardInvitations dashboardsId={id} />
+
       {/*  대시보드 삭제하기 */}
       <Button
         color="white-black"
