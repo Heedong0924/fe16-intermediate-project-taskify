@@ -1,23 +1,36 @@
 import { ReactNode } from 'react';
 import { create } from 'zustand';
 
-interface DialogContentData {
-  [key: string]: unknown;
-}
-
+/**
+ * @interface DiallogStateContent
+ * @description Dialog에서 사용되는 컨텐츠 상태들의 타입 정의
+ * @property {ReactNode | null} dialogComponent Dialog 내부에서 작성되는 React.Node (JSX 컴포넌트를 그대로 받음)
+ * @property {DialogContentData | null} data? Dialog간 데이터 전송을 위한 간단한 key, value 쌍의 객체
+ */
 interface DialogStateContent {
-  isOpen: boolean;
   dialogComponent: ReactNode | null;
-  data?: DialogContentData | null;
 }
 
+/**
+ * @interface DialogState
+ * @description useDialogStore
+ * @property {boolean} isOpen Dialog의 열림 상태 (false = 닫힘, true = 열림)
+ * @property {DialogStateContent[]} stateHistory stateHistory 이전 Dialog의 상태를 stack에 저장하여 callstack 처럼 동작 (히스토리 저장)
+ */
 interface DialogState extends DialogStateContent {
+  isOpen: boolean;
   stateHistory: DialogStateContent[];
-  openDialog: (params: {
-    dialogComponent: ReactNode;
-    data?: DialogContentData | null;
-  }) => void;
+
+  /**
+   * @method openDialog Dialog를 활성화하는 액션 함수
+   * @param {ReactNode} params.dialogComponent - Dialog 내부에 렌더링될 React 컴포넌트 (필수)
+   */
+  openDialog: (params: { dialogComponent: ReactNode }) => void;
+
+  /** @method closeDialog Dialog 닫는 액션 함수 */
   closeDialog: () => void;
+
+  /** @method goback 이전 Dialog로 이동하는 액션 함수 */
   goBack: () => void;
 }
 
@@ -27,18 +40,16 @@ export const useDialogStore = create<DialogState>((set) => ({
   stateHistory: [],
   data: null,
 
-  openDialog: ({ dialogComponent, data }) => {
+  openDialog: ({ dialogComponent }) => {
     set((prev) => {
       const newHistory = {
         isOpen: prev.isOpen,
         dialogComponent: prev.dialogComponent,
-        data: prev.data,
       };
 
       return {
         isOpen: true,
         dialogComponent,
-        data,
         stateHistory: prev.isOpen
           ? [...prev.stateHistory, newHistory]
           : prev.stateHistory,
@@ -50,7 +61,6 @@ export const useDialogStore = create<DialogState>((set) => ({
     set({
       isOpen: false,
       dialogComponent: null,
-      data: null,
       stateHistory: [],
     });
   },
@@ -69,7 +79,6 @@ export const useDialogStore = create<DialogState>((set) => ({
       return {
         isOpen: false,
         dialogComponent: null,
-        data: null,
         stateHistory: [],
       };
     });
