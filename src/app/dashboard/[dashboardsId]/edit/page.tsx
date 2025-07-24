@@ -8,6 +8,7 @@ import { ContentSectionWithAction } from '@/components/common/ContentSection';
 import Button from '@/components/ui/Buttons';
 import { useDashboard, useUpdateDashboard } from '@/hooks/useDashboardEdit';
 
+import DashboardMembers from './components/DashboardMembers';
 import DashboardUpdate from './components/DashboardUpdate';
 
 export default function DashboardEditPage() {
@@ -19,10 +20,12 @@ export default function DashboardEditPage() {
 
   const dashboardQuery = useDashboard(id!);
 
+  console.log(dashboardQuery);
+
   // http://localhost:3000/dashboard/temp/edit 임시 보드
   const tempDashboard = {
     id: '-1',
-    title: '새 대시보드',
+    title: '새 대시보드123',
     color: '#76A5EA', // 기본 색상
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
@@ -37,17 +40,12 @@ export default function DashboardEditPage() {
 
   return (
     <div className="min-h-screen bg-[var(--gray-FAFAFA)] p-[20px]">
-      {/* 대시보드 수정 */}
-      <DashboardUpdate
-        dashboard={queryResult.data}
-        isLoading={queryResult.isLoading}
-        isError={queryResult.isError}
-        onUpdate={(data) => mutation.mutate(data)}
-      />
-
       {/* 뒤로가기 */}
       <nav className="mb-[34px]">
-        <Link href="/" className="flex items-center gap-2">
+        <Link
+          href={`/dashboard/${dashboardsId}`}
+          className="flex items-center gap-2"
+        >
           <Image
             src="/images/arrow-left.svg"
             alt="돌아가기"
@@ -58,16 +56,22 @@ export default function DashboardEditPage() {
         </Link>
       </nav>
 
+      {/* 대시보드 수정 */}
+      <DashboardUpdate
+        dashboard={queryResult.data}
+        isLoading={queryResult.isLoading}
+        isError={queryResult.isError}
+        onUpdate={(data) => mutation.mutate(data)}
+      />
+
       {/* 구성원 */}
-      <ContentSectionWithAction title="구성원" titleRight={<div>TEST</div>}>
-        <p>콘텐츠</p>
-      </ContentSectionWithAction>
+      <DashboardMembers />
+
       {/* 초대 내역 */}
       <ContentSectionWithAction title="초대 내역" titleRight={<div>TEST</div>}>
         <p>콘텐츠</p>
       </ContentSectionWithAction>
       {/*  대시보드 삭제하기 */}
-      {/* onClick 넣어야함 */}
       <Button
         color="white-black"
         className="btn-removeDash w-full border border-[#D9D9D9] bg-transparent md:w-[320px]"

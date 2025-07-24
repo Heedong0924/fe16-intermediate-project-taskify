@@ -317,4 +317,33 @@
   .chip-colorPick label {
     @apply flex cursor-pointer items-center justify-center rounded-full;
   }
+
+  /* 칩 CSS */
+  .chip-add {
+    @apply flex items-center justify-center rounded-[4px] bg-[var(--violet-F1EFFD)];
+  }
+
+  .chip-counter {
+    @apply flex items-center justify-center rounded-[4px] bg-[var(--gray-EEEEEE)] text-xs font-[500] text-[var(--gray-787486)];
+  }
+
+  .chip-status {
+    @apply inline-flex items-center gap-[6px] rounded-[16px] bg-[var(--violet-F1EFFD)] font-[500] text-[var(--violet-5534DA)];
+  }
+
+  .chip-status i {
+    @apply h-[6px] w-[6px] rounded-full bg-[var(--violet-5534DA)];
+  }
+
+  .chip-tag {
+    @apply rounded-[4px];
+  }
+
+  .chip-colorPick {
+    @apply flex gap-[10px];
+  }
+
+  .chip-colorPick label {
+    @apply flex items-center justify-center rounded-full;
+  }
 }

@@ -14,7 +14,6 @@ type Props = {
   onUpdate: (data: { title: string; color: string }) => void;
 };
 
-// 이름바꿔
 export default function DashboardUpdate({
   dashboard,
   isLoading,
@@ -42,13 +41,17 @@ export default function DashboardUpdate({
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-      <ColorPickerChip
-        // className="mt-[16px]"
-        value={color}
-        onChange={setColor}
-      />
-      <h1>{color}</h1>
-      <Button onClick={() => onUpdate({ title, color })}>임시버튼</Button>
+      <div className="mt-[16px] mb-[40px]">
+        {/* <h1>{color}</h1> */}
+        <ColorPickerChip value={color} onChange={setColor} />
+      </div>
+      <Button
+        color="violet-white"
+        className="h-[54px] w-full"
+        onClick={() => onUpdate({ title, color })}
+      >
+        변경
+      </Button>
     </ContentSection>
   );
 }
