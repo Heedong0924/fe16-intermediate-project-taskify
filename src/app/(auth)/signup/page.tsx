@@ -45,7 +45,7 @@ const SignupPage = () => {
   // 비밀번호 표시 토글 상태
   const [showPassword, setShowPassword] = useState(false);
   const togglePassword = (): void => setShowPassword((prev) => !prev);
-  const { signup, error, isLoading } = useAuth();
+  const { signup, isLoading } = useAuth();
   const onSubmit = (data: FormValues) => {
     console.log(data); // 사용자가 입력한 값
     signup({
@@ -53,9 +53,6 @@ const SignupPage = () => {
       nickname: data.nickname,
       password: data.password,
     });
-    if (error) {
-      console.error('Signup error:', error);
-    }
   };
 
   return (

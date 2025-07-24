@@ -1,8 +1,10 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
+import AlertDialog from '@/components/common/dialog/AlertDialog';
 import {
   postSignup,
   SignupRequest,
@@ -12,6 +14,7 @@ import {
   LoginResponse,
 } from '@/lib/api/auth';
 import { useAuthStore } from '@/stores/useAuthStore';
+import { useDialogStore } from '@/stores/useDialogStore';
 
 /**
  * useAuth 훅
@@ -36,7 +39,7 @@ import { useAuthStore } from '@/stores/useAuthStore';
  */
 
 export const useAuth = () => {
-  // 1) Zustand 스토어에서 상태·액션 가져오기
+  // Zustand 스토어에서 상태·액션 가져오기
   const setUser = useAuthStore((state) => state.setUser);
   const setToken = useAuthStore((state) => state.setToken);
   const logout = useAuthStore((state) => state.logout);
@@ -44,6 +47,23 @@ export const useAuth = () => {
   const isAuth = useAuthStore((state) => state.isAuth);
   const accessToken = useAuthStore((state) => state.accessToken);
   const router = useRouter();
+
+  // 다이얼로그 스토어에서 openDialog 액션 가져오기
+  const { openDialog } = useDialogStore();
+  const errorDialog = (message: string, err: Error) => {
+    let errorMsg = '알 수 없는 오류';
+    if (axios.isAxiosError(err) && err.response?.data?.message) {
+      errorMsg = err.response.data.message as string;
+    }
+    openDialog({
+      dialogComponent: (
+        <AlertDialog
+          description={`${message} ${errorMsg}`}
+          closeBtnText="확인"
+        />
+      ),
+    });
+  };
 
   // 2) 로그인 mutation 선언
   const {
@@ -61,7 +81,7 @@ export const useAuth = () => {
       router.push('/');
     },
     onError: (err) => {
-      console.error('Login failed:', err);
+      errorDialog('로그인에 실패했습니다.', err);
     },
   });
 
@@ -81,7 +101,7 @@ export const useAuth = () => {
       });
     },
     onError: (err) => {
-      console.error('Signup failed:', err);
+      errorDialog('회원가입에 실패했습니다.', err);
     },
   });
 
