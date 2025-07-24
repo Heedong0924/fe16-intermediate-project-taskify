@@ -12,6 +12,10 @@ const nextConfig = {
         pathname: "/icons/**",
       },
       */
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos', // Picsum 도메인 (테스트 이미지)
+      },
     ],
   },
   env: {
