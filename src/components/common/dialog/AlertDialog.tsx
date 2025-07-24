@@ -5,8 +5,14 @@ import {
   DialogFooter,
   DialogHeader,
 } from '@/components/ui/Dialog';
-import { useDialogStore } from '@/store/dialogStore';
+import { useDialogStore } from '@/stores/useDialogStore';
 
+/**
+ * @interface AlertDialogProps
+ * @description AlertDialog 컴포넌트가 사용하는 props 정의
+ * @property {string} decription 메세지 본문 텍스트
+ * @property {string} closeBtnText 다이얼로그를 닫는 버튼에 표시될 텍스트
+ */
 interface AlertDialogProps {
   description: string;
   closeBtnText: string;
@@ -29,7 +35,7 @@ const AlertDialog = ({ description, closeBtnText }: AlertDialogProps) => {
       </DialogHeader>
       <DialogFooter>
         <Button
-          className="bg-taskify-violet-primary hover:bg-taskify-violet h-auto w-full"
+          className="bg-taskify-violet-primary hover:bg-taskify-violet h-auto w-full cursor-pointer"
           onClick={closeDialog}
         >
           <span className="text-taskify-md-semibold text-taskify-neutral-0 md:text-taskify-lg-medium">

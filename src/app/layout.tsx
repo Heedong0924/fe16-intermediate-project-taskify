@@ -20,8 +20,10 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={pretendard.variable}>
-        <QueryProviders>{children}</QueryProviders>
-        <GlobalDialog />
+        <QueryProviders>
+          {children}
+          <GlobalDialog />
+        </QueryProviders>
       </body>
     </html>
   );

@@ -6,17 +6,24 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/Dialog';
-import { useDialogStore } from '@/store/dialogStore';
+import { useDialogStore } from '@/stores/useDialogStore';
 
 import ConfirmColumnDeletionDialog from './ConfirmColumnDeletionDialog';
 
-const ColumnSettingsDialog = () => {
-  const { openDialog, closeDialog, data } = useDialogStore();
+interface ColumnSettingsDialogProps {
+  columnId: number;
+  columnName: string;
+}
+
+const ColumnSettingsDialog = ({
+  columnId,
+  columnName,
+}: ColumnSettingsDialogProps) => {
+  const { openDialog, closeDialog } = useDialogStore();
 
   const handleOpenConfirm = () => {
     openDialog({
-      dialogComponent: <ConfirmColumnDeletionDialog />,
-      data,
+      dialogComponent: <ConfirmColumnDeletionDialog columnId={columnId} />,
     });
   };
 
@@ -24,12 +31,6 @@ const ColumnSettingsDialog = () => {
     alert('Done!');
     closeDialog();
   };
-
-  // 테스트를 위한 런타임 타입 가드
-  let displayId: string | number | null = null;
-  if (data && (typeof data.id === 'string' || typeof data.id === 'number')) {
-    displayId = data.id;
-  }
 
   const content = (
     <>
@@ -39,47 +40,48 @@ const ColumnSettingsDialog = () => {
         <DialogHeader>
           <DialogTitle className="text-left">
             <span className="text-taskify-2xl-bold text-taskify-neutral-700">
-              컬럼 관리 data: {displayId}
+              컬럼 관리
             </span>
           </DialogTitle>
           <DialogDescription />
         </DialogHeader>
 
         {/* 본문 내용 (여기에 폼, 텍스트 등을 추가) */}
-        <div className="grid gap-4">
-          <label
-            htmlFor="name"
-            className="text-taskify-lg-medium text-taskify-neutral-700 text-left"
-          >
-            이름
-          </label>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <input
-              id="name"
-              type="text"
-              placeholder="<--기존 컬럼 이름 데이터를 끌어와야함-->"
-              className="text-taskify-neutral-700 text-taskify-md-regular border-taskify-neutral-300 col-span-4 rounded-lg border px-4 py-3"
-            />
+        <form className="grid gap-4" onSubmit={handleSubmit}>
+          <div>
+            <label
+              htmlFor="name"
+              className="text-taskify-lg-medium text-taskify-neutral-700 text-left"
+            >
+              이름
+            </label>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <input
+                id="name"
+                type="text"
+                defaultValue={columnName}
+                className="text-taskify-neutral-700 text-taskify-md-regular border-taskify-neutral-300 col-span-4 rounded-lg border px-4 py-3"
+              />
+            </div>
           </div>
-        </div>
-        <DialogFooter className="flex flex-row justify-between">
-          <Button
-            className="bg-taskify-neutral-0 border-taskify-neutral-300 hover:bg-taskify-neutral-0 h-auto grow-1 border-1 py-[14px]"
-            type="button"
-            onClick={handleOpenConfirm}
-          >
-            <span className="text-taskify-lg-semibold text-taskify-neutral-500">
-              삭제
-            </span>
-          </Button>
-          <Button
-            className="bg-taskify-violet-primary hover:bg-taskify-violet-primary h-auto grow-1 py-[14px]"
-            type="submit"
-            onClick={handleSubmit}
-          >
-            <span className="text-taskify-lg-semibold">변경</span>
-          </Button>
-        </DialogFooter>
+          <DialogFooter className="flex flex-row justify-between">
+            <Button
+              className="bg-taskify-neutral-0 border-taskify-neutral-300 hover:bg-taskify-neutral-0 h-auto grow-1 cursor-pointer border-1 py-[14px]"
+              type="button"
+              onClick={handleOpenConfirm}
+            >
+              <span className="text-taskify-lg-semibold text-taskify-neutral-500">
+                삭제
+              </span>
+            </Button>
+            <Button
+              className="bg-taskify-violet-primary hover:bg-taskify-violet-primary h-auto grow-1 cursor-pointer py-[14px]"
+              type="submit"
+            >
+              <span className="text-taskify-lg-semibold">변경</span>
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </>
   );

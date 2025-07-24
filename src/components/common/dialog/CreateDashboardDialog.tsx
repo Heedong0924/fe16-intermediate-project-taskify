@@ -1,15 +1,22 @@
+import { useState } from 'react';
+
 import { Button } from '@/components/ui/Button';
 import {
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/Dialog';
-import { useDialogStore } from '@/store/dialogStore';
+import { useDialogStore } from '@/stores/useDialogStore';
+
+import { ColorPickerChip } from '../Chips';
 
 const CreateDashboardDialog = () => {
   const { closeDialog } = useDialogStore();
+
+  const [selectedColor, setSelectedColor] = useState<string>('#7AC555');
 
   const handleSubmit = () => {
     alert('Done!');
@@ -34,41 +41,42 @@ const CreateDashboardDialog = () => {
         </DialogHeader>
 
         {/* 본문 내용 (여기에 폼, 텍스트 등을 추가) */}
-        <div className="grid gap-4">
-          <label
-            htmlFor="name"
-            className="text-taskify-lg-medium text-taskify-neutral-700 text-left"
-          >
-            대시보드 이름
-          </label>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <input
-              id="name"
-              placeholder="새로운 대시보드"
-              type="text"
-              className="text-taskify-neutral-700 text-taskify-md-regular border-taskify-neutral-300 col-span-4 rounded-lg border px-4 py-3"
-            />
+        <form className="grid gap-4" onSubmit={handleSubmit}>
+          <div>
+            <label
+              htmlFor="name"
+              className="text-taskify-lg-medium text-taskify-neutral-700 text-left"
+            >
+              대시보드 이름
+            </label>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <input
+                id="name"
+                placeholder="새로운 대시보드"
+                type="text"
+                className="text-taskify-neutral-700 text-taskify-md-regular border-taskify-neutral-300 col-span-4 rounded-lg border px-4 py-3"
+              />
+            </div>
+            <div className="mt-4">
+              <ColorPickerChip
+                size="sm"
+                value={selectedColor}
+                onChange={setSelectedColor}
+              />
+            </div>
           </div>
-          <div>{/* @TODO 컬러 팔레트 */}</div>
-        </div>
-        <DialogFooter className="flex flex-row justify-between">
-          <Button
-            className="bg-taskify-neutral-0 border-taskify-neutral-300 hover:bg-taskify-neutral-0 h-auto grow-1 border-1 py-[14px]"
-            type="button"
-            onClick={closeDialog}
-          >
-            <span className="text-taskify-lg-semibold text-taskify-neutral-500">
+          <DialogFooter className="flex flex-row justify-between">
+            <DialogClose className='className="bg-taskify-neutral-0 border-taskify-neutral-300 hover:bg-taskify-neutral-0 py-[14px]" text-taskify-lg-semibold text-taskify-neutral-500 h-auto grow-1 cursor-pointer rounded-lg border-1'>
               취소
-            </span>
-          </Button>
-          <Button
-            className="bg-taskify-violet-primary hover:bg-taskify-violet-primary h-auto grow-1 py-[14px]"
-            type="submit"
-            onClick={handleSubmit}
-          >
-            <span className="text-taskify-lg-semibold">생성</span>
-          </Button>
-        </DialogFooter>
+            </DialogClose>
+            <Button
+              className="bg-taskify-violet-primary hover:bg-taskify-violet-primary h-auto grow-1 cursor-pointer py-[14px]"
+              type="submit"
+            >
+              <span className="text-taskify-lg-semibold">생성</span>
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </>
   );

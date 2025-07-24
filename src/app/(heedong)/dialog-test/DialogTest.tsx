@@ -7,7 +7,7 @@ import CreateDashboardDialog from '@/components/common/dialog/CreateDashboardDia
 import SendInvitationDialog from '@/components/common/dialog/SendInvitationDialog';
 import TaskCardDialog from '@/components/common/dialog/TaskCardDialog';
 import { Button } from '@/components/ui/Button';
-import { useDialogStore } from '@/store/dialogStore';
+import { useDialogStore } from '@/stores/useDialogStore';
 
 const DialogTest = () => {
   const { openDialog } = useDialogStore();
@@ -33,15 +33,20 @@ const DialogTest = () => {
       <Button
         onClick={() =>
           openDialog({
-            dialogComponent: <ColumnSettingsDialog />,
-            data: { id: 1 },
+            dialogComponent: (
+              <ColumnSettingsDialog columnId={1} columnName="기존 컬럼" />
+            ),
           })
         }
       >
-        글로벌 다이얼로그: 컬럼 관리 테스트
+        글로벌 다이얼로그: 컬럼 관리 테스트 (수정 및 삭제)
       </Button>
       <Button
-        onClick={() => openDialog({ dialogComponent: <CreateColumnDialog /> })}
+        onClick={() =>
+          openDialog({
+            dialogComponent: <CreateColumnDialog dashboardId={15564} />,
+          })
+        }
       >
         글로벌 다이얼로그: 컬럼 생성 테스트
       </Button>
@@ -54,13 +59,21 @@ const DialogTest = () => {
       </Button>
       <Button
         onClick={() =>
-          openDialog({ dialogComponent: <SendInvitationDialog /> })
+          openDialog({
+            dialogComponent: <SendInvitationDialog dashboardId={15564} />,
+          })
         }
       >
         글로벌 다이얼로그: 초대하기 테스트
       </Button>
       <Button
-        onClick={() => openDialog({ dialogComponent: <TaskCardDialog /> })}
+        onClick={() =>
+          openDialog({
+            dialogComponent: (
+              <TaskCardDialog cardId={13404} columnName="Todo" />
+            ),
+          })
+        }
       >
         글로벌 다이얼로그: 할 일 카드 테스트
       </Button>

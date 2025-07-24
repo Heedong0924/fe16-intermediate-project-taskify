@@ -1,15 +1,22 @@
 import { Button } from '@/components/ui/Button';
 import {
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/Dialog';
-import { useDialogStore } from '@/store/dialogStore';
+import { useDialogStore } from '@/stores/useDialogStore';
 
-const SendInvitationDialog = () => {
+interface SendInvitationDialogProps {
+  dashboardId: number;
+}
+
+const SendInvitationDialog = ({ dashboardId }: SendInvitationDialogProps) => {
   const { closeDialog } = useDialogStore();
+
+  console.log(dashboardId);
 
   const handleClose = () => {
     closeDialog();
@@ -38,40 +45,35 @@ const SendInvitationDialog = () => {
         </DialogHeader>
 
         {/* 본문 내용 (여기에 폼, 텍스트 등을 추가) */}
-        <div className="grid gap-4">
-          <label
-            htmlFor="name"
-            className="text-taskify-lg-medium text-taskify-neutral-700 text-left"
-          >
-            이메일
-          </label>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <input
-              id="name"
-              placeholder="user@example.com"
-              type="text"
-              className="text-taskify-neutral-700 text-taskify-md-regular border-taskify-neutral-300 col-span-4 rounded-lg border px-4 py-3"
-            />
+        <form className="grid gap-4" onSubmit={handleSubmit}>
+          <div>
+            <label
+              htmlFor="name"
+              className="text-taskify-lg-medium text-taskify-neutral-700 text-left"
+            >
+              이메일
+            </label>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <input
+                id="name"
+                placeholder="user@example.com"
+                type="text"
+                className="text-taskify-neutral-700 text-taskify-md-regular border-taskify-neutral-300 col-span-4 rounded-lg border px-4 py-3"
+              />
+            </div>
           </div>
-        </div>
-        <DialogFooter className="flex flex-row justify-between">
-          <Button
-            className="bg-taskify-neutral-0 border-taskify-neutral-300 hover:bg-taskify-neutral-0 h-auto grow-1 border-1 py-[14px]"
-            type="button"
-            onClick={handleClose}
-          >
-            <span className="text-taskify-lg-semibold text-taskify-neutral-500">
+          <DialogFooter className="flex flex-row justify-between">
+            <DialogClose className="bg-taskify-neutral-0 border-taskify-neutral-300 hover:bg-taskify-neutral-0 </span> h-auto grow-1 cursor-pointer rounded-lg border-1 py-[14px]">
               취소
-            </span>
-          </Button>
-          <Button
-            className="bg-taskify-violet-primary hover:bg-taskify-violet-primary h-auto grow-1 py-[14px]"
-            type="submit"
-            onClick={handleSubmit}
-          >
-            <span className="text-taskify-lg-semibold">생성</span>
-          </Button>
-        </DialogFooter>
+            </DialogClose>
+            <Button
+              className="bg-taskify-violet-primary hover:bg-taskify-violet-primary h-auto grow-1 cursor-pointer py-[14px]"
+              type="submit"
+            >
+              <span className="text-taskify-lg-semibold">생성</span>
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </>
   );

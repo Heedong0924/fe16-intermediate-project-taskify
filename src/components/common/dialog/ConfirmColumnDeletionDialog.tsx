@@ -5,16 +5,21 @@ import {
   DialogFooter,
   DialogHeader,
 } from '@/components/ui/Dialog';
-import { useDialogStore } from '@/store/dialogStore';
+import { useDialogStore } from '@/stores/useDialogStore';
 
-const ConfirmColumnDeletionDialog = () => {
-  const { closeDialog, goBack, data } = useDialogStore();
+interface ConfirmColumnDeletionDialogProps {
+  columnId: number;
+}
 
-  // 테스트를 위한 런타임 타입 가드
-  let displayId: string | number | null = null;
-  if (data && (typeof data.id === 'string' || typeof data.id === 'number')) {
-    displayId = data.id;
-  }
+const ConfirmColumnDeletionDialog = ({
+  columnId,
+}: ConfirmColumnDeletionDialogProps) => {
+  const { closeDialog, goBack } = useDialogStore();
+
+  const handleDeleteClick = () => {
+    alert(columnId);
+    closeDialog();
+  };
 
   const content = (
     <DialogContent
@@ -22,28 +27,27 @@ const ConfirmColumnDeletionDialog = () => {
       showCloseButton={false}
     >
       <DialogHeader className="flex">
-        <DialogDescription className="text-center">
-          <span className="text-taskify-lg-medium text-taskify-neutral-700 md:text-taskify-xl-medium">
-            컬럼의 모든 카드가 삭제됩니다. data: {displayId}
-          </span>
+        <DialogDescription className="text-taskify-lg-medium text-taskify-neutral-700 md:text-taskify-xl-medium text-center">
+          컬럼의 모든 카드가 삭제됩니다.
         </DialogDescription>
       </DialogHeader>
-      <DialogFooter className="flex flex-row justify-between">
-        <Button
-          className="bg-taskify-neutral-0 border-taskify-neutral-300 hover:bg-taskify-neutral-0 h-auto grow-1 border-1 py-[14px]"
-          onClick={goBack}
-        >
-          <span className="text-taskify-lg-semibold text-taskify-neutral-500">
-            취소
-          </span>
-        </Button>
-        <Button
-          className="bg-taskify-violet-primary hover:bg-taskify-violet-primary h-auto grow-1 py-[14px]"
-          onClick={closeDialog}
-        >
-          <span className="text-taskify-lg-semibold">삭제</span>
-        </Button>
-      </DialogFooter>
+      <form onSubmit={handleDeleteClick}>
+        <DialogFooter className="flex flex-row justify-between">
+          <Button
+            className="text-taskify-neutral-500 bg-taskify-neutral-0 border-taskify-neutral-300 hover:bg-taskify-neutral-0 h-auto grow-1 cursor-pointer border-1 py-[14px]"
+            type="button"
+            onClick={goBack}
+          >
+            <span className="text-taskify-lg-semibold">취소</span>
+          </Button>
+          <Button
+            className="bg-taskify-violet-primary hover:bg-taskify-violet-primary h-auto grow-1 cursor-pointer py-[14px]"
+            type="submit"
+          >
+            <span className="text-taskify-lg-semibold">삭제</span>
+          </Button>
+        </DialogFooter>
+      </form>
     </DialogContent>
   );
 
