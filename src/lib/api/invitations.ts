@@ -1,28 +1,30 @@
+import { Invitation } from '@/types/Invitation';
+
 import axiosInstance from '../axiosInstance';
 
-// 0. 공통 타입 정의
+// // 0. 공통 타입 정의
 
-export interface UserInfo {
-  id: number;
-  nickname: string;
-  email: string;
-}
+// export interface UserInfo {
+//   id: number;
+//   nickname: string;
+//   email: string;
+// }
 
-export interface DashboardInfo {
-  id: number;
-  title: string;
-}
+// export interface DashboardInfo {
+//   id: number;
+//   title: string;
+// }
 
-export interface Invitation {
-  id: number;
-  inviter: UserInfo;
-  invitee: UserInfo;
-  teamId: string;
-  dashboard: DashboardInfo;
-  inviteAccepted: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
+// export interface Invitation {
+//   id: number;
+//   inviter: UserInfo;
+//   invitee: UserInfo;
+//   teamId: string;
+//   dashboard: DashboardInfo;
+//   inviteAccepted: boolean;
+//   createdAt: string;
+//   updatedAt: string;
+// }
 
 // 1. GET - 내가 받은 초대 목록 조회
 
