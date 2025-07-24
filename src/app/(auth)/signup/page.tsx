@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Input from '@/components/common/Input';
+import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/hooks/useAuth';
 import {
   emailValidation,
@@ -30,6 +31,7 @@ type FormValues = {
   nickname: string;
   password: string;
   confirmPassword: string;
+  checkbox: boolean;
 };
 
 const SignupPage = () => {
@@ -37,6 +39,7 @@ const SignupPage = () => {
     register,
     handleSubmit,
     getValues,
+    reset,
     formState: { errors, dirtyFields, isValid, isSubmitting },
   } = useForm<FormValues>({
     mode: 'onChange',
@@ -47,12 +50,14 @@ const SignupPage = () => {
   const togglePassword = (): void => setShowPassword((prev) => !prev);
   const { signup, isLoading } = useAuth();
   const onSubmit = (data: FormValues) => {
-    console.log(data); // 사용자가 입력한 값
-    signup({
-      email: data.email,
-      nickname: data.nickname,
-      password: data.password,
-    });
+    signup(
+      {
+        email: data.email,
+        nickname: data.nickname,
+        password: data.password,
+      },
+      { onSettled: () => reset() },
+    ); // 회원가입 후 폼 리셋
   };
 
   return (
@@ -138,17 +143,24 @@ const SignupPage = () => {
             htmlFor="terms-checkbox"
             className="flex items-center gap-2 text-black"
           >
-            <input type="checkbox" id="terms-checkbox" className="" />
+            <input
+              type="checkbox"
+              id="terms-checkbox"
+              className=""
+              {...register('checkbox', { required: true })}
+            />
             이용약관에 동의합니다.
           </label>
         </div>
-        <button
+        <Button
+          variant="default"
+          size="lg"
           className="bg-taskify-violet-primary w-full rounded-lg py-2 text-white"
           type="submit"
           disabled={!isValid || isSubmitting || isLoading}
         >
           가입하기
-        </button>
+        </Button>
       </form>
       <p className="">
         이미 회원이신가요?{' '}
