@@ -5,10 +5,14 @@ import Link from 'next/link';
 import { notFound, useParams } from 'next/navigation';
 
 import Button from '@/components/ui/Buttons';
-import { useDashboard, useUpdateDashboard } from '@/hooks/useDashboardEdit';
+import {
+  useDashboard,
+  useUpdateDashboard,
+  useDeleteDashboard,
+} from '@/hooks/useDashboardEdit';
 
-import DashboardMembers from './components/_DashboardMembers';
 import DashboardInvitations from './components/DashboardInvitations';
+import DashboardMembers from './components/DashboardMembers';
 import DashboardUpdate from './components/DashboardUpdate';
 
 export default function DashboardEditPage() {
@@ -28,6 +32,9 @@ export default function DashboardEditPage() {
   }
 
   const mutation = useUpdateDashboard(id);
+
+  // 삭제
+  const deleteMutation = useDeleteDashboard();
 
   return (
     <div className="min-h-screen bg-[var(--gray-FAFAFA)] p-[20px]">
@@ -56,7 +63,7 @@ export default function DashboardEditPage() {
       />
 
       {/* 구성원 */}
-      <DashboardMembers />
+      <DashboardMembers dashboardsId={id} />
 
       {/* 초대 내역 */}
       <DashboardInvitations dashboardsId={id} />
@@ -65,6 +72,7 @@ export default function DashboardEditPage() {
       <Button
         color="white-black"
         className="btn-removeDash w-full border border-[#D9D9D9] bg-transparent md:w-[320px]"
+        onClick={() => deleteMutation.mutate(id)}
       >
         대시보드 삭제하기
       </Button>

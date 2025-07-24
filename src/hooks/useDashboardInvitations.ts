@@ -1,6 +1,6 @@
 import {
   useMutation,
-  UseMutationResult,
+  // UseMutationResult,
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
@@ -12,12 +12,15 @@ import {
 } from '@/lib/api/dashboardInvitationsService';
 import { InvitationsResponse } from '@/types/DashboardInvitation';
 
+const DASHBOARD_INVITATIONS_KEY = (id: number) =>
+  ['dashboard-invitations', id] as const;
+
 /*
  * 초대 목록 hooks
  */
 export const useDashboardInvitations = (dashboardsId: number) => {
   return useQuery<InvitationsResponse>({
-    queryKey: ['dashboard-invitations', dashboardsId],
+    queryKey: DASHBOARD_INVITATIONS_KEY(dashboardsId),
     queryFn: () => getDashboardInvitations(dashboardsId),
     enabled: !!dashboardsId,
   });
@@ -34,7 +37,7 @@ export const useInviteDashboardUser = (dashboardsId: number) => {
       createDashboardInvitations(dashboardsId, email),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['dashboardInvitations', dashboardsId],
+        queryKey: DASHBOARD_INVITATIONS_KEY(dashboardsId),
       });
     },
     onError: (error) => {
@@ -46,17 +49,15 @@ export const useInviteDashboardUser = (dashboardsId: number) => {
 /*
  * 초대 삭제 hooks
  */
-export const useDeleteInvitation = (
-  dashboardsId: number,
-): UseMutationResult<void, Error, number, unknown> => {
+export const useDeleteInvitation = (dashboardsId: number) => {
   const queryClient = useQueryClient();
 
-  return useMutation<void, Error, number, unknown>({
+  return useMutation({
     mutationFn: (invitationId: number) =>
       deleteDashboardInvitations(dashboardsId, invitationId),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['dashboard-invitations', dashboardsId],
+        queryKey: DASHBOARD_INVITATIONS_KEY(dashboardsId),
       });
     },
   });

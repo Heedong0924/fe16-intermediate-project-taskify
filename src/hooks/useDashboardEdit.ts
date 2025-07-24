@@ -1,7 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { getDashboardById } from '@/lib/api/dashboardById';
-import { updateDashboard } from '@/lib/api/dashboardService';
+import {
+  updateDashboard,
+  getDashboardById,
+  deleteDashboard,
+} from '@/lib/api/dashboardService';
 
 /*
  * 대시보드 ID로 대시보드 상세 정보 가져오는 hooks
@@ -31,6 +34,22 @@ export const useUpdateDashboard = (dashboardsId: number) => {
       // 새로고침 없이도 수정된 데이터가 반영
       queryClient.invalidateQueries({ queryKey: ['dashboard', dashboardsId] });
       queryClient.invalidateQueries({ queryKey: ['dashboards'] });
+    },
+  });
+};
+
+/*
+ * 대시보드 삭제
+ */
+export const useDeleteDashboard = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (memberId: number) => deleteDashboard(memberId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['dashboard'],
+      });
     },
   });
 };

@@ -8,6 +8,7 @@ import {
   useDeleteInvitation,
 } from '@/hooks/useDashboardInvitations';
 
+// 네비게이션 만들어
 export default function DashboardInvitations({
   dashboardsId,
 }: {
@@ -43,6 +44,7 @@ export default function DashboardInvitations({
       return;
     }
 
+    // 고쳐
     const alreadyAcceptedMember = invitationsDate?.invitations.some(
       (invitation) =>
         invitation.invitee.email === email && invitation.inviteAccepted,
@@ -66,7 +68,6 @@ export default function DashboardInvitations({
 
   if (invitationsLoading) return <p>불러오는 중...</p>;
   if (invitationsError) return <p>에러 발생!</p>;
-  if (!invitationsDate?.invitations.length) return <p>보낸 초대가 없습니다.</p>;
 
   return (
     <ContentSectionWithAction
@@ -85,20 +86,24 @@ export default function DashboardInvitations({
         </>
       }
     >
-      {invitationsDate.invitations.map((invitation) => (
-        <div key={invitation.id} className="flex gap-2.5">
-          <p>{invitation.invitee.email}</p>
-          <p>상태: {invitation.inviteAccepted ? '수락됨' : '대기 중'}</p>
-          <q>{new Date(invitation.createdAt).toLocaleDateString()}</q>
-          <Button
-            onClick={() => deleteMutation.mutate(invitation.id)}
-            disabled={deleteMutation.isPending}
-            className="text-sm text-red-500 hover:underline"
-          >
-            삭제
-          </Button>
-        </div>
-      ))}
+      {invitationsDate?.invitations.length ? (
+        invitationsDate.invitations.map((invitation) => (
+          <div key={invitation.id} className="flex gap-2.5">
+            <p>{invitation.invitee.email}</p>
+            <p>상태: {invitation.inviteAccepted ? '수락됨' : '대기 중'}</p>
+            <q>{new Date(invitation.createdAt).toLocaleDateString()}</q>
+            <Button
+              onClick={() => deleteMutation.mutate(invitation.id)}
+              disabled={deleteMutation.isPending}
+              className="text-sm text-red-500 hover:underline"
+            >
+              삭제
+            </Button>
+          </div>
+        ))
+      ) : (
+        <p>보낸 초대가 없습니다.</p>
+      )}
     </ContentSectionWithAction>
   );
 }
