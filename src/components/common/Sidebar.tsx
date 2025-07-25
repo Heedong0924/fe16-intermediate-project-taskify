@@ -1,7 +1,5 @@
 'use client';
 
-// 기능 - 대시보드 생성 버튼 클릭시 생성 모달, 대시보드 리스트 클릭시 link-대시보드 상세 페이지
-
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -9,16 +7,20 @@ import { useState } from 'react';
 
 import addIcon from '@/../public/images/icon/addBox.svg';
 import { getDashboards } from '@/lib/api/dashboardService';
+import { useDialogStore } from '@/stores/useDialogStore';
 import { Dashboard, DashboardResponse } from '@/types/Dashboard';
 
 import DashboardCard from './DashboardCrad';
 import PaginationButton from '../ui/PaginationButton';
 import { LogoMd } from '../ui/SVGLogo';
+import CreateDashboardDialog from './dialog/CreateDashboardDialog';
 
 const Sidebar = () => {
   const [page, setPage] = useState<number>(1);
 
   const itemsSize = 15;
+
+  const { openDialog } = useDialogStore();
 
   const {
     data, // API 응답 데이터 (DashboardResponse 타입)
@@ -63,7 +65,11 @@ const Sidebar = () => {
         </Link>
         <div className="mt-14">
           <button
-            // onClick={대시보드 생성 모달}
+            onClick={() =>
+              openDialog({
+                dialogComponent: <CreateDashboardDialog />,
+              })
+            }
             className="hover:bg-taskify-neutral-200 mb-[15px] flex h-5 w-full items-center justify-between"
             type="button"
           >
@@ -73,9 +79,6 @@ const Sidebar = () => {
             <Image src={addIcon} alt="add to dashboard" />
           </button>
           <div className="">
-            {/* 대시보드 리스트 - map으로 api 요청받아온 리스트 - 재사용 가능한가?
-            ㅇㅇ 내 대시보드 리스트랑 같음 맡기자 이건 여기도 무한스크롤? ㄴㄴ
-            페이지네이션 시안상으론 15개씩 */}
             {dashboards.map((dashboard) => (
               <DashboardCard
                 key={dashboard.id}

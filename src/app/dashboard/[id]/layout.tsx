@@ -12,7 +12,7 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="flex h-screen xl:overflow-hidden">
-      <main className="flex h-full shrink-0 grow flex-nowrap overflow-x-auto xl:overflow-y-hidden">
+      <main className="flex h-full shrink-0 grow flex-nowrap overflow-x-auto px-0 xl:overflow-y-hidden">
         {children}
       </main>
     </div>

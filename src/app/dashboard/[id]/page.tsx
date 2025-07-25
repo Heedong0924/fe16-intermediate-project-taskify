@@ -1,23 +1,20 @@
-// - '새로운 컬럼 추가하기' 버튼을 클릭하면 컬럼 추가하기 모달이 나타나도록 하세요.
-// - 각 컬럼의 '+' 버튼을 클릭하면 해당 컬럼 할 일 생성 모달이 나타나도록 하세요.
-// - 각 컬럼의 '톱니바퀴' 버튼을 클릭하면 컬럼 수정 모달이 나타나도록 하세요.
-// - 생성된 할 일 카드를 클릭하면 해당 카드 상세 모달이 나타나도록 하세요.
-// - 각 칼럼의 카드들은 무한 스크롤로 이어지도록 하세요.
-
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 
 import { AddCountChip } from '@/components/common/Chips';
+import CreateColumnDialog from '@/components/common/dialog/CreateColumnDialog';
 import Button from '@/components/ui/Buttons';
 import { getColumn } from '@/lib/api/columnService';
+import { useDialogStore } from '@/stores/useDialogStore';
 import { ColumnResponse } from '@/types/Column';
 
 import ColumnComponent from './components/ColumnComponent';
 
 const DashboardIdPage = () => {
   const Prams = useParams();
+  const { openDialog } = useDialogStore();
 
   const rawDashboardId = Prams.id as string;
   const dashboardId = Number(rawDashboardId);
@@ -45,14 +42,26 @@ const DashboardIdPage = () => {
   const columns = data?.data;
 
   return (
-    <div className="relative flex h-full grow flex-col xl:flex-row">
+    <div className="flex h-full max-w-full grow flex-col xl:flex-row">
       {columns &&
         columns?.map((column) =>
-          column ? <ColumnComponent key={column.id} column={column} /> : null,
+          column ? (
+            <ColumnComponent
+              dashboardId={dashboardId}
+              key={column.id}
+              column={column}
+            />
+          ) : null,
         )}
+      <div className="h-24 shrink-0 xl:hidden" />
       <Button
-        color="white-black"
-        className="btn-addCol fixed bottom-0 mx-5 my-5 flex shrink-0 xl:relative"
+        onClick={() =>
+          openDialog({
+            dialogComponent: <CreateColumnDialog dashboardId={dashboardId} />,
+          })
+        }
+        color="violet-white"
+        className="btn-addCol fixed right-5 bottom-0 left-5 my-5 flex shrink-0 md:ml-[160px] xl:static xl:w-[534px]"
       >
         <span className="mr-3">새로운 컬럼 시작하기</span>
         <AddCountChip size="sm" />
@@ -62,7 +71,3 @@ const DashboardIdPage = () => {
 };
 
 export default DashboardIdPage;
-
-// pc 사이즈 미만에서는 각 칼럼 드롭다운 가능하면 좋겠는데
-
-// createCards 모달
