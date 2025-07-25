@@ -1,23 +1,13 @@
 import React, { HTMLAttributes } from 'react';
 
+import { formattedDate } from '@/lib/utils/fotmattedDate';
+
 import { AvatarProfile } from '../../Profile';
 
 interface CardAuthorProps extends HTMLAttributes<HTMLDivElement> {
   author?: string;
   dueDate?: string;
 }
-
-export const formattedDate = (str: string) => {
-  const date = new Date(str);
-  return new Intl.DateTimeFormat('ko-KR', {
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false, // 24시간 형식 (오전/오후 없음)
-  }).format(date);
-};
 
 const CardAuthor = ({ className, author, dueDate }: CardAuthorProps) => {
   const baseStyles = 'grid px-4 py-2 text-left';

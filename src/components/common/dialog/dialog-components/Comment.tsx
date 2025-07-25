@@ -2,11 +2,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { HTMLAttributes, useState } from 'react';
 
 import { deleteComment } from '@/lib/api/commentService';
+import { formattedDate } from '@/lib/utils/fotmattedDate';
 import { getUserStateFromLocalstorage } from '@/lib/utils/getUserStateFromLocalstorage';
 import { useDialogStore } from '@/stores/useDialogStore';
 import CommentType from '@/types/Comment.types';
 
-import { formattedDate } from './CardAuthor';
 import { AvatarProfile } from '../../Profile';
 import AlertDialog from '../AlertDialog';
 import TaskDialogUpdateCommentForm from './TaskDialogUpdateCommentForm';
