@@ -78,6 +78,7 @@ const Sidebar = () => {
             페이지네이션 시안상으론 15개씩 */}
             {dashboards.map((dashboard) => (
               <DashboardCard
+                key={dashboard.id}
                 dashboard={dashboard}
                 className="hover:bg-taskify-neutral-200 h-[42px]"
               />

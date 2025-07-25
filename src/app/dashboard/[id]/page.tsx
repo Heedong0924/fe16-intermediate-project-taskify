@@ -1,4 +1,3 @@
-// - 각 컬럼 오른쪽에 해당 카드 개수가 보이도록 하세요. - 칼럼 이름 옆 chip?
 // - '새로운 컬럼 추가하기' 버튼을 클릭하면 컬럼 추가하기 모달이 나타나도록 하세요.
 // - 각 컬럼의 '+' 버튼을 클릭하면 해당 컬럼 할 일 생성 모달이 나타나도록 하세요.
 // - 각 컬럼의 '톱니바퀴' 버튼을 클릭하면 컬럼 수정 모달이 나타나도록 하세요.
@@ -12,7 +11,6 @@ import { useParams } from 'next/navigation';
 
 import { AddCountChip } from '@/components/common/Chips';
 import Button from '@/components/ui/Buttons';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { getColumn } from '@/lib/api/columnService';
 import { ColumnResponse } from '@/types/Column';
 
@@ -47,33 +45,24 @@ const DashboardIdPage = () => {
   const columns = data?.data;
 
   return (
-    <div className="flex min-h-screen">
-      <ScrollArea className="w-full">
-        <div className="flex flex-col xl:flex-row xl:overflow-x-auto">
-          {columns &&
-            columns.map((column) => <ColumnComponent column={column} />)}
-          <Button color="white-black" className="btn-addCol mx-5 my-5 flex">
-            <span className="mr-3">새로운 컬럼 시작하기</span>
-            <AddCountChip size="sm" />
-          </Button>
-        </div>
-      </ScrollArea>
+    <div className="relative flex h-full grow flex-col xl:flex-row">
+      {columns &&
+        columns?.map((column) =>
+          column ? <ColumnComponent key={column.id} column={column} /> : null,
+        )}
+      <Button
+        color="white-black"
+        className="btn-addCol fixed bottom-0 mx-5 my-5 flex shrink-0 xl:relative"
+      >
+        <span className="mr-3">새로운 컬럼 시작하기</span>
+        <AddCountChip size="sm" />
+      </Button>
     </div>
   );
 };
 
 export default DashboardIdPage;
 
-// 각 칼럼은 무한스크롤 - 이것도 pc사이즈에서만? - 칼럼 컴포넌트 분리 하자 어차피 받아서 map 해줘야하는데 지저분해 */}
-// 한 번에 만들고 분리해주자 xl:max-w-[354px]
-// columns.title?
-// 여기에 title옆 카드 개수 chip 및 톱니바퀴 아이콘 버튼
 // pc 사이즈 미만에서는 각 칼럼 드롭다운 가능하면 좋겠는데
 
 // createCards 모달
-
-// cards 목록조회 api
-
-// 음...tablet이랑 mobail에서는 fixed 로 화면 아래에 고정시켜놔야하나
-// <Scrollbar orientation="horizontal" />
-// 스크롤바 ui가 필요한가?
