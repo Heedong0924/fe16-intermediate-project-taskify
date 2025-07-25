@@ -1,6 +1,6 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
+import { mockInvitations } from '@/app/mydashboard/components/invitation/mockData';
 import { Invitation } from '@/types/Invitation';
 
 import InvitationListItem from './InvitationListItem';
@@ -10,47 +10,39 @@ type InvitationProps = {
   searchTerm: string;
 };
 
-const InvitationList = ({ searchTerm }: InvitationProps) => {
+const InvitationListTest = ({ searchTerm }: InvitationProps) => {
   const observerEl = useRef<HTMLTableRowElement | null>(null);
+  const [page, setPage] = useState(1);
+  const [invitations, setInvitations] = useState<Invitation[]>([]);
+  const size = 10;
 
-  const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteQuery({
-    queryKey: ['invitations', searchTerm],
-    queryFn: async ({ pageParam = 0 }) => {
-      const query = new URLSearchParams();
-      query.append('size', '10');
-      query.append('cursorId', pageParam.toString());
-      if (searchTerm) query.append('title', searchTerm);
+  const filtered = mockInvitations.filter((inv) =>
+    inv.dashboard.title.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
 
-      const res = await fetch(`/api/invitations?${query.toString()}`);
-      if (!res.ok) throw new Error('Failed to fetch');
-      return res.json();
-    },
-    initialPageParam: 0,
-    getNextPageParam: (lastPage) => lastPage.cursorId ?? null,
-  });
+  const paginated = filtered.slice(0, page * size);
+
+  useEffect(() => {
+    setInvitations(paginated);
+  }, [page, searchTerm]);
 
   useEffect(() => {
     const currentEl = observerEl.current;
     const io = new IntersectionObserver((entries) => {
-      console.log('👀 entries:', entries);
-      console.log('👉 isIntersecting:', entries[0].isIntersecting);
-      console.log('🧾 hasNextPage:', hasNextPage);
-      if (entries[0].isIntersecting && hasNextPage) {
-        console.log('📦 fetchNextPage 실행!');
-        fetchNextPage();
+      console.log('intersection:', entries[0].isIntersecting);
+
+      if (entries[0].isIntersecting && page * size < filtered.length) {
+        setPage((prev) => prev + 1);
       }
     });
-    console.log('observer 실행됨!');
+
     if (currentEl) io.observe(currentEl);
     return () => {
       if (currentEl) io.disconnect();
     };
-  }, [hasNextPage, fetchNextPage]);
+  }, [filtered.length, page]);
 
-  const allInvitations =
-    data?.pages.flatMap((page) => page.invitations as Invitation[]) ?? [];
-
-  if (!isFetching && allInvitations.length === 0) {
+  if (filtered.length === 0) {
     return <NoResult />;
   }
 
@@ -82,14 +74,14 @@ const InvitationList = ({ searchTerm }: InvitationProps) => {
         </tr>
       </thead>
       <tbody>
-        {allInvitations.map((invitation, i) => {
-          const isLast = i === allInvitations.length - 1;
+        {invitations.map((invitation, i) => {
+          const isLast = i === invitations.length - 1;
           return (
             <InvitationListItem
               key={invitation.id}
               invitation={invitation}
               searchTerm={searchTerm}
-              observerRef={isLast ? observerEl : null}
+              observerRef={isLast ? observerEl : null} // 👈 마지막 요소에만 ref 전달
             />
           );
         })}
@@ -98,15 +90,9 @@ const InvitationList = ({ searchTerm }: InvitationProps) => {
             <div style={{ height: '10px' }} />
           </td>
         </tr>
-
-        {isFetching && (
-          <tr>
-            <td colSpan={4}>로딩 중...</td>
-          </tr>
-        )}
       </tbody>
     </table>
   );
 };
 
-export default InvitationList;
+export default InvitationListTest;

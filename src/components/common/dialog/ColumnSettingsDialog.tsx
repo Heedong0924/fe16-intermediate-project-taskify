@@ -1,3 +1,6 @@
+import { useMutation } from '@tanstack/react-query';
+import { ChangeEvent, FormEvent, useState } from 'react';
+
 import { Button } from '@/components/ui/Button';
 import {
   DialogContent,
@@ -6,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/Dialog';
+import { updateColumn } from '@/lib/api/columnService';
 import { useDialogStore } from '@/stores/useDialogStore';
 
 import ConfirmColumnDeletionDialog from './ConfirmColumnDeletionDialog';
@@ -19,7 +23,17 @@ const ColumnSettingsDialog = ({
   columnId,
   columnName,
 }: ColumnSettingsDialogProps) => {
-  const { openDialog, closeDialog } = useDialogStore();
+  const [updateColumnValue, setUpdateColumnValue] =
+    useState<string>(columnName);
+  const { openDialog } = useDialogStore();
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: updateColumn,
+    onSuccess: () => {},
+    onError: (error) => {
+      console.error('컬럼 수정에 실패했습니다.', error.message);
+    },
+  });
 
   const handleOpenConfirm = () => {
     openDialog({
@@ -27,9 +41,13 @@ const ColumnSettingsDialog = ({
     });
   };
 
-  const handleSubmit = () => {
-    alert('Done!');
-    closeDialog();
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!isPending) mutate({ columnId, title: updateColumnValue });
+  };
+
+  const handleUpdateChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setUpdateColumnValue(e.target.value);
   };
 
   const content = (
@@ -59,7 +77,8 @@ const ColumnSettingsDialog = ({
               <input
                 id="name"
                 type="text"
-                defaultValue={columnName}
+                defaultValue={updateColumnValue}
+                onChange={handleUpdateChange}
                 className="text-taskify-neutral-700 text-taskify-md-regular border-taskify-neutral-300 col-span-4 rounded-lg border px-4 py-3"
               />
             </div>

@@ -8,6 +8,7 @@ import { Invitation } from '@/types/Invitation';
 interface InvitationProps {
   invitation: Invitation;
   searchTerm: string;
+  observerRef: React.Ref<HTMLTableRowElement>;
 }
 
 // 검색 시 키워드 두꺼운 보라색으로 하이라이팅
@@ -28,14 +29,18 @@ const highlightText = (text: string, keyword: string) => {
   );
 };
 
-const InvitationListItem = ({ invitation, searchTerm }: InvitationProps) => {
+const InvitationListItem = ({
+  invitation,
+  searchTerm,
+  observerRef,
+}: InvitationProps) => {
   const { dashboard, inviter, createdAt } = invitation;
   const timeAgo = useTimeAgo(createdAt);
 
   const { mutate, isPending } = usePutInvitation();
 
   return (
-    <tr className="border-taskify-neutral-200 border-b">
+    <tr className="border-taskify-neutral-200 border-b" ref={observerRef}>
       <td className="text-taskify-lg-regular text-taskify-neutral-700 pl-[76px]">
         {highlightText(dashboard.title, searchTerm)}
       </td>
