@@ -111,6 +111,7 @@ const TaskCardDialog = ({
                 variant: 'default',
                 onSelect: () => {
                   openDialog({
+                    isNewOpen: true,
                     dialogComponent: (
                       <ConfirmTaskCardDeletionDialog cardId={cardId} />
                     ),

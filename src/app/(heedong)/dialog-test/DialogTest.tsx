@@ -75,13 +75,37 @@ const DialogTest = () => {
                 dashboardId={15564}
                 columnId={52469}
                 columnName="Todo"
-                cardId={13404}
+                cardId={13429}
               />
             ),
           })
         }
       >
         글로벌 다이얼로그: 할 일 카드 테스트
+      </Button>
+      <Button
+        onClick={() => {
+          openDialog({
+            dialogComponent: (
+              <TaskCardDialog
+                dashboardId={15564}
+                columnId={52469}
+                columnName="Todo"
+                cardId={13429}
+              />
+            ),
+          });
+          setTimeout(() => {
+            openDialog({
+              isNewOpen: true,
+              dialogComponent: (
+                <AlertDialog description="test" closeBtnText="확인" isGoBack />
+              ),
+            });
+          }, 3000);
+        }}
+      >
+        글로벌 다이얼로그: 중첩 다이얼로그 테스트
       </Button>
     </div>
   );
