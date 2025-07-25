@@ -133,7 +133,6 @@ const TaskCardDialog = ({
           </span>
         </DialogTitle>
       </DialogHeader>
-
       <div className="grid grid-cols-4 gap-4">
         <CardAuthor
           className="border-taskify-neutral-300 d col-span-4 rounded-lg border-1"
@@ -162,14 +161,6 @@ const TaskCardDialog = ({
               height={400}
             />
           )}
-          {/* 아래는 테스트용 이미지 */}
-          <Image
-            className="overflow-hidden rounded-lg"
-            src="https://picsum.photos/id/684/600/400"
-            alt="test"
-            width={600}
-            height={400}
-          />
         </div>
         <div className="relative col-start-1 col-end-5 flex flex-col justify-between">
           <p className="text-taskify-md-medium mb-1">댓글</p>
@@ -182,7 +173,6 @@ const TaskCardDialog = ({
               onChange={handleCreateCommentChange}
               onKeyDown={handleKeyDown}
             />
-
             <Button
               className="bg-taskify-neutral-0 hover:bg-taskify-neutral-0 text-taskify-violet-primary border-taskify-neutral-300 absolute right-4 bottom-4 cursor-pointer border"
               type="submit"
