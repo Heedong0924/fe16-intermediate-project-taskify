@@ -107,6 +107,10 @@ const Comment = ({ comment, cardId }: CommentProps) => {
           </span>
           <span className="text-taskify-xs-normal text-taskify-neutral-400">
             {formattedDate(comment.updatedAt)}
+            {comment.createdAt &&
+              comment.updatedAt &&
+              comment.updatedAt > comment.createdAt &&
+              ' (수정됨)'}
           </span>
         </div>
         {isUpdateMode ? (
