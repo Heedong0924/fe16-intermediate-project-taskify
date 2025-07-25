@@ -160,10 +160,18 @@ const ColumnComponent = ({
         >
           <AddCountChip size="sm" />
         </Button>
-        <ScrollArea className="max-h-full w-full flex-grow overflow-auto">
+        <ScrollArea className="max-h-full w-full grow flex-col overflow-auto">
           {cards &&
             isOpen &&
-            cards?.map((card) => <CardComponent key={card.id} card={card} />)}
+            cards?.map((card) => (
+              <CardComponent
+                key={card.id}
+                card={card}
+                dashboardId={dashboardId}
+                columId={columnId}
+                columnName={column.title}
+              />
+            ))}
           {isFetchingNextPage && <div>로딩중...</div>}
           {cards.length === 0 && !isFetching && (
             <div className="text-taskify-gray-400 mt-5 p-4 text-center">
