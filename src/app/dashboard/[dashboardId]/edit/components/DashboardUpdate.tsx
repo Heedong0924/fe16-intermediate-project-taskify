@@ -16,9 +16,9 @@ type FormValues = {
 
 // 값이 공백으로 들어갈 때 처리 하기
 export default function DashboardUpdate({
-  dashboardsId,
+  dashboardId,
 }: {
-  dashboardsId: number;
+  dashboardId: number;
 }) {
   const [color, setColor] = useState('');
 
@@ -32,8 +32,8 @@ export default function DashboardUpdate({
     reValidateMode: 'onBlur', // 블러 시에도 다시 검사
   });
 
-  const { data, isPending, isError } = useDashboard(dashboardsId);
-  const mutation = useUpdateDashboard(dashboardsId);
+  const { data, isPending, isError } = useDashboard(dashboardId);
+  const mutation = useUpdateDashboard(dashboardId);
 
   useEffect(() => {
     // 대시보드가 정상적으로 로드 됐을 때

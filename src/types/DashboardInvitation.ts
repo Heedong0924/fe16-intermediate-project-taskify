@@ -24,3 +24,8 @@ export interface InvitationsResponse {
   totalCount: number;
   invitations: Invitation[];
 }
+
+export interface InvitationsQueryParams {
+  page?: number;
+  size?: number;
+}

@@ -323,10 +323,10 @@
 
   /* 대시보드 상세 페이지 */
   .dashboard-update-title label {
-    @apply !text-[16px] md:!text-[18px];
+    @apply !text-[16px] sm:!text-[18px];
   }
   .dashboard-update-title input {
-    @apply !text-[14px] md:!text-[16px];
+    @apply !text-[14px] sm:!text-[16px];
   }
 
   /* Dialog Scroll bar */

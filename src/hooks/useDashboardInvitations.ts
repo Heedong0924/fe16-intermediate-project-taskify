@@ -1,4 +1,5 @@
 import {
+  keepPreviousData,
   useMutation,
   // UseMutationResult,
   useQuery,
@@ -6,11 +7,14 @@ import {
 } from '@tanstack/react-query';
 
 import {
-  createDashboardInvitations,
+  // createDashboardInvitations,
   getDashboardInvitations,
   deleteDashboardInvitations,
 } from '@/lib/api/dashboardInvitationsService';
-import { InvitationsResponse } from '@/types/DashboardInvitation';
+import {
+  InvitationsResponse,
+  InvitationsQueryParams,
+} from '@/types/DashboardInvitation';
 
 const DASHBOARD_INVITATIONS_KEY = (id: number) =>
   ['dashboard-invitations', id] as const;
@@ -18,46 +22,52 @@ const DASHBOARD_INVITATIONS_KEY = (id: number) =>
 /*
  * 초대 목록 hooks
  */
-export const useDashboardInvitations = (dashboardsId: number) => {
+export const useDashboardInvitations = (
+  dashboardId: number,
+  params: InvitationsQueryParams,
+) => {
+  const { page, size } = params;
+
   return useQuery<InvitationsResponse>({
-    queryKey: DASHBOARD_INVITATIONS_KEY(dashboardsId),
-    queryFn: () => getDashboardInvitations(dashboardsId),
-    enabled: !!dashboardsId,
+    queryKey: ['dashboard-invitations', dashboardId, page, size],
+    queryFn: () => getDashboardInvitations(dashboardId, params),
+    enabled: !!dashboardId,
+    placeholderData: keepPreviousData,
   });
 };
 
 /*
  * 초대 훅 hooks
  */
-export const useInviteDashboardUser = (dashboardsId: number) => {
-  const queryClient = useQueryClient();
+// export const useInviteDashboardUser = (dashboardId: number) => {
+//   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: (email: string) =>
-      createDashboardInvitations(dashboardsId, email),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: DASHBOARD_INVITATIONS_KEY(dashboardsId),
-      });
-    },
-    onError: (error) => {
-      console.error('초대 실패:', error);
-    },
-  });
-};
+//   return useMutation({
+//     mutationFn: (email: string) =>
+//       createDashboardInvitations(dashboardId, email),
+//     onSuccess: () => {
+//       queryClient.invalidateQueries({
+//         queryKey: DASHBOARD_INVITATIONS_KEY(dashboardId),
+//       });
+//     },
+//     onError: (error) => {
+//       console.error('초대 실패:', error);
+//     },
+//   });
+// };
 
 /*
  * 초대 삭제 hooks
  */
-export const useDeleteInvitation = (dashboardsId: number) => {
+export const useDeleteInvitation = (dashboardId: number) => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (invitationId: number) =>
-      deleteDashboardInvitations(dashboardsId, invitationId),
+      deleteDashboardInvitations(dashboardId, invitationId),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: DASHBOARD_INVITATIONS_KEY(dashboardsId),
+        queryKey: DASHBOARD_INVITATIONS_KEY(dashboardId),
       });
     },
   });

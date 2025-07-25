@@ -12,10 +12,10 @@ import DashboardMembers from './components/DashboardMembers';
 import DashboardUpdate from './components/DashboardUpdate';
 
 export default function DashboardEditPage() {
-  const { dashboardsId } = useParams();
+  const { dashboardId } = useParams();
 
   // ID 체크
-  const id = Number(dashboardsId);
+  const id = Number(dashboardId);
   if (Number.isNaN(id)) {
     notFound();
   }
@@ -28,7 +28,7 @@ export default function DashboardEditPage() {
       {/* 뒤로가기 */}
       <nav className="mb-[34px]">
         <Link
-          href={`/dashboard/${dashboardsId}`}
+          href={`/dashboard/${dashboardId}`}
           className="flex items-center gap-2"
         >
           <Image
@@ -42,19 +42,19 @@ export default function DashboardEditPage() {
       </nav>
 
       {/* 대시보드 타이틀, 컬러 수정 */}
-      <DashboardUpdate dashboardsId={id} />
+      <DashboardUpdate dashboardId={id} />
 
       {/* 구성원 */}
-      <DashboardMembers dashboardsId={id} />
+      <DashboardMembers dashboardId={id} />
 
       {/* 초대 내역 */}
-      <DashboardInvitations dashboardsId={id} />
+      <DashboardInvitations dashboardId={id} />
 
       {/*  대시보드 삭제하기 */}
       {/* 모달 경고 창 떠야함 */}
       <Button
         color="white-black"
-        className="btn-removeDash w-full border border-[#D9D9D9] bg-transparent md:w-[320px]"
+        className="btn-removeDash w-full border border-[#D9D9D9] bg-transparent sm:w-[320px]"
         onClick={() => deleteMutation.mutate(id)}
       >
         대시보드 삭제하기

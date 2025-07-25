@@ -1,24 +1,29 @@
-import { InvitationsResponse } from '@/types/DashboardInvitation';
+import {
+  InvitationsResponse,
+  InvitationsQueryParams,
+} from '@/types/DashboardInvitation';
 
 import axiosInstance from '../axiosInstance';
 
 // 대시보드 초대 목록
 export const getDashboardInvitations = async (
-  dashboardsId: number,
+  dashboardId: number,
+  params: InvitationsQueryParams,
 ): Promise<InvitationsResponse> => {
   const response = await axiosInstance.get<InvitationsResponse>(
-    `/dashboards/${dashboardsId}/invitations`,
+    `/dashboards/${dashboardId}/invitations`,
+    { params },
   );
   return response.data;
 };
 
 // 대시보드 초대 하기
 export const createDashboardInvitations = async (
-  dashboardsId: number,
+  dashboardId: number,
   email: string,
 ): Promise<InvitationsResponse> => {
   const response = await axiosInstance.post<InvitationsResponse>(
-    `/dashboards/${dashboardsId}/invitations`,
+    `/dashboards/${dashboardId}/invitations`,
     { email },
   );
   return response.data;
@@ -26,10 +31,10 @@ export const createDashboardInvitations = async (
 
 // 대시보드 초대 삭제
 export const deleteDashboardInvitations = async (
-  dashboardsId: number,
+  dashboardId: number,
   invitationId: number,
 ): Promise<void> => {
   await axiosInstance.delete(
-    `/dashboards/${dashboardsId}/invitations/${invitationId}`,
+    `/dashboards/${dashboardId}/invitations/${invitationId}`,
   );
 };

@@ -11,9 +11,9 @@ export function ContentSection({
 }) {
   return (
     <section
-      className={`${className} mb-4 rounded-[16px] bg-white px-[16px] py-[20px] md:px-[28px] md:py-[32px]`}
+      className={`${className} mb-4 max-w-[none] rounded-[16px] bg-white px-[16px] py-[20px] sm:max-w-[700px] sm:px-[28px] sm:py-[32px]`}
     >
-      <h1 className="text-[20px] font-[700] md:text-[24px]">{title}</h1>
+      <h1 className="text-[20px] font-[700] sm:text-[24px]">{title}</h1>
       {children}
     </section>
   );
@@ -33,10 +33,10 @@ export function ContentSectionWithAction({
 }) {
   return (
     <section
-      className={`${className} mb-4 rounded-[16px] bg-white py-[20px] md:py-[32px]`}
+      className={`${className} mb-4 max-w-[none] rounded-[16px] bg-white py-[20px] sm:max-w-[700px] sm:py-[32px]`}
     >
-      <div className="mb-[12px] flex items-center justify-between px-[20px] md:px-[28px]">
-        <h1 className="text-[20px] font-[700] md:text-[24px]">{title}</h1>
+      <div className="mb-[12px] flex items-center justify-between px-[20px] sm:px-[28px]">
+        <h1 className="text-[20px] font-[700] sm:text-[24px]">{title}</h1>
         <div className="flex">{titleRight}</div>
       </div>
       {children}
