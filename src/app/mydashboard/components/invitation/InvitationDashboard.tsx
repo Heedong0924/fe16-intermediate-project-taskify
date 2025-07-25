@@ -1,7 +1,8 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
+import { Skeleton } from '@/components/ui/skeleton';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useGetInvitations } from '@/hooks/useGetInvitations';
 
@@ -17,19 +18,9 @@ const InvitationDashboard = () => {
   // 디바운스 시간은 300ms로 사용
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
-  // data 또는 debouncedSearchTerm이 바뀔 때만 필터 연산 수행 (불필요한 연산 방지)
-  const filteredResults = useMemo(() => {
-    if (!data?.invitations) return [];
-    return data.invitations.filter((item) =>
-      item.dashboard.title
-        .toLowerCase()
-        .includes(debouncedSearchTerm.toLowerCase()),
-    );
-  }, [data, debouncedSearchTerm]);
-
-  // 로딩중 UI 추가 필요 (없는 경우 빈 목록이 먼저 노출되는 문제 발생)
+  // 로딩중 UI 추가 (없는 경우 빈 목록이 먼저 노출되는 문제 발생) - 추가했으나 깜빡임처럼 보이는 점 문제.
   if (isPending) {
-    return <div>로딩중..</div>;
+    return <Skeleton className="h-[450px] w-[1022px] rounded-2xl" />;
   }
 
   return (
@@ -46,10 +37,7 @@ const InvitationDashboard = () => {
         <div className="mt-5">
           <SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           <div className="h-[290px] overflow-auto">
-            <InvitationList
-              invitations={filteredResults}
-              searchTerm={searchTerm}
-            />
+            <InvitationList searchTerm={debouncedSearchTerm} />
           </div>
         </div>
       )}

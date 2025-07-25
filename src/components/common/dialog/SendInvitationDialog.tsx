@@ -1,3 +1,6 @@
+import { useMutation } from '@tanstack/react-query';
+import { ChangeEvent, FormEvent, useState } from 'react';
+
 import { Button } from '@/components/ui/Button';
 import {
   DialogClose,
@@ -7,6 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/Dialog';
+import { createInvitations } from '@/lib/api/dashboardService';
 import { useDialogStore } from '@/stores/useDialogStore';
 
 interface SendInvitationDialogProps {
@@ -15,16 +19,25 @@ interface SendInvitationDialogProps {
 
 const SendInvitationDialog = ({ dashboardId }: SendInvitationDialogProps) => {
   const { closeDialog } = useDialogStore();
+  const [emailValue, setEmailValue] = useState<string>('');
 
-  console.log(dashboardId);
+  const { mutate, isPending } = useMutation({
+    mutationFn: createInvitations,
+    onSuccess: () => {
+      closeDialog();
+    },
+    onError: (error) => {
+      console.error('초대 요청에 실패했습니다.', error.message);
+    },
+  });
 
-  const handleClose = () => {
-    closeDialog();
+  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setEmailValue(e.target.value);
   };
 
-  const handleSubmit = () => {
-    alert('Done!');
-    handleClose();
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!isPending) mutate({ dashboardId, email: emailValue });
   };
 
   const content = (
@@ -58,6 +71,8 @@ const SendInvitationDialog = ({ dashboardId }: SendInvitationDialogProps) => {
                 id="name"
                 placeholder="user@example.com"
                 type="text"
+                value={emailValue}
+                onChange={handleEmailChange}
                 className="text-taskify-neutral-700 text-taskify-md-regular border-taskify-neutral-300 col-span-4 rounded-lg border px-4 py-3"
               />
             </div>

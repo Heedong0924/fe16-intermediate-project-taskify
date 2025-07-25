@@ -321,41 +321,37 @@
     @apply flex cursor-pointer items-center justify-center rounded-full;
   }
 
-  /* 칩 CSS */
-  .chip-add {
-    @apply flex items-center justify-center rounded-[4px] bg-[var(--violet-F1EFFD)];
-  }
-
-  .chip-counter {
-    @apply flex items-center justify-center rounded-[4px] bg-[var(--gray-EEEEEE)] text-xs font-[500] text-[var(--gray-787486)];
-  }
-
-  .chip-status {
-    @apply inline-flex items-center gap-[6px] rounded-[16px] bg-[var(--violet-F1EFFD)] font-[500] text-[var(--violet-5534DA)];
-  }
-
-  .chip-status i {
-    @apply h-[6px] w-[6px] rounded-full bg-[var(--violet-5534DA)];
-  }
-
-  .chip-tag {
-    @apply rounded-[4px];
-  }
-
-  .chip-colorPick {
-    @apply flex gap-[10px];
-  }
-
-  .chip-colorPick label {
-    @apply flex items-center justify-center rounded-full;
-  }
-
   /* 대시보드 상세 페이지 */
   .dashboard-update-title label {
     @apply !text-[16px] md:!text-[18px];
   }
   .dashboard-update-title input {
     @apply !text-[14px] md:!text-[16px];
+  }
+
+  /* Dialog Scroll bar */
+  /* 1. 스크롤바 트랙 (스크롤바 배경) */
+  .dialog-scrollable-content::-webkit-scrollbar {
+    width: 8px;
+    background-color: transparent;
+  }
+
+  /* 2. 스크롤바 엄지 (실제 움직이는 부분) */
+  .dialog-scrollable-content::-webkit-scrollbar-thumb {
+    background-color: #d4d4d4;
+    border-radius: 4px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  /* 3. 스크롤바 호버 시 */
+  .dialog-scrollable-content::-webkit-scrollbar-thumb:hover {
+    background-color: #a3a3a3;
+  }
+
+  /* 4. 선택적: 스크롤바 코너 (스크롤바가 만나는 부분) */
+  .dialog-scrollable-content::-webkit-scrollbar-corner {
+    background-color: transparent;
   }
 }
 

@@ -1,3 +1,6 @@
+import { useMutation } from '@tanstack/react-query';
+import { ChangeEvent, FormEvent, useState } from 'react';
+
 import { Button } from '@/components/ui/Button';
 import {
   DialogClose,
@@ -7,6 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/Dialog';
+import { createColumn } from '@/lib/api/columnService';
 import { useDialogStore } from '@/stores/useDialogStore';
 
 interface CreateColumnDialogProps {
@@ -14,13 +18,27 @@ interface CreateColumnDialogProps {
 }
 
 const CreateColumnDialog = ({ dashboardId }: CreateColumnDialogProps) => {
+  const [createColumnValue, setCreateColumnValue] = useState<string>('');
+
   const { closeDialog } = useDialogStore();
 
-  console.log(dashboardId);
+  const { mutate, isPending } = useMutation({
+    mutationFn: createColumn,
+    onSuccess: () => {
+      closeDialog();
+    },
+    onError: (error) => {
+      console.error('컬럼 생성에 실패했습니다.', error.message);
+    },
+  });
 
-  const handleSubmit = () => {
-    alert('Done!');
-    closeDialog();
+  const handleCreateColumnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setCreateColumnValue(e.target.value);
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!isPending) mutate({ title: createColumnValue, dashboardId });
   };
 
   const content = (
@@ -54,6 +72,8 @@ const CreateColumnDialog = ({ dashboardId }: CreateColumnDialogProps) => {
                 id="name"
                 placeholder="새로운 프로젝트"
                 type="text"
+                value={createColumnValue}
+                onChange={handleCreateColumnChange}
                 className="text-taskify-neutral-700 text-taskify-md-regular border-taskify-neutral-300 col-span-4 rounded-lg border px-4 py-3"
               />
             </div>

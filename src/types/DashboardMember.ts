@@ -3,7 +3,7 @@ export interface Member {
   userId: number;
   email: string;
   nickname: string;
-  profileImageUrl: string;
+  profileImageUrl: string | null;
   createdAt: string;
   updatedAt: string;
   isOwner: boolean;

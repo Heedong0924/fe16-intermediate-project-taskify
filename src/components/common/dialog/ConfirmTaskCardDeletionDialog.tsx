@@ -8,31 +8,31 @@ import {
   DialogFooter,
   DialogHeader,
 } from '@/components/ui/Dialog';
-import { deleteColumn } from '@/lib/api/columnService';
+import { deleteCard } from '@/lib/api/cardService';
 import { useDialogStore } from '@/stores/useDialogStore';
 
 interface ConfirmColumnDeletionDialogProps {
-  columnId: number;
+  cardId: number;
 }
 
-const ConfirmColumnDeletionDialog = ({
-  columnId,
+const ConfirmTaskCardDeletionDialog = ({
+  cardId,
 }: ConfirmColumnDeletionDialogProps) => {
   const { closeDialog, goBack } = useDialogStore();
 
   const { mutate, isPending } = useMutation({
-    mutationFn: deleteColumn,
+    mutationFn: deleteCard,
     onSuccess: () => {
       closeDialog();
     },
     onError: (error) => {
-      console.error('컬럼 삭제에 실패했습니다.', error.message);
+      console.error('카드 삭제에 실패했습니다.', error.message);
     },
   });
 
   const handleDeleteClick = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!isPending) mutate(columnId);
+    if (!isPending) mutate(cardId);
   };
 
   const content = (
@@ -42,7 +42,7 @@ const ConfirmColumnDeletionDialog = ({
     >
       <DialogHeader className="flex">
         <DialogDescription className="text-taskify-lg-medium text-taskify-neutral-700 md:text-taskify-xl-medium text-center">
-          컬럼의 모든 카드가 삭제됩니다.
+          정말 삭제하시겠습니까?
         </DialogDescription>
       </DialogHeader>
       <form onSubmit={handleDeleteClick}>
@@ -68,4 +68,4 @@ const ConfirmColumnDeletionDialog = ({
   return content;
 };
 
-export default ConfirmColumnDeletionDialog;
+export default ConfirmTaskCardDeletionDialog;
