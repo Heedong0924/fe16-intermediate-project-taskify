@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { ContentSectionWithAction } from '@/components/common/ContentSection';
-import { UserProfile } from '@/components/common/Profile';
+import { AvatarProfile, UserProfile } from '@/components/common/Profile';
 import Button from '@/components/ui/Buttons';
 import PaginationButton from '@/components/ui/PaginationButton';
 import {
@@ -55,6 +55,11 @@ export default function DashboardMembers({
             <UserProfile
               profileImg={member.profileImageUrl}
               userName={member.nickname}
+            />
+            <AvatarProfile
+              userName={member.nickname}
+              profileImg={member.profileImageUrl}
+              size="md"
             />
             {!member.isOwner ? (
               <Button
