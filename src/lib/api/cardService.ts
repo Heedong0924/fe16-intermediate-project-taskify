@@ -70,6 +70,11 @@ export const updateCard = async (
   return res.data;
 };
 
+export const deleteCard = async (cardId: number): Promise<DetailCard> => {
+  const res = await axiosInstance.delete(`/cards/${cardId}`);
+  return res.data;
+};
+
 export const getCardList = async (
   params: DetailCardProps,
 ): Promise<DetailCardResponse> => {

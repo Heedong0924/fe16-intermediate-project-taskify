@@ -1,5 +1,6 @@
 import axiosInstance from '@/lib/axiosInstance';
-import Comment from '@/types/Comment';
+import Comment from '@/types/Comment.types';
+import CommentsResponse from '@/types/CommentsResponse';
 
 export const getComments = async ({
   cardId,
@@ -9,7 +10,13 @@ export const getComments = async ({
   cardId: number;
   size: number;
   cursorId: number;
-}): Promise<[Comment]> => {
+}): Promise<CommentsResponse> => {
+  if (cursorId === 0) {
+    const res = await axiosInstance.get(
+      `/comments?cardId=${cardId}&size=${size}`,
+    );
+    return res.data;
+  }
   const res = await axiosInstance.get(
     `/comments?cardId=${cardId}&size=${size}&cursorId=${cursorId}`,
   );
@@ -36,10 +43,13 @@ export const createComment = async ({
   return res.data;
 };
 
-export const updateComment = async (
-  commentId: number,
-  content: string,
-): Promise<Comment> => {
+export const updateComment = async ({
+  commentId,
+  content,
+}: {
+  commentId: number;
+  content: string;
+}): Promise<Comment> => {
   const res = await axiosInstance.put(`/comments/${commentId}`, {
     content,
   });

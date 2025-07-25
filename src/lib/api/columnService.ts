@@ -21,10 +21,13 @@ export const getColumn = async (
   return res.data;
 };
 
-export const updateColumn = async (
-  columnId: number,
-  title: string,
-): Promise<Column> => {
+export const updateColumn = async ({
+  columnId,
+  title,
+}: {
+  columnId: number;
+  title: string;
+}): Promise<Column> => {
   const res = await axiosInstance.put(`/columns/${columnId}`, {
     title,
   });
