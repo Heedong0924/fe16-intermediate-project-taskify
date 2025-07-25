@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 
-import { AvatarProfile } from './Profile';
+import { AvatarProfile } from '../../Profile';
 
-interface CardAuthorProps {
-  className: string;
+interface CardAuthorProps extends HTMLAttributes<HTMLDivElement> {
   author?: string;
   dueDate?: string;
 }
@@ -21,7 +20,7 @@ export const formattedDate = (str: string) => {
 };
 
 const CardAuthor = ({ className, author, dueDate }: CardAuthorProps) => {
-  const baseStyles = 'grid px-4 py-2';
+  const baseStyles = 'grid px-4 py-2 text-left';
   const combinedClassName = `${baseStyles} ${className}`;
   const colHeaderFtStyles = 'text-taskify-xs-semibold text-taskify-neutral-900';
   const cellFtStyles = 'text-taskify-neutral-700 text-taskify-xs-normal';
