@@ -15,10 +15,9 @@ export default function DashboardMembers({
   dashboardsId: number;
 }) {
   const [page, setPage] = useState(1);
-  const size = 5;
+  const size = 4;
 
-  // isPending, isError
-  const { data } = useDashboardMember({
+  const { data, isPending, isError } = useDashboardMember({
     page,
     size,
     dashboardId: dashboardsId,
@@ -26,9 +25,14 @@ export default function DashboardMembers({
 
   const deleteMutation = useDeleteMember();
 
+  if (isPending) return <p>로딩 중...</p>;
+  // 404 페이지와 함께 모달 띄우기
+  if (isError) return <p>실패...</p>;
+
   // 나일때는 삭제 버튼 삭제
   return (
     <ContentSectionWithAction
+      className="min-h-[401px] !pb-[16px] md:min-h-[410px] md:!pb-[20px]"
       title="구성원"
       titleRight={
         <PaginationButton
@@ -39,18 +43,34 @@ export default function DashboardMembers({
         />
       }
     >
-      {data?.members.map((member) => (
-        <div key={member.id} className="flex items-center justify-between">
-          <UserProfile profileImg="" userName={member.nickname} />
-          <Button
-            // 삭제 후 페이지 이동
-            onClick={() => deleteMutation.mutate(member.id)}
-            className="btn-one"
+      <h2 className="mt-[18px] px-[20px] text-base text-[var(--gray-D9D9D9)] md:mt-[27px] md:px-[28px] md:text-[16px]">
+        이름
+      </h2>
+      <ul className="divide-y">
+        {data?.members.map((member) => (
+          <li
+            key={member.id}
+            className="flex items-center justify-between px-[20px] py-[12px] last:pb-0 md:px-[28px] md:py-[16px]"
           >
-            삭제
-          </Button>
-        </div>
-      ))}
+            <UserProfile
+              profileImg={member.profileImageUrl}
+              userName={member.nickname}
+            />
+            {!member.isOwner ? (
+              <Button
+                // 경고 모달창 추가하기
+                onClick={() => deleteMutation.mutate(member.id)}
+                color="white-violet"
+                className="btn-one o !rounded-[4px] border border-[var(--gray-D9D9D9)] text-[12px] md:!text-[14px]"
+              >
+                삭제
+              </Button>
+            ) : (
+              ''
+            )}
+          </li>
+        ))}
+      </ul>
     </ContentSectionWithAction>
   );
 }

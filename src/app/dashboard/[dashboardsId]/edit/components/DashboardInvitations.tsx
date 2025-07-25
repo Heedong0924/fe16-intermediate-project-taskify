@@ -1,12 +1,14 @@
 import { useState } from 'react';
 
 import { ContentSectionWithAction } from '@/components/common/ContentSection';
+import SendInvitationDialog from '@/components/common/dialog/SendInvitationDialog';
 import Button from '@/components/ui/Buttons';
 import {
   useInviteDashboardUser,
   useDashboardInvitations,
   useDeleteInvitation,
 } from '@/hooks/useDashboardInvitations';
+import { useDialogStore } from '@/stores/useDialogStore';
 
 // 네비게이션 만들어
 export default function DashboardInvitations({
@@ -14,6 +16,8 @@ export default function DashboardInvitations({
 }: {
   dashboardsId: number;
 }) {
+  const { openDialog } = useDialogStore();
+
   // 초대 함
   const [email, setEmail] = useState('');
   const { mutate: inviteUser, isPending } =
@@ -36,13 +40,13 @@ export default function DashboardInvitations({
     if (!email) return;
 
     // 이미 초대한 이메일
-    const alreadyInvited = invitationsDate?.invitations.some(
-      (invitation) => invitation.invitee.email === email,
-    );
-    if (alreadyInvited) {
-      alert('이미 초대한 이메일임');
-      return;
-    }
+    // const alreadyInvited = invitationsDate?.invitations.some(
+    //   (invitation) => invitation.invitee.email === email,
+    // );
+    // if (alreadyInvited) {
+    //   alert('이미 초대한 이메일임');
+    //   return;
+    // }
 
     // 고쳐
     const alreadyAcceptedMember = invitationsDate?.invitations.some(
@@ -74,6 +78,18 @@ export default function DashboardInvitations({
       title="초대 내역"
       titleRight={
         <>
+          <Button
+            className=""
+            onClick={() =>
+              openDialog({
+                dialogComponent: (
+                  <SendInvitationDialog dashboardId={dashboardsId} />
+                ),
+              })
+            }
+          >
+            초대하기
+          </Button>
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -90,7 +106,7 @@ export default function DashboardInvitations({
         invitationsDate.invitations.map((invitation) => (
           <div key={invitation.id} className="flex gap-2.5">
             <p>{invitation.invitee.email}</p>
-            <p>상태: {invitation.inviteAccepted ? '수락됨' : '대기 중'}</p>
+            {/* <p>상태: {invitation.inviteAccepted ? '수락됨' : '대기 중'}</p> */}
             <q>{new Date(invitation.createdAt).toLocaleDateString()}</q>
             <Button
               onClick={() => deleteMutation.mutate(invitation.id)}

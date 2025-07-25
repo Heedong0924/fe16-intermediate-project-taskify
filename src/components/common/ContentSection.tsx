@@ -3,14 +3,18 @@ import React from 'react';
 export function ContentSection({
   title,
   children,
+  className = '',
 }: {
   title: string;
   children: React.ReactNode;
+  className?: string;
 }) {
   return (
-    <section className="mb-4 rounded-[16px] bg-white px-[16px] py-[20px] md:px-[28px] md:py-[32px]">
+    <section
+      className={`${className} mb-4 rounded-[16px] bg-white px-[16px] py-[20px] md:px-[28px] md:py-[32px]`}
+    >
       <h1 className="text-[20px] font-[700] md:text-[24px]">{title}</h1>
-      <div>{children}</div>
+      {children}
     </section>
   );
 }
@@ -20,18 +24,22 @@ export function ContentSectionWithAction({
   title,
   titleRight,
   children,
+  className = '',
 }: {
   title: string;
   titleRight: React.ReactNode;
   children: React.ReactNode;
+  className?: string;
 }) {
   return (
-    <section className="mb-4 rounded-[16px] bg-white px-[16px] py-[20px] md:px-[28px] md:py-[32px]">
-      <div className="mb-[12px] flex items-center justify-between">
+    <section
+      className={`${className} mb-4 rounded-[16px] bg-white py-[20px] md:py-[32px]`}
+    >
+      <div className="mb-[12px] flex items-center justify-between px-[20px] md:px-[28px]">
         <h1 className="text-[20px] font-[700] md:text-[24px]">{title}</h1>
         <div className="flex">{titleRight}</div>
       </div>
-      <div>{children}</div>
+      {children}
     </section>
   );
 }

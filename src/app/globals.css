@@ -349,6 +349,14 @@
   .chip-colorPick label {
     @apply flex items-center justify-center rounded-full;
   }
+
+  /* 대시보드 상세 페이지 */
+  .dashboard-update-title label {
+    @apply !text-[16px] md:!text-[18px];
+  }
+  .dashboard-update-title input {
+    @apply !text-[14px] md:!text-[16px];
+  }
 }
 
 @theme inline {

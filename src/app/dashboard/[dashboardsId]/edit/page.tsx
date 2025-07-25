@@ -5,11 +5,7 @@ import Link from 'next/link';
 import { notFound, useParams } from 'next/navigation';
 
 import Button from '@/components/ui/Buttons';
-import {
-  useDashboard,
-  useUpdateDashboard,
-  useDeleteDashboard,
-} from '@/hooks/useDashboardEdit';
+import { useDeleteDashboard } from '@/hooks/useDashboardEdit';
 
 import DashboardInvitations from './components/DashboardInvitations';
 import DashboardMembers from './components/DashboardMembers';
@@ -24,16 +20,7 @@ export default function DashboardEditPage() {
     notFound();
   }
 
-  const { data: dashboardData, isLoading, isError } = useDashboard(id);
-
-  // 서버 에러 404 처리
-  if (isError) {
-    notFound();
-  }
-
-  const mutation = useUpdateDashboard(id);
-
-  // 삭제
+  // 대시보드 삭제
   const deleteMutation = useDeleteDashboard();
 
   return (
@@ -55,12 +42,7 @@ export default function DashboardEditPage() {
       </nav>
 
       {/* 대시보드 타이틀, 컬러 수정 */}
-      <DashboardUpdate
-        dashboard={dashboardData}
-        isLoading={isLoading}
-        // isError={dashboardQuery.isError}
-        onUpdate={(data) => mutation.mutate(data)}
-      />
+      <DashboardUpdate dashboardsId={id} />
 
       {/* 구성원 */}
       <DashboardMembers dashboardsId={id} />
@@ -69,6 +51,7 @@ export default function DashboardEditPage() {
       <DashboardInvitations dashboardsId={id} />
 
       {/*  대시보드 삭제하기 */}
+      {/* 모달 경고 창 떠야함 */}
       <Button
         color="white-black"
         className="btn-removeDash w-full border border-[#D9D9D9] bg-transparent md:w-[320px]"
