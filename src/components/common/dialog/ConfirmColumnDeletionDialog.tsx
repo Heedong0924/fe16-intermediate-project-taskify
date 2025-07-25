@@ -1,3 +1,6 @@
+import { useMutation } from '@tanstack/react-query';
+import { FormEvent } from 'react';
+
 import { Button } from '@/components/ui/Button';
 import {
   DialogContent,
@@ -5,6 +8,7 @@ import {
   DialogFooter,
   DialogHeader,
 } from '@/components/ui/Dialog';
+import { deleteColumn } from '@/lib/api/columnService';
 import { useDialogStore } from '@/stores/useDialogStore';
 
 interface ConfirmColumnDeletionDialogProps {
@@ -16,9 +20,19 @@ const ConfirmColumnDeletionDialog = ({
 }: ConfirmColumnDeletionDialogProps) => {
   const { closeDialog, goBack } = useDialogStore();
 
-  const handleDeleteClick = () => {
-    alert(columnId);
-    closeDialog();
+  const { mutate, isPending } = useMutation({
+    mutationFn: deleteColumn,
+    onSuccess: () => {
+      closeDialog();
+    },
+    onError: (error) => {
+      console.error('컬럼 삭제에 실패했습니다.', error.message);
+    },
+  });
+
+  const handleDeleteClick = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!isPending) mutate(columnId);
   };
 
   const content = (

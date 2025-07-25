@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { ChangeEvent, FormEvent, useState } from 'react';
 
 import { Button } from '@/components/ui/Button';
 import {
@@ -9,6 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/Dialog';
+import { createDashboard } from '@/lib/api/dashboardService';
 import { useDialogStore } from '@/stores/useDialogStore';
 
 import { ColorPickerChip } from '../Chips';
@@ -16,11 +18,27 @@ import { ColorPickerChip } from '../Chips';
 const CreateDashboardDialog = () => {
   const { closeDialog } = useDialogStore();
 
+  const [createDashboardValue, setCreateDashboardValue] = useState<string>('');
   const [selectedColor, setSelectedColor] = useState<string>('#7AC555');
 
-  const handleSubmit = () => {
-    alert('Done!');
-    closeDialog();
+  const { mutate, isPending } = useMutation({
+    mutationFn: createDashboard,
+    onSuccess: () => {
+      closeDialog();
+    },
+    onError: (error) => {
+      console.error('대쉬보드 생성에 실패했습니다.', error.message);
+    },
+  });
+
+  const handleCreateDashboardChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setCreateDashboardValue(e.target.value);
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!isPending)
+      mutate({ title: createDashboardValue, color: selectedColor });
   };
 
   const content = (
@@ -54,6 +72,7 @@ const CreateDashboardDialog = () => {
                 id="name"
                 placeholder="새로운 대시보드"
                 type="text"
+                onChange={handleCreateDashboardChange}
                 className="text-taskify-neutral-700 text-taskify-md-regular border-taskify-neutral-300 col-span-4 rounded-lg border px-4 py-3"
               />
             </div>
