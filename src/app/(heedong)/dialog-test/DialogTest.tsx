@@ -5,7 +5,7 @@ import ColumnSettingsDialog from '@/components/common/dialog/ColumnSettingsDialo
 import CreateColumnDialog from '@/components/common/dialog/CreateColumnDialog';
 import CreateDashboardDialog from '@/components/common/dialog/CreateDashboardDialog';
 import SendInvitationDialog from '@/components/common/dialog/SendInvitationDialog';
-// import TaskCardDialog from '@/components/common/dialog/TaskCardDialog';
+import TaskCardDialog from '@/components/common/dialog/TaskCardDialog';
 import { Button } from '@/components/ui/Button';
 import { useDialogStore } from '@/stores/useDialogStore';
 
@@ -14,6 +14,7 @@ const DialogTest = () => {
 
   return (
     <div className="flex flex-col gap-4">
+      테스트 중인 DashboardId: 15564
       <Button
         onClick={() => {
           setTimeout(() => {
@@ -34,7 +35,7 @@ const DialogTest = () => {
         onClick={() =>
           openDialog({
             dialogComponent: (
-              <ColumnSettingsDialog columnId={1} columnName="기존 컬럼" />
+              <ColumnSettingsDialog columnId={52576} columnName="기존 컬럼" />
             ),
           })
         }
@@ -66,17 +67,22 @@ const DialogTest = () => {
       >
         글로벌 다이얼로그: 초대하기 테스트
       </Button>
-      {/* <Button
+      <Button
         onClick={() =>
           openDialog({
             dialogComponent: (
-              <TaskCardDialog cardId={13404} columnName="Todo" />
+              <TaskCardDialog
+                dashboardId={15564}
+                columnId={52469}
+                columnName="Todo"
+                cardId={13404}
+              />
             ),
           })
         }
       >
         글로벌 다이얼로그: 할 일 카드 테스트
-      </Button> */}
+      </Button>
     </div>
   );
 };
