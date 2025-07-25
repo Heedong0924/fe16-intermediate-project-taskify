@@ -13,6 +13,8 @@ import {
 import { createColumn } from '@/lib/api/columnService';
 import { useDialogStore } from '@/stores/useDialogStore';
 
+import AlertDialog from './AlertDialog';
+
 interface CreateColumnDialogProps {
   dashboardId: number;
 }
@@ -20,15 +22,23 @@ interface CreateColumnDialogProps {
 const CreateColumnDialog = ({ dashboardId }: CreateColumnDialogProps) => {
   const [createColumnValue, setCreateColumnValue] = useState<string>('');
 
-  const { closeDialog } = useDialogStore();
+  const { openDialog, closeDialog } = useDialogStore();
 
   const { mutate, isPending } = useMutation({
     mutationFn: createColumn,
     onSuccess: () => {
       closeDialog();
     },
-    onError: (error) => {
-      console.error('컬럼 생성에 실패했습니다.', error.message);
+    onError: (_error) => {
+      openDialog({
+        dialogComponent: (
+          <AlertDialog
+            description="컬럼 생성에 실패했습니다."
+            closeBtnText="확인"
+            isGoBack
+          />
+        ),
+      });
     },
   });
 

@@ -16,10 +16,15 @@ import { useDialogStore } from '@/stores/useDialogStore';
 interface AlertDialogProps {
   description: string;
   closeBtnText: string;
+  isGoBack?: boolean;
 }
 
-const AlertDialog = ({ description, closeBtnText }: AlertDialogProps) => {
-  const { closeDialog } = useDialogStore();
+const AlertDialog = ({
+  description,
+  closeBtnText,
+  isGoBack,
+}: AlertDialogProps) => {
+  const { closeDialog, goBack } = useDialogStore();
 
   const content = (
     <DialogContent
@@ -36,7 +41,7 @@ const AlertDialog = ({ description, closeBtnText }: AlertDialogProps) => {
       <DialogFooter>
         <Button
           className="bg-taskify-violet-primary hover:bg-taskify-violet h-auto w-full cursor-pointer"
-          onClick={closeDialog}
+          onClick={isGoBack ? goBack : closeDialog}
         >
           <span className="text-taskify-md-semibold text-taskify-neutral-0 md:text-taskify-lg-medium">
             {closeBtnText}

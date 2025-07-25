@@ -11,6 +11,8 @@ import {
 import { deleteCard } from '@/lib/api/cardService';
 import { useDialogStore } from '@/stores/useDialogStore';
 
+import AlertDialog from './AlertDialog';
+
 interface ConfirmColumnDeletionDialogProps {
   cardId: number;
 }
@@ -18,15 +20,23 @@ interface ConfirmColumnDeletionDialogProps {
 const ConfirmTaskCardDeletionDialog = ({
   cardId,
 }: ConfirmColumnDeletionDialogProps) => {
-  const { closeDialog, goBack } = useDialogStore();
+  const { openDialog, closeDialog, goBack } = useDialogStore();
 
   const { mutate, isPending } = useMutation({
     mutationFn: deleteCard,
     onSuccess: () => {
       closeDialog();
     },
-    onError: (error) => {
-      console.error('카드 삭제에 실패했습니다.', error.message);
+    onError: (_error) => {
+      openDialog({
+        dialogComponent: (
+          <AlertDialog
+            description="카드 삭제에 실패했습니다."
+            closeBtnText="확인"
+            isGoBack
+          />
+        ),
+      });
     },
   });
 

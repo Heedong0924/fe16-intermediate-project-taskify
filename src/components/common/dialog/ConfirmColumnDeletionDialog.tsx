@@ -11,6 +11,8 @@ import {
 import { deleteColumn } from '@/lib/api/columnService';
 import { useDialogStore } from '@/stores/useDialogStore';
 
+import AlertDialog from './AlertDialog';
+
 interface ConfirmColumnDeletionDialogProps {
   columnId: number;
 }
@@ -18,15 +20,23 @@ interface ConfirmColumnDeletionDialogProps {
 const ConfirmColumnDeletionDialog = ({
   columnId,
 }: ConfirmColumnDeletionDialogProps) => {
-  const { closeDialog, goBack } = useDialogStore();
+  const { openDialog, closeDialog, goBack } = useDialogStore();
 
   const { mutate, isPending } = useMutation({
     mutationFn: deleteColumn,
     onSuccess: () => {
       closeDialog();
     },
-    onError: (error) => {
-      console.error('컬럼 삭제에 실패했습니다.', error.message);
+    onError: (_error) => {
+      openDialog({
+        dialogComponent: (
+          <AlertDialog
+            description="컬럼 삭제에 실패했습니다."
+            closeBtnText="확인"
+            isGoBack
+          />
+        ),
+      });
     },
   });
 

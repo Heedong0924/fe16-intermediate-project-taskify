@@ -13,12 +13,14 @@ import {
 import { createInvitations } from '@/lib/api/dashboardService';
 import { useDialogStore } from '@/stores/useDialogStore';
 
+import AlertDialog from './AlertDialog';
+
 interface SendInvitationDialogProps {
   dashboardId: number;
 }
 
 const SendInvitationDialog = ({ dashboardId }: SendInvitationDialogProps) => {
-  const { closeDialog } = useDialogStore();
+  const { openDialog, closeDialog } = useDialogStore();
   const [emailValue, setEmailValue] = useState<string>('');
 
   const { mutate, isPending } = useMutation({
@@ -26,8 +28,16 @@ const SendInvitationDialog = ({ dashboardId }: SendInvitationDialogProps) => {
     onSuccess: () => {
       closeDialog();
     },
-    onError: (error) => {
-      console.error('초대 요청에 실패했습니다.', error.message);
+    onError: (_error) => {
+      openDialog({
+        dialogComponent: (
+          <AlertDialog
+            description="초대 요청에 실패했습니다."
+            closeBtnText="확인"
+            isGoBack
+          />
+        ),
+      });
     },
   });
 

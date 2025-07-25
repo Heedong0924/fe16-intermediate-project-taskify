@@ -14,9 +14,10 @@ import { createDashboard } from '@/lib/api/dashboardService';
 import { useDialogStore } from '@/stores/useDialogStore';
 
 import { ColorPickerChip } from '../Chips';
+import AlertDialog from './AlertDialog';
 
 const CreateDashboardDialog = () => {
-  const { closeDialog } = useDialogStore();
+  const { openDialog, closeDialog } = useDialogStore();
 
   const [createDashboardValue, setCreateDashboardValue] = useState<string>('');
   const [selectedColor, setSelectedColor] = useState<string>('#7AC555');
@@ -26,8 +27,16 @@ const CreateDashboardDialog = () => {
     onSuccess: () => {
       closeDialog();
     },
-    onError: (error) => {
-      console.error('대쉬보드 생성에 실패했습니다.', error.message);
+    onError: (_error) => {
+      openDialog({
+        dialogComponent: (
+          <AlertDialog
+            description="대쉬보드 생성에 실패했습니다."
+            closeBtnText="확인"
+            isGoBack
+          />
+        ),
+      });
     },
   });
 

@@ -12,6 +12,7 @@ import {
 import { updateColumn } from '@/lib/api/columnService';
 import { useDialogStore } from '@/stores/useDialogStore';
 
+import AlertDialog from './AlertDialog';
 import ConfirmColumnDeletionDialog from './ConfirmColumnDeletionDialog';
 
 interface ColumnSettingsDialogProps {
@@ -30,8 +31,16 @@ const ColumnSettingsDialog = ({
   const { mutate, isPending } = useMutation({
     mutationFn: updateColumn,
     onSuccess: () => {},
-    onError: (error) => {
-      console.error('컬럼 수정에 실패했습니다.', error.message);
+    onError: (_error) => {
+      openDialog({
+        dialogComponent: (
+          <AlertDialog
+            description="컬럼 수정에 실패했습니다."
+            closeBtnText="확인"
+            isGoBack
+          />
+        ),
+      });
     },
   });
 
