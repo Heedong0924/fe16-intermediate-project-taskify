@@ -50,3 +50,14 @@ export const createInvitations = async ({
   );
   return res.data;
 };
+
+// 대시보드 아이디로 상세 가져오기
+export const getDashboardById = async (dashboardsId: number) => {
+  const res = await axiosInstance.get(`/dashboards/${dashboardsId}`);
+  return res.data;
+};
+
+// 대시보드 삭제
+export const deleteDashboard = async (dashboardId: number): Promise<void> => {
+  await axiosInstance.delete(`/dashboards/${dashboardId}`);
+};
