@@ -77,7 +77,7 @@ const TaskDialogUpdateCommentForm = ({
   }, [isUpdateMode]);
 
   return isUpdateMode ? (
-    <form className="relative" onSubmit={handleCommentSubmit}>
+    <form className="relative mt-[-8px]" onSubmit={handleCommentSubmit}>
       <textarea
         className="border-taskify-neutral-300 text-taskify-xs-normal dialog-scrollable-content w-full resize-none rounded-lg border px-3 py-3"
         ref={textareaRef}
@@ -96,7 +96,9 @@ const TaskDialogUpdateCommentForm = ({
       </Button>
     </form>
   ) : (
-    <div className="text-taskify-xs-normal whitespace-pre-wrap">{content}</div>
+    <span className="text-taskify-xs-normal md:text-taskify-md-regular mt-[-8px] grow-1 whitespace-pre-wrap">
+      {content}
+    </span>
   );
 };
 

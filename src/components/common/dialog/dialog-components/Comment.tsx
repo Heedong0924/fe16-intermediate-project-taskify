@@ -38,7 +38,7 @@ const Comment = ({ className, comment, cardId }: CommentProps) => {
   });
 
   const linkText =
-    'underline underline-offset-2 cursor-pointer text-taskify-xs-normal text-taskify-neutral-400';
+    'underline underline-offset-2 cursor-pointer text-taskify-xs-normal text-[10px] md:text-taskify-xs-normal text-taskify-neutral-400';
 
   const handleCommentUpdateClick = () => {
     setIsUpdateMode((prev) => !prev);
@@ -57,10 +57,10 @@ const Comment = ({ className, comment, cardId }: CommentProps) => {
       <AvatarProfile userName={comment.author.nickname} size="sm" />
       <div className="flex grow-1 flex-col gap-2">
         <div className="flex items-end gap-2">
-          <span className="text-taskify-xs-semibold text-taskify-neutral-700">
+          <span className="text-taskify-xs-semibold md:text-taskify-md-semibold text-taskify-neutral-700">
             {comment.author.nickname}
           </span>
-          <span className="text-taskify-xs-normal text-taskify-neutral-400">
+          <span className="text-taskify-xs-normal md:text-taskify-xs-normal text-taskify-neutral-400 text-[10px]">
             {formattedDate(comment.updatedAt)}
             {comment.createdAt &&
               comment.updatedAt &&
@@ -76,7 +76,7 @@ const Comment = ({ className, comment, cardId }: CommentProps) => {
           toggleUpdateMode={toggleUpdateMode}
         />
         {userState !== null && userState.user.id === comment.author.id && (
-          <div className="flex gap-2">
+          <div className="mt-[-8px] flex gap-2">
             <button
               className={linkText}
               type="button"

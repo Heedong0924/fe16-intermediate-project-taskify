@@ -59,10 +59,12 @@ const TaskDialogCreateCommentForm = ({
 
   return (
     <div className={className}>
-      <p className="text-taskify-md-medium mb-1">댓글</p>
+      <p className="text-taskify-md-medium md:text-taskify-lg-medium mb-1">
+        댓글
+      </p>
       <form onSubmit={handleCommentSubmit}>
         <textarea
-          className="border-taskify-neutral-300 text-taskify-xs-normal dialog-scrollable-content w-full resize-none rounded-lg border px-3 py-3"
+          className="border-taskify-neutral-300 text-taskify-xs-normal md:text-taskify-md-regular dialog-scrollable-content w-full resize-none rounded-lg border px-3 py-3"
           placeholder="댓글 작성하기"
           rows={3}
           value={commentValue}
@@ -75,7 +77,7 @@ const TaskDialogCreateCommentForm = ({
           disabled={isPending}
           onClick={handleCommentSubmitClick}
         >
-          입력
+          <span className="text-taskify-xs-medium">입력</span>
         </Button>
       </form>
     </div>
