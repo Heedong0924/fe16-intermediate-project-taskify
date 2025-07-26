@@ -30,11 +30,10 @@ export function ColumnSelector({
   className,
 }: ColumnSelectorProps) {
   // 스토어에서 Column 리스트 가져오기
-  const columns = useColumnStore((state) => state.getColumnsInfos());
-
+  const columns = useColumnStore((state) => state.getColumns());
   // 현재 선택된 id 에 해당하는 title 찾기
   const current = columns.find((column) => column.id === columnId);
-
+  console.log('ColumnSelector', { columns, current });
   return (
     <div className={className}>
       <label

@@ -1,5 +1,5 @@
 import axiosInstance from '@/lib/axiosInstance';
-import DetailCard from '@/types/DatailCard';
+import DetailCard from '@/types/DetailCard';
 
 export const getCard = async (cardId: number): Promise<DetailCard> => {
   const res = await axiosInstance.get(`/cards/${cardId}`);

@@ -30,6 +30,8 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   className?: string;
   /** 입력 필드 추가 클래스명 */
   inputClassName?: string;
+  /** 강조 표시 */
+  isHightLight?: boolean;
   /** 좌측 아이콘 클릭 핸들러 */
   onLeftIconClick?: () => void;
   /** 우측 아이콘 클릭 핸들러 */
@@ -60,6 +62,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       inputClassName,
       disabled = false,
       id,
+      isHightLight = false,
       onLeftIconClick,
       onRightIconClick,
       onFocus,
@@ -136,6 +139,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             )}
           >
             {label}
+            {isHightLight && (
+              <span className="text-taskify-violet-primary"> *</span>
+            )}
           </label>
         )}
 

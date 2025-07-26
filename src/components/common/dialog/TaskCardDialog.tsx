@@ -18,8 +18,8 @@ import CardAuthor from '../CardAuthor';
 import { StatusChip, TagChip } from '../Chips';
 import Comments from './Comments';
 import { KebobMenu } from '../KebobMenu';
-import AlertDialog from './AlertDialog';
 import ConfirmTaskCardDeletionDialog from './ConfirmTaskCardDeletionDialog';
+import TodoEditDialog from './TodoDialog/TodoEditDialog';
 
 interface TaskCardDialogProps {
   dashboardId: number;
@@ -100,7 +100,11 @@ const TaskCardDialog = ({
                 onSelect: () => {
                   openDialog({
                     dialogComponent: (
-                      <AlertDialog description="test" closeBtnText="확인" />
+                      <TodoEditDialog
+                        columnId={columnId}
+                        cardData={data}
+                        mode="edit"
+                      />
                     ),
                   });
                 },
