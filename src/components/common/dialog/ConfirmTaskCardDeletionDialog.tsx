@@ -7,6 +7,7 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
+  DialogTitle,
 } from '@/components/ui/Dialog';
 import { deleteCard } from '@/lib/api/cardService';
 import { useDialogStore } from '@/stores/useDialogStore';
@@ -47,13 +48,16 @@ const ConfirmTaskCardDeletionDialog = ({
 
   const content = (
     <DialogContent
-      className="w-[327px] gap-8 px-4 py-6 md:w-[568px]"
+      className="max-w-[300px] px-4 sm:max-w-[460px] md:max-w-[568px] md:gap-7 md:px-6"
       showCloseButton={false}
     >
-      <DialogHeader className="flex">
-        <DialogDescription className="text-taskify-lg-medium text-taskify-neutral-700 md:text-taskify-xl-medium text-center">
-          정말 삭제하시겠습니까?
-        </DialogDescription>
+      <DialogHeader className="gap-0">
+        <DialogTitle className="text-center">
+          <span className="text-taskify-neutral-700 text-taskify-2lg-medium md:text-taskify-xl-medium">
+            정말 삭제하시겠습니까?
+          </span>
+        </DialogTitle>
+        <DialogDescription />
       </DialogHeader>
       <form onSubmit={handleDeleteClick}>
         <DialogFooter className="flex flex-row justify-between">
