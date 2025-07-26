@@ -1,7 +1,10 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { ContentSection } from '@/components/common/ContentSection';
+import MyInfoPassword from './components/MyInfoPassword';
+import MyInfoProfile from './components/MyInfoProfile';
 // import Button from '@/components/ui/Buttons';
 
 export default function MyPage() {
@@ -9,10 +12,11 @@ export default function MyPage() {
     <div className="min-h-screen bg-[var(--gray-FAFAFA)] p-[20px]">
       {/* 뒤로가기 */}
       <nav className="mb-[34px]">
+        {/* 주소 설정해주기 */}
         <Link href="/" className="flex items-center gap-2">
           <Image
             src="/images/arrow-left.svg"
-            alt="왼쪽으로 가는 화살표 아이콘"
+            alt="돌아가기"
             width={20}
             height={20}
           />
@@ -20,9 +24,9 @@ export default function MyPage() {
         </Link>
       </nav>
       {/* 프로필 */}
-      <ContentSection title="프로필"> </ContentSection>
+      <MyInfoProfile />
       {/* 비밀번호 변경 */}
-      <ContentSection title="비밀번호 변경"> </ContentSection>
+      <MyInfoPassword />
     </div>
   );
 }

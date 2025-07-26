@@ -12,9 +12,13 @@ const nextConfig = {
         pathname: "/icons/**",
       },
       */
+      // {
+      //   protocol: 'https',
+      //   hostname: 'picsum.photos', // Picsum 도메인 (테스트 이미지)
+      // },
       {
         protocol: 'https',
-        hostname: 'picsum.photos', // Picsum 도메인 (테스트 이미지)
+        hostname: 'sprint-fe-project.s3.ap-northeast-2.amazonaws.com',
       },
     ],
   },
