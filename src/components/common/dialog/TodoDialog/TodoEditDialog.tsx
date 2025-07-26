@@ -10,7 +10,7 @@ import Input from '@/components/common/Input';
 import Textarea from '@/components/common/Textarea';
 import UploadImageButton from '@/components/common/UploadImageButton';
 import { Button } from '@/components/ui/Button';
-import { DatePicker } from '@/components/ui/DatePicker';
+import { DateTimePicker } from '@/components/ui/DateTimePicker';
 import {
   DialogClose,
   DialogContent,
@@ -197,7 +197,26 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
           >
             마감일
           </label>
-          <DatePicker />
+          <Controller
+            name="dueDate"
+            control={control}
+            defaultValue={defaultVals.dueDate}
+            render={({ field }) => {
+              // field.value: ISO string or ''
+              const selectedDate = field.value
+                ? new Date(field.value)
+                : undefined;
+              return (
+                <DateTimePicker
+                  value={selectedDate}
+                  onChange={(date) => {
+                    field.onChange(date ? date.toISOString() : '');
+                  }}
+                  placeholder="마감일을 선택하세요"
+                />
+              );
+            }}
+          />
         </div>
 
         {/* 태그 선택 */}
