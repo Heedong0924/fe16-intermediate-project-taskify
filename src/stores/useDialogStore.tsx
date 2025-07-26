@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 import { create } from 'zustand';
 
+import { Dialog } from '@/components/ui/Dialog';
+
 /**
  * @interface DiallogStateContent
  * @description Dialog에서 사용되는 컨텐츠 상태들의 타입 정의
@@ -23,9 +25,13 @@ interface DialogState extends DialogStateContent {
 
   /**
    * @method openDialog Dialog를 활성화하는 액션 함수
-   * @param {ReactNode} params.dialogComponent - Dialog 내부에 렌더링될 React 컴포넌트 (필수)
+   * @param {ReactNode} params.dialogComponent Dialog 내부에 렌더링될 React 컴포넌트 (필수)
+   * @param {boolean} params.isNewOpen Dialog를 새로 띄울지를 판별하는 플래그 (중첩 다이얼로그 여부)
    */
-  openDialog: (params: { dialogComponent: ReactNode }) => void;
+  openDialog: (params: {
+    dialogComponent: ReactNode;
+    isNewOpen?: boolean;
+  }) => void;
 
   /** @method closeDialog Dialog 닫는 액션 함수 */
   closeDialog: () => void;
@@ -40,7 +46,7 @@ export const useDialogStore = create<DialogState>((set) => ({
   stateHistory: [],
   data: null,
 
-  openDialog: ({ dialogComponent }) => {
+  openDialog: ({ dialogComponent, isNewOpen = false }) => {
     set((prev) => {
       const newHistory = {
         isOpen: prev.isOpen,
@@ -49,7 +55,14 @@ export const useDialogStore = create<DialogState>((set) => ({
 
       return {
         isOpen: true,
-        dialogComponent,
+        dialogComponent: !isNewOpen ? (
+          dialogComponent
+        ) : (
+          <>
+            {prev.dialogComponent}
+            <Dialog open>{dialogComponent}</Dialog>
+          </>
+        ),
         stateHistory: prev.isOpen
           ? [...prev.stateHistory, newHistory]
           : prev.stateHistory,
