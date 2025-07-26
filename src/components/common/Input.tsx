@@ -86,7 +86,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     /**
      * 상태별 border 클래스를 반환합니다
      */
-    const getBorderClass = (state: InputState): string => {
+    const getInputBorderClass = (state: InputState): string => {
       const borderClasses = {
         default: 'border-gray-300 hover:border-gray-400',
         focus: 'border-violet-500 ring-2 ring-violet-100',
@@ -122,7 +122,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     };
 
     const currentState = getInputState();
-    const borderClass = getBorderClass(currentState);
+    const borderClass = getInputBorderClass(currentState);
     const disabledClass = disabled
       ? 'bg-gray-50 cursor-not-allowed'
       : 'bg-white';

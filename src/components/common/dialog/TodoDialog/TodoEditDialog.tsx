@@ -1,10 +1,11 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
-import { Calendar } from 'lucide-react';
 import React, { useCallback, useMemo } from 'react';
 import { useForm, Controller } from 'react-hook-form';
+import { twMerge } from 'tailwind-merge';
 
+import { TagInput } from '@/components/common/dialog/TodoDialog/TagInput';
 import Input from '@/components/common/Input';
 import UploadImageButton from '@/components/common/UploadImageButton';
 import { Button } from '@/components/ui/Button';
@@ -89,16 +90,32 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
           },
     [cardData, columnId],
   );
+  console.log('defaultVals', defaultVals);
+
   const {
     control,
     register,
     handleSubmit,
-    formState: { errors, dirtyFields, isSubmitting },
+    formState: { errors, dirtyFields, isSubmitting, isValid },
   } = useForm<TodoFormData>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
     defaultValues: defaultVals,
   });
+
+  // 스타일 변수
+  const editModeClass = mode === 'edit' ? 'md:grid-cols-2' : '';
+  const getStatusClass = () => {
+    if (errors.description) {
+      return 'border-red-500 focus:ring-2 focus:ring-red-100';
+    }
+    if (dirtyFields.description) {
+      return 'border-green-500 focus:ring-2 focus:ring-green-100';
+    }
+    return '';
+  };
+
+  // api 연결 뮤테이션
   const uploadMutation = useMutation<string, Error, File>({
     mutationFn: (file) => cardImageUpload(columnId, file),
   });
@@ -125,14 +142,14 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
       onOpenAutoFocus={(event) => event.preventDefault()}
       showCloseButton={false}
     >
-      <DialogHeader className="pb-8">
+      <DialogHeader>
         <DialogTitle className="text-taskify-neutral-800 text-xl font-bold">
           {mode === 'edit' ? '할 일 수정' : '할 일 생성'}
         </DialogTitle>
       </DialogHeader>
 
-      <form className="text-taskify-neutral-800 flex max-h-[70vh] flex-col gap-8 overflow-auto">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+      <form className="text-taskify-neutral-800 flex max-h-[70vh] flex-col gap-8 overflow-auto p-3">
+        <div className={twMerge('grid grid-cols-1 gap-8', editModeClass)}>
           {/* 상태 선택 셀렉터 (생성 모드에서는 없음) */}
           {mode === 'edit' && (
             <Controller
@@ -171,6 +188,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
           type="text"
           isSuccess={dirtyFields.title && !errors.title}
           isError={!!errors.title}
+          errorMessage={errors.title?.message}
           placeholder="할 일 제목을 입력하세요"
           {...register('title', {
             required: '제목은 필수 입력입니다.',
@@ -191,35 +209,56 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
           </label>
           <textarea
             rows={3}
-            className="w-full resize-none rounded-md border border-gray-300 px-3 py-2"
+            className={twMerge(
+              'w-full resize-none rounded-md border px-3 py-2 transition-all duration-200',
+              'border-gray-300 focus:border-violet-300 focus:ring-2 focus:ring-violet-100',
+              getStatusClass(),
+            )}
             placeholder="할 일에 대한 상세한 설명을 입력하세요"
+            {...register('description', {
+              required: '설명은 필수 입력입니다.',
+              maxLength: {
+                value: 200,
+                message: '설명은 최대 200자까지 입력할 수 있습니다.',
+              },
+            })}
           />
+          {errors.description && (
+            <p className="mt-1 text-xs text-red-600">
+              {errors.description.message}
+            </p>
+          )}
         </div>
 
         {/* 마감일 입력 */}
-        <div className="space-y-2">
+        <div className="flex flex-col gap-2 md:gap-[10px]">
           <label
             className="text-sm font-medium text-gray-700"
             htmlFor="dueDate"
           >
             마감일
           </label>
-          <div className="relative">
-            <input
-              id="dueDate"
-              type="text"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 pl-10 focus:border-transparent focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              placeholder="YYYY.MM.DD HH:MM"
-            />
-            <Calendar className="absolute top-1/2 left-3 size-4 -translate-y-1/2 transform text-gray-400" />
-          </div>
         </div>
 
         {/* 태그 선택 */}
-        <div className="space-y-2">
+        <div className="flex flex-col gap-2 md:gap-[10px]">
           <label className="text-sm font-medium text-gray-700" htmlFor="tags">
             태그
           </label>
+          <Controller
+            name="tags"
+            control={control}
+            defaultValue={defaultVals.tags}
+            render={({ field }) => (
+              <TagInput
+                tags={field.value}
+                onChange={field.onChange}
+                placeholder="태그를 입력하고 ENTER을 눌러주세요"
+                maxTags={7}
+                size="sm"
+              />
+            )}
+          />
         </div>
 
         {/* 이미지 섹션 */}
@@ -256,7 +295,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
         <DialogClose asChild>
           <Button
             type="submit"
-            disabled={isSubmitting}
+            disabled={!isValid || isSubmitting}
             className="bg-taskify-violet-primary text-white hover:bg-violet-900"
             onClick={handleSubmit(onSubmit)}
           >

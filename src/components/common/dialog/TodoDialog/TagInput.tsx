@@ -39,6 +39,7 @@ export function TagInput({
   className = '',
 }: TagInputProps) {
   const [inputValue, setInputValue] = useState('');
+  const [isComposing, setIsComposing] = useState(false);
   const [currentTags, setCurrentTags] = useState<string[]>(tags);
 
   /**
@@ -79,10 +80,11 @@ export function TagInput({
    * Backspace: 입력값이 없을 때 마지막 태그 제거
    */
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !isComposing) {
       e.preventDefault();
-      addTag(inputValue);
-      setInputValue('');
+      const value = (e.currentTarget as HTMLInputElement).value.trim();
+      addTag(value);
+      setInputValue(''); // 상태 비우기
     } else if (e.key === 'Backspace' && !inputValue && currentTags.length > 0) {
       // 입력값이 없고 백스페이스를 누르면 마지막 태그 제거
       removeTag(currentTags[currentTags.length - 1]);
@@ -118,7 +120,7 @@ export function TagInput({
           >
             <TagChip size={size}>{tag}</TagChip>
             {/* 삭제 버튼 오버레이 */}
-            <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+            <span className="absolute -top-1 -right-1 flex h-3 w-3 items-center justify-center rounded-full bg-red-500 text-xs text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
               ×
             </span>
           </button>
@@ -133,6 +135,12 @@ export function TagInput({
           placeholder={currentTags.length === 0 ? placeholder : ''}
           className="min-w-[120px] flex-1 bg-transparent text-sm outline-none"
           disabled={maxTags ? currentTags.length >= maxTags : false}
+          onCompositionStart={() => setIsComposing(true)}
+          onCompositionEnd={(e) => {
+            setIsComposing(false);
+            // 조합 끝난 뒤 상태 동기화
+            setInputValue(e.currentTarget.value);
+          }}
         />
       </div>
 
