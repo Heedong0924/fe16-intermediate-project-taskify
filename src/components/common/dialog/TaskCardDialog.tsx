@@ -33,9 +33,9 @@ const TaskCardDialog = ({
     queryFn: () => getCard(cardId),
   });
 
-  const content = (
+  return (
     <DialogContent
-      className="dialog-scrollable-content h-[50vh] max-h-[710px] max-w-[327px] gap-4 overflow-auto px-4 md:max-h-[766px] md:max-w-[678px] md:px-8 lg:max-w-[732px]"
+      className="dialog-scrollable-content h-[50vh] max-h-[710px] max-w-[327px] gap-4 overflow-auto px-4 md:max-h-[766px] md:max-w-[678px] md:gap-6 md:px-8 lg:max-w-[732px]"
       showCloseButton={false}
       onOpenAutoFocus={(event) => event.preventDefault()}
     >
@@ -94,7 +94,6 @@ const TaskCardDialog = ({
       </DialogFooter>
     </DialogContent>
   );
-
-  return content;
 };
+
 export default TaskCardDialog;
