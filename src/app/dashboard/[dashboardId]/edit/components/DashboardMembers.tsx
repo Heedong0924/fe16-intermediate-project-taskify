@@ -30,10 +30,9 @@ export default function DashboardMembers({
   // 404 페이지와 함께 모달 띄우기
   if (isError) return <p>실패...</p>;
 
-  // 나일때는 삭제 버튼 삭제
   return (
     <ContentSectionWithAction
-      className="min-h-[401px] !pb-[16px] sm:min-h-[410px] sm:!pb-[20px]"
+      className="dashboard-section-action-item2 min-h-[401px] !pb-[16px] sm:min-h-[410px] sm:!pb-[20px]"
       title="구성원"
       titleRight={
         <PaginationButton

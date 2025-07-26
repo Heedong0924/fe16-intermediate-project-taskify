@@ -35,9 +35,11 @@ export function ContentSectionWithAction({
     <section
       className={`${className} mb-4 max-w-[none] rounded-[16px] bg-white py-[20px] sm:max-w-[700px] sm:py-[32px]`}
     >
-      <div className="mb-[12px] flex items-center justify-between px-[20px] sm:px-[28px]">
+      {/* flex items-center justify-between */}
+      <div className="mb-[12px] px-[20px] sm:px-[28px]">
         <h1 className="text-[20px] font-[700] sm:text-[24px]">{title}</h1>
-        <div className="flex">{titleRight}</div>
+        {titleRight}
+        {/* <div className="flex">{titleRight}</div> */}
       </div>
       {children}
     </section>

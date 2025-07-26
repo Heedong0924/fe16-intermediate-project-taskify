@@ -13,7 +13,7 @@ import {
 } from '@/hooks/useDashboardInvitations';
 import { useDialogStore } from '@/stores/useDialogStore';
 
-// 네비게이션 만들어
+// 페이지 옮긴 뒤 초대 삭제 하면 전 페이지로 안 넘어가고 현재 페이지에서 초대가 없다고 뜸...
 export default function DashboardInvitations({
   dashboardId,
 }: {
@@ -38,19 +38,22 @@ export default function DashboardInvitations({
   return (
     <ContentSectionWithAction
       // 16px20px
-      className="min-h-[385px] !pb-[16px] sm:min-h-[450px] sm:!pb-[20px]"
+      className="dashboard-section-action-item4 min-h-[395px] !pb-[16px] sm:min-h-[469px] sm:!pb-[20px]"
       title="초대 내역"
       titleRight={
-        <div className="flex items-center gap-4">
+        <>
+          {/* <div className="items-center gap-4"></div> */}
           <PaginationButton
+            className="ml-auto"
             page={page}
             size={size}
             totalCount={data?.totalCount}
             onPageChange={setPage}
           />
+          {/* direction: column */}
           <Button
             color="violet-white"
-            className="h-[26px] gap-2 !rounded-[4px] px-3 text-[12px] sm:h-[32px] sm:px-4 sm:!text-[14px]"
+            className="col-start-2 row-start-2 h-[26px] gap-2 justify-self-end !rounded-[4px] px-3 text-[12px] sm:col-start-3 sm:row-start-1 sm:h-[32px] sm:px-4 sm:!text-[14px]"
             onClick={() =>
               openDialog({
                 dialogComponent: (
@@ -67,12 +70,12 @@ export default function DashboardInvitations({
             />
             <span>초대하기</span>
           </Button>
-        </div>
+          <h2 className="col-start-1 row-start-2 text-base text-[var(--gray-D9D9D9)] sm:text-[16px]">
+            이메일
+          </h2>
+        </>
       }
     >
-      <h2 className="mt-[18px] px-[20px] text-base text-[var(--gray-D9D9D9)] sm:mt-[27px] sm:px-[28px] sm:text-[16px]">
-        이메일
-      </h2>
       <ul className="divide-y">
         {data?.invitations.length ? (
           data.invitations.map((invitation) => (

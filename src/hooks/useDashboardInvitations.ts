@@ -16,9 +16,6 @@ import {
   InvitationsQueryParams,
 } from '@/types/DashboardInvitation';
 
-const DASHBOARD_INVITATIONS_KEY = (id: number) =>
-  ['dashboard-invitations', id] as const;
-
 /*
  * 초대 목록 hooks
  */
@@ -67,7 +64,7 @@ export const useDeleteInvitation = (dashboardId: number) => {
       deleteDashboardInvitations(dashboardId, invitationId),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: DASHBOARD_INVITATIONS_KEY(dashboardId),
+        queryKey: ['dashboard-invitations', dashboardId],
       });
     },
   });

@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
 import { Button } from '@/components/ui/Button';
@@ -18,12 +18,17 @@ interface SendInvitationDialogProps {
 }
 
 const SendInvitationDialog = ({ dashboardId }: SendInvitationDialogProps) => {
+  // queryClient 추가
+  const queryClient = useQueryClient();
   const { closeDialog } = useDialogStore();
   const [emailValue, setEmailValue] = useState<string>('');
 
   const { mutate, isPending } = useMutation({
     mutationFn: createInvitations,
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['dashboard-invitations', dashboardId],
+      });
       closeDialog();
     },
     onError: (error) => {
