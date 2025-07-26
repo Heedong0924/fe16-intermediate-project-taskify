@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
 import { Button } from '@/components/ui/Button';
@@ -17,6 +17,7 @@ import { ColorPickerChip } from '../Chips';
 
 const CreateDashboardDialog = () => {
   const { closeDialog } = useDialogStore();
+  const queryClient = useQueryClient();
 
   const [createDashboardValue, setCreateDashboardValue] = useState<string>('');
   const [selectedColor, setSelectedColor] = useState<string>('#7AC555');
@@ -25,6 +26,7 @@ const CreateDashboardDialog = () => {
     mutationFn: createDashboard,
     onSuccess: () => {
       closeDialog();
+      queryClient.invalidateQueries({ queryKey: ['dashboards'] });
     },
     onError: (error) => {
       console.error('대쉬보드 생성에 실패했습니다.', error.message);
