@@ -1,71 +1,36 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
 
 import { TagInput } from '@/components/common/dialog/TodoDialog/TagInput';
 import Input from '@/components/common/Input';
+import Textarea from '@/components/common/Textarea';
 import UploadImageButton from '@/components/common/UploadImageButton';
 import { Button } from '@/components/ui/Button';
+import { DatePicker } from '@/components/ui/DatePicker';
 import {
   DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
+  DialogDescription,
 } from '@/components/ui/Dialog';
 import { cardImageUpload } from '@/lib/api/columnService';
-import type Assignee from '@/types/Assignee';
+import { mapCardToForm, getAssigneeFromCard } from '@/lib/utils/cardMapper';
 import DetailCard from '@/types/DetailCard';
+import { TodoFormData } from '@/types/TodoFormData';
 
 import { ColumnSelector } from './ColumnSelector';
 import { UserSelector } from './UserSelector';
-
 /**
  * 할 일 생성 및 수정 모달 컴포넌트
  * @returns {JSX.Element} 할 일 수정 모달
  */
 
-// 수정 및 생성에 사용할 폼 데이터 타입 정의
-type TodoFormData = {
-  columnId: number;
-  assigneeUserId: number;
-  title: string;
-  description: string;
-  dueDate: string;
-  tags: string[];
-  imageUrl: string;
-};
-
-// API 카드 데이터를 폼 데이터로 변환하는 함수
-function mapCardToForm(data: DetailCard): TodoFormData {
-  const {
-    columnId,
-    assignee: { id: assigneeUserId },
-    title,
-    description,
-    dueDate,
-    tags,
-    imageUrl,
-  } = data;
-
-  return {
-    columnId,
-    assigneeUserId,
-    title,
-    description,
-    dueDate,
-    tags,
-    imageUrl,
-  };
-}
-
-// prop 카드 데이터에서 assignee 정보를 추출하는 함수
-function getAssigneeFromCard(cardData?: DetailCard): Assignee | undefined {
-  return cardData?.assignee;
-}
 // TodoEditDialogProps 인터페이스 정의
 interface TodoEditDialogProps {
   columnId: number; // 선택된 열 ID
@@ -90,10 +55,9 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
           },
     [cardData, columnId],
   );
-  console.log('defaultVals', defaultVals);
-
   const {
     control,
+    setFocus,
     register,
     handleSubmit,
     formState: { errors, dirtyFields, isSubmitting, isValid },
@@ -105,15 +69,6 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
 
   // 스타일 변수
   const editModeClass = mode === 'edit' ? 'md:grid-cols-2' : '';
-  const getStatusClass = () => {
-    if (errors.description) {
-      return 'border-red-500 focus:ring-2 focus:ring-red-100';
-    }
-    if (dirtyFields.description) {
-      return 'border-green-500 focus:ring-2 focus:ring-green-100';
-    }
-    return '';
-  };
 
   // api 연결 뮤테이션
   const uploadMutation = useMutation<string, Error, File>({
@@ -128,7 +83,8 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
     [uploadMutation],
   );
 
-  const onSubmit = () => {
+  const onSubmit = (data: TodoFormData) => {
+    console.log('Submitted data:', data);
     if (mode === 'create') {
       // 생성 모드에서 새로운 할 일 생성
     } else {
@@ -136,10 +92,18 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
     }
   };
 
+  // 디버깅용 콘솔 로그
+  useEffect(() => {
+    console.log('defaultVals', defaultVals);
+  }, []);
+
   const content = (
     <DialogContent
       className="dialog-scrollable-content"
-      onOpenAutoFocus={(event) => event.preventDefault()}
+      onOpenAutoFocus={(event) => {
+        event.preventDefault();
+        setFocus('title'); // 모달 열릴 때 제목 입력 필드에 포커스
+      }}
       showCloseButton={false}
     >
       <DialogHeader>
@@ -147,7 +111,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
           {mode === 'edit' ? '할 일 수정' : '할 일 생성'}
         </DialogTitle>
       </DialogHeader>
-
+      <DialogDescription />
       <form className="text-taskify-neutral-800 flex max-h-[70vh] flex-col gap-8 overflow-auto p-3">
         <div className={twMerge('grid grid-cols-1 gap-8', editModeClass)}>
           {/* 상태 선택 셀렉터 (생성 모드에서는 없음) */}
@@ -207,13 +171,8 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
           >
             설명 <span className="text-taskify-violet-primary">*</span>
           </label>
-          <textarea
+          <Textarea
             rows={3}
-            className={twMerge(
-              'w-full resize-none rounded-md border px-3 py-2 transition-all duration-200',
-              'border-gray-300 focus:border-violet-300 focus:ring-2 focus:ring-violet-100',
-              getStatusClass(),
-            )}
             placeholder="할 일에 대한 상세한 설명을 입력하세요"
             {...register('description', {
               required: '설명은 필수 입력입니다.',
@@ -238,6 +197,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
           >
             마감일
           </label>
+          <DatePicker />
         </div>
 
         {/* 태그 선택 */}
@@ -285,6 +245,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
           </div>
         </div>
       </form>
+
       {/* 버튼 영역 */}
       <DialogFooter className="grid grid-cols-2 gap-3 pt-4">
         <DialogClose asChild>

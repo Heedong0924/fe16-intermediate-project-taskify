@@ -33,7 +33,7 @@ export function ColumnSelector({
   const columns = useColumnStore((state) => state.getColumns());
   // 현재 선택된 id 에 해당하는 title 찾기
   const current = columns.find((column) => column.id === columnId);
-  console.log('ColumnSelector', { columns, current });
+
   return (
     <div className={className}>
       <label
