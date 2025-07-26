@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
 import { Button } from '@/components/ui/Button';
@@ -12,36 +13,34 @@ import {
 } from '@/components/ui/Dialog';
 import { createDashboard } from '@/lib/api/dashboardService';
 import { useDialogStore } from '@/stores/useDialogStore';
+import ServerErrorResponse from '@/types/ServerErrorResponse';
 
 import { ColorPickerChip } from '../Chips';
-import AlertDialog from './AlertDialog';
+import Input from '../Input';
 
 const CreateDashboardDialog = () => {
-  const { openDialog, closeDialog } = useDialogStore();
+  const { closeDialog } = useDialogStore();
 
   const [createDashboardValue, setCreateDashboardValue] = useState<string>('');
   const [selectedColor, setSelectedColor] = useState<string>('#7AC555');
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined,
+  );
 
   const { mutate, isPending } = useMutation({
     mutationFn: createDashboard,
     onSuccess: () => {
       closeDialog();
     },
-    onError: (_error) => {
-      openDialog({
-        dialogComponent: (
-          <AlertDialog
-            description="대쉬보드 생성에 실패했습니다."
-            closeBtnText="확인"
-            isGoBack
-          />
-        ),
-      });
+    onError: (error) => {
+      const axiosError = error as AxiosError<ServerErrorResponse>;
+      setErrorMessage(axiosError.response?.data.message);
     },
   });
 
   const handleCreateDashboardChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCreateDashboardValue(e.target.value);
+    if (errorMessage) setErrorMessage(undefined);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -65,20 +64,17 @@ const CreateDashboardDialog = () => {
       </DialogHeader>
       <form className="flex flex-col gap-8 md:gap-10" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-2">
-          <label
-            htmlFor="name"
-            className="text-taskify-lg-medium md:text-taskify-2lg-medium text-taskify-neutral-700 text-left"
-          >
-            대시보드 이름
-          </label>
-          <input
-            id="name"
-            placeholder="새로운 대시보드"
+          <Input
+            id="title"
+            label="이름"
             type="text"
             autoComplete="off"
+            placeholder="대시보드 이름을 입력해주세요."
             value={createDashboardValue}
             onChange={handleCreateDashboardChange}
-            className="text-taskify-neutral-700 text-taskify-md-regular md:text-taskify-lg-regular border-taskify-neutral-300 col-span-4 rounded-lg border px-4 py-3"
+            isError={errorMessage !== undefined}
+            errorMessage={errorMessage}
+            inputClassName="text-taskify-neutral-700 text-taskify-md-regular md:text-taskify-lg-regular px-4 py-3"
           />
           <div className="mt-2">
             <ColorPickerChip

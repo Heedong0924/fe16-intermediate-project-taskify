@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
 import { Button } from '@/components/ui/Button';
@@ -12,37 +13,35 @@ import {
 } from '@/components/ui/Dialog';
 import { createInvitations } from '@/lib/api/dashboardService';
 import { useDialogStore } from '@/stores/useDialogStore';
+import ServerErrorResponse from '@/types/ServerErrorResponse';
 
-import AlertDialog from './AlertDialog';
+import Input from '../Input';
 
 interface SendInvitationDialogProps {
   dashboardId: number;
 }
 
 const SendInvitationDialog = ({ dashboardId }: SendInvitationDialogProps) => {
-  const { openDialog, closeDialog } = useDialogStore();
+  const { closeDialog } = useDialogStore();
   const [emailValue, setEmailValue] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined,
+  );
 
   const { mutate, isPending } = useMutation({
     mutationFn: createInvitations,
     onSuccess: () => {
       closeDialog();
     },
-    onError: (_error) => {
-      openDialog({
-        dialogComponent: (
-          <AlertDialog
-            description="초대 요청에 실패했습니다."
-            closeBtnText="확인"
-            isGoBack
-          />
-        ),
-      });
+    onError: (error) => {
+      const axiosError = error as AxiosError<ServerErrorResponse>;
+      setErrorMessage(axiosError.response?.data.message);
     },
   });
 
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmailValue(e.target.value);
+    if (errorMessage) setErrorMessage(undefined);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -65,20 +64,17 @@ const SendInvitationDialog = ({ dashboardId }: SendInvitationDialogProps) => {
       </DialogHeader>
       <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-2">
-          <label
-            htmlFor="name"
-            className="text-taskify-lg-medium md:text-taskify-2lg-medium text-taskify-neutral-700 text-left"
-          >
-            이메일
-          </label>
-          <input
-            id="name"
-            placeholder="user@example.com"
+          <Input
+            id="email"
+            label="이메일"
             type="text"
             autoComplete="off"
+            placeholder="user@example.com"
             value={emailValue}
             onChange={handleEmailChange}
-            className="text-taskify-neutral-700 text-taskify-md-regular md:text-taskify-lg-regular border-taskify-neutral-300 col-span-4 rounded-lg border px-4 py-3"
+            isError={errorMessage !== undefined}
+            errorMessage={errorMessage}
+            inputClassName="text-taskify-neutral-700 text-taskify-md-regular md:text-taskify-lg-regular px-4 py-3"
           />
         </div>
         <DialogFooter className="flex flex-row justify-between">

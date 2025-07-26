@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
 import { Button } from '@/components/ui/Button';
@@ -11,9 +12,10 @@ import {
 } from '@/components/ui/Dialog';
 import { updateColumn } from '@/lib/api/columnService';
 import { useDialogStore } from '@/stores/useDialogStore';
+import ServerErrorResponse from '@/types/ServerErrorResponse';
 
-import AlertDialog from './AlertDialog';
 import ConfirmColumnDeletionDialog from './ConfirmColumnDeletionDialog';
+import Input from '../Input';
 
 interface ColumnSettingsDialogProps {
   columnId: number;
@@ -26,21 +28,20 @@ const ColumnSettingsDialog = ({
 }: ColumnSettingsDialogProps) => {
   const [updateColumnValue, setUpdateColumnValue] =
     useState<string>(columnName);
-  const { openDialog } = useDialogStore();
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined,
+  );
+
+  const { openDialog, closeDialog } = useDialogStore();
 
   const { mutate, isPending } = useMutation({
     mutationFn: updateColumn,
-    onSuccess: () => {},
-    onError: (_error) => {
-      openDialog({
-        dialogComponent: (
-          <AlertDialog
-            description="컬럼 수정에 실패했습니다."
-            closeBtnText="확인"
-            isGoBack
-          />
-        ),
-      });
+    onSuccess: () => {
+      closeDialog();
+    },
+    onError: (error) => {
+      const axiosError = error as AxiosError<ServerErrorResponse>;
+      setErrorMessage(axiosError.response?.data.message);
     },
   });
 
@@ -50,13 +51,14 @@ const ColumnSettingsDialog = ({
     });
   };
 
+  const handleUpdateChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setUpdateColumnValue(e.target.value);
+    if (errorMessage) setErrorMessage(undefined);
+  };
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isPending) mutate({ columnId, title: updateColumnValue });
-  };
-
-  const handleUpdateChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setUpdateColumnValue(e.target.value);
   };
 
   return (
@@ -71,21 +73,18 @@ const ColumnSettingsDialog = ({
       </DialogHeader>
       <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-2">
-          <label
-            htmlFor="name"
-            className="text-taskify-lg-medium md:text-taskify-2lg-medium text-taskify-neutral-700 text-left"
-          >
-            이름
-          </label>
-          <input
-            id="name"
+          <Input
+            id="title"
+            label="이름"
             type="text"
-            placeholder="수정할 컬럼명을 입력해주세요."
             autoComplete="off"
+            placeholder="컬럼 이름을 입력해주세요."
             defaultValue={updateColumnValue}
             value={updateColumnValue}
             onChange={handleUpdateChange}
-            className="text-taskify-neutral-700 text-taskify-md-regular md:text-taskify-lg-regular border-taskify-neutral-300 col-span-4 rounded-lg border px-4 py-3"
+            isError={errorMessage !== undefined}
+            errorMessage={errorMessage}
+            inputClassName="text-taskify-neutral-700 text-taskify-md-regular md:text-taskify-lg-regular px-4 py-3"
           />
         </div>
         <DialogFooter className="flex flex-row justify-between">
