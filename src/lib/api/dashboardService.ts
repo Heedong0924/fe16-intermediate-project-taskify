@@ -51,6 +51,11 @@ export const createInvitations = async ({
   return res.data;
 };
 
+export const getDashboardDetail = async (dashboardId: number) => {
+  const res = await axiosInstance.get(`/dashboards/${dashboardId}`);
+  return res.data;
+};
+
 // 대시보드 아이디로 상세 가져오기
 export const getDashboardById = async (dashboardsId: number) => {
   const res = await axiosInstance.get(`/dashboards/${dashboardsId}`);
