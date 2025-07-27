@@ -1,5 +1,83 @@
+import { useForm } from 'react-hook-form';
+
 import { ContentSection } from '@/components/common/ContentSection';
+import Input from '@/components/common/Input';
+import Button from '@/components/ui/Buttons';
+import { useChangePassword } from '@/hooks/useMyInfoEdit';
+import {
+  passwordValidation,
+  confirmPasswordValidation,
+} from '@/lib/validationRules';
+// import { useEffect, useState } from 'react';
+
+type FormValues = {
+  password: string;
+  newPassword: string;
+  confirmPassword: string;
+};
 
 export default function MyInfoPassword() {
-  return <ContentSection title="비밀번호 변경">비밀번호 </ContentSection>;
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors, dirtyFields, isValid, isSubmitting },
+    // reset,
+  } = useForm<FormValues>({
+    mode: 'onChange',
+    reValidateMode: 'onBlur',
+  });
+
+  // isLoading, error
+  const { mutate: changePassword } = useChangePassword();
+
+  const onSubmit = (data: FormValues) => {
+    changePassword(data);
+  };
+
+  return (
+    // 완료되면 인풋 초기화 ..........
+    <ContentSection title="비밀번호 변경">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Input
+          label="현재 비밀번호"
+          type="password"
+          autoComplete="current-password"
+          placeholder="비밀번호 입력"
+          isError={!!errors.password}
+          isSuccess={dirtyFields.password && !errors.password}
+          errorMessage={errors.password?.message}
+          {...register('password', passwordValidation)}
+        />
+        <Input
+          label="새 비밀번호"
+          type="password"
+          autoComplete="new-Password"
+          placeholder="새 비밀번호 입력"
+          isError={!!errors.newPassword}
+          isSuccess={dirtyFields.newPassword && !errors.newPassword}
+          errorMessage={errors.newPassword?.message}
+          {...register('newPassword', passwordValidation)}
+        />
+        <Input
+          label="새 비밀번호 확인"
+          type="password"
+          autoComplete="new-Password"
+          placeholder="새 비밀번호 입력"
+          isError={!!errors.confirmPassword}
+          isSuccess={dirtyFields.confirmPassword && !errors.confirmPassword}
+          errorMessage={errors.confirmPassword?.message}
+          {...register(
+            'confirmPassword',
+            confirmPasswordValidation(() => ({
+              password: getValues('newPassword'),
+            })),
+          )}
+        />
+        <Button type="submit" disabled={!isValid || isSubmitting}>
+          변경
+        </Button>
+      </form>
+    </ContentSection>
+  );
 }

@@ -11,12 +11,14 @@ import {
   useUploadProfileImage,
 } from '@/hooks/useMyInfoEdit';
 import { nicknameValidation } from '@/lib/validationRules';
+import { useAuthStore } from '@/stores/useAuthStore';
 
 type FormValues = {
   nickname: string;
 };
 
 export default function MyInfoProfile() {
+  const { user, setUser } = useAuthStore(); // 스토리지
   const {
     register,
     handleSubmit,
@@ -57,10 +59,24 @@ export default function MyInfoProfile() {
   };
 
   const handleUpload = (formData: FormValues) => {
-    mutation.mutate({
-      nickname: formData.nickname.trim() ?? '',
-      profileImageUrl: profileImageUrl ?? data?.profileImageUrl ?? '',
-    });
+    const nicknameData = formData.nickname.trim() ?? '';
+    const profileImageUrlData = profileImageUrl ?? data?.profileImageUrl ?? '';
+
+    mutation.mutate(
+      {
+        nickname: nicknameData,
+        profileImageUrl: profileImageUrlData,
+      },
+      {
+        onSuccess: () => {
+          setUser({
+            ...user!, // 기존 유저 정보 전체 유지
+            nickname: nicknameData,
+            profileImageUrl: profileImageUrlData,
+          });
+        },
+      },
+    );
   };
 
   return (
@@ -74,16 +90,23 @@ export default function MyInfoProfile() {
             onChange={(url) => setProfileImageUrl(url)}
           />
           <Input label="이메일" value={data?.email ?? ''} disabled />
+          {/* 닉네임 10자 이하 작성... Validation 추가 */}
           <Input
             label="닉네임"
             type="text"
+            autoComplete="nickname"
             placeholder="닉네임을 적어주세요"
             isError={!!errors.nickname}
             isSuccess={dirtyFields.nickname && !errors.nickname}
             errorMessage={errors.nickname?.message}
             {...register('nickname', nicknameValidation)}
           />
-          <Button onClick={handleSubmit(handleUpload)}>저장</Button>
+          <Button
+            onClick={handleSubmit(handleUpload)}
+            // disabled={!isValid || isSubmitting || isLoading}
+          >
+            저장
+          </Button>
         </>
       </ContentSection>
     </>

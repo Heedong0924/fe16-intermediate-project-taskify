@@ -1,7 +1,13 @@
+'use client';
+
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { getMyInfo } from '@/lib/api/auth';
+import { getMyInfo, changePassword } from '@/lib/api/auth';
 import { updateMyInfo, uploadProfileImage } from '@/lib/api/users';
+// import { useDialogStore } from '@/stores/useDialogStore';
+// import AlertDialog from '@/components/common/dialog/AlertDialog';
+
+// const a = () => {}
 
 // 내 정보 가져오기
 export const useMyInfo = () => {
@@ -29,5 +35,22 @@ export const useUpdateMyInfo = () => {
 export const useUploadProfileImage = () => {
   return useMutation<string, Error, File>({
     mutationFn: async (file: File) => uploadProfileImage({ image: file }),
+  });
+};
+
+// 비밀번호 변경
+export const useChangePassword = () => {
+  // import { useDialogStore } from '@/stores/useDialogStore';
+
+  return useMutation({
+    mutationFn: ({
+      password,
+      newPassword,
+    }: {
+      password: string;
+      newPassword: string;
+    }) => changePassword(password, newPassword),
+
+    // onSuccess: () => {},
   });
 };
