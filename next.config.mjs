@@ -16,6 +16,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'picsum.photos', // Picsum 도메인 (테스트 이미지)
       },
+      {
+        protocol: 'https',
+        hostname: 'placehold.co', // Placehold 도메인 (Placehold 이미지)
+      },
     ],
   },
   env: {
