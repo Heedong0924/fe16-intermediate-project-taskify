@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 
 import { ContentSection } from '@/components/common/ContentSection';
 import Input from '@/components/common/Input';
-import UploadImageButtonCopy from '@/components/common/UploadImageButtonCopy';
+import UploadImageButtonCopy from '@/components/common/UploadImageButton_Mypage';
 import Button from '@/components/ui/Buttons';
 import {
   useMyInfo,
@@ -22,7 +22,7 @@ export default function MyInfoProfile() {
   const {
     register,
     handleSubmit,
-    formState: { errors, dirtyFields },
+    formState: { errors, dirtyFields, isValid, isSubmitting },
     reset,
   } = useForm<FormValues>({
     mode: 'onChange',
@@ -51,7 +51,6 @@ export default function MyInfoProfile() {
     const previewUrl = URL.createObjectURL(file);
     setProfileImageUrl(previewUrl);
 
-    // 서버에 이미지 보냄? 맞?
     const uploadedUrl = await uploadImage(file);
     setProfileImageUrl(uploadedUrl);
 
@@ -80,18 +79,23 @@ export default function MyInfoProfile() {
   };
 
   return (
-    <>
-      {/* 프로필이 성공적으로 업데이트가 되면 스토리지에도 정보를 보내야함 */}
-      <ContentSection title="프로필">
-        <>
-          <UploadImageButtonCopy
-            initialImageUrl={profileImageUrl}
-            onUpload={handleFileSelect}
-            onChange={(url) => setProfileImageUrl(url)}
-          />
-          <Input label="이메일" value={data?.email ?? ''} disabled />
-          {/* 닉네임 10자 이하 작성... Validation 추가 */}
+    <ContentSection title="프로필">
+      <div className="sm:mt-6 sm:grid sm:grid-cols-[auto_1fr] sm:gap-10">
+        <UploadImageButtonCopy
+          className="my-10 size-[100px] sm:my-0 sm:size-[182px]"
+          initialImageUrl={profileImageUrl}
+          onUpload={handleFileSelect}
+          onImageChange={(url) => setProfileImageUrl(url)}
+        />
+        <div>
           <Input
+            className="input-email mb-4"
+            label="이메일"
+            value={data?.email ?? ''}
+            disabled
+          />
+          <Input
+            className="mb-6"
             label="닉네임"
             type="text"
             autoComplete="nickname"
@@ -102,13 +106,15 @@ export default function MyInfoProfile() {
             {...register('nickname', nicknameValidation)}
           />
           <Button
+            color="violet-white"
+            className="btn-modal-db w-full"
             onClick={handleSubmit(handleUpload)}
-            // disabled={!isValid || isSubmitting || isLoading}
+            disabled={!isValid || isSubmitting}
           >
             저장
           </Button>
-        </>
-      </ContentSection>
-    </>
+        </div>
+      </div>
+    </ContentSection>
   );
 }

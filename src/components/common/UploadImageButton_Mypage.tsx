@@ -1,7 +1,14 @@
 'use client';
 
+import clsx from 'clsx';
 import Image from 'next/image';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import {
+  ChangeEvent,
+  useEffect,
+  useRef,
+  useState,
+  HTMLAttributes,
+} from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { LuPencilLine } from 'react-icons/lu';
 
@@ -10,14 +17,15 @@ import { LuPencilLine } from 'react-icons/lu';
 // initialImageUrl 사용자의 이미지를 받음
 type UploadImageButtonProps = {
   onUpload: (file: File) => Promise<string>;
-  onChange: (url: string) => void;
+  onImageChange: (url: string) => void;
   initialImageUrl?: string; // 추가
-};
+} & HTMLAttributes<HTMLDivElement>;
 
 const UploadImageButton = ({
   onUpload,
-  onChange,
+  onImageChange: onChange,
   initialImageUrl,
+  ...rest
 }: UploadImageButtonProps) => {
   // 디폴트 이미지 없음
   const [imageUrl, setImageUrl] = useState<string | null>(
@@ -55,22 +63,26 @@ const UploadImageButton = ({
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') triggerUpload();
       }}
-      className="group relative h-32 w-32 cursor-pointer overflow-hidden rounded-lg border border-dashed border-gray-300"
+      className={clsx(
+        // 사이즈 따로 뺌
+        'group relative cursor-pointer overflow-hidden rounded-lg border border-dashed border-gray-300',
+        rest.className,
+      )}
     >
       {imageUrl ? (
-        // 추가
-        <div className="relative h-32 w-32">
+        <>
           <Image
             src={imageUrl}
             alt="preview"
-            // className="h-full w-full object-cover"
-            fill // 추가
-            style={{ objectFit: 'cover' }} // 추가
+            fill
+            sizes="auto"
+            className="object-cover"
+            priority
           />
           <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition group-hover:opacity-100">
             <LuPencilLine className="h-6 w-6 text-white" />
           </div>
-        </div>
+        </>
       ) : (
         <div className="flex h-full w-full flex-col items-center justify-center bg-gray-50 text-sm text-gray-500">
           <FaPlus className="text-taskify-violet-primary mb-1 h-6 w-6" />

@@ -26,7 +26,7 @@ export default function DashboardEditPage() {
   return (
     <div className="min-h-screen bg-[var(--gray-FAFAFA)] p-[20px]">
       {/* 뒤로가기 */}
-      <nav className="mb-[34px]">
+      <nav className="mb-[10px] sm:mb-[25px]">
         <Link
           href={`/dashboard/${dashboardId}`}
           className="flex items-center gap-2"

@@ -36,9 +36,9 @@ export default function MyInfoPassword() {
   };
 
   return (
-    // 완료되면 인풋 초기화 ..........
+    // 완료되면 인풋 초기화 시켜야함..........!!!
     <ContentSection title="비밀번호 변경">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className="mt-10">
         <Input
           label="현재 비밀번호"
           type="password"
@@ -50,6 +50,7 @@ export default function MyInfoPassword() {
           {...register('password', passwordValidation)}
         />
         <Input
+          className="my-4"
           label="새 비밀번호"
           type="password"
           autoComplete="new-Password"
@@ -60,6 +61,7 @@ export default function MyInfoPassword() {
           {...register('newPassword', passwordValidation)}
         />
         <Input
+          className="mb-6"
           label="새 비밀번호 확인"
           type="password"
           autoComplete="new-Password"
@@ -74,7 +76,12 @@ export default function MyInfoPassword() {
             })),
           )}
         />
-        <Button type="submit" disabled={!isValid || isSubmitting}>
+        <Button
+          color="violet-white"
+          className="btn-modal-db w-full"
+          type="submit"
+          disabled={!isValid || isSubmitting}
+        >
           변경
         </Button>
       </form>

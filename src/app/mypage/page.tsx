@@ -11,7 +11,7 @@ export default function MyPage() {
   return (
     <div className="min-h-screen bg-[var(--gray-FAFAFA)] p-[20px]">
       {/* 뒤로가기 */}
-      <nav className="mb-[34px]">
+      <nav className="mb-[10px] sm:mb-[25px]">
         {/* 주소 설정해주기 */}
         <Link href="/" className="flex items-center gap-2">
           <Image
