@@ -3,8 +3,6 @@ export const headerConfig = [
     match: (pathname: string) => pathname === '/mydashboard',
     config: {
       title: '나의 대시보드',
-      showInviteButton: true,
-      showManageButton: true,
     },
   },
   {
