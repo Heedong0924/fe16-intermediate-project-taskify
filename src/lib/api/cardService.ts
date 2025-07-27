@@ -20,10 +20,10 @@ export const createCard = async ({
   title: string;
   description: string;
   dueDate: string;
-  tags: [string];
+  tags: string[];
   imageUrl: string;
 }): Promise<DetailCard> => {
-  const res = await axiosInstance.post(`/cards}`, {
+  const res = await axiosInstance.post(`/cards`, {
     columnId,
     assigneeUserId,
     title,
@@ -51,7 +51,7 @@ export const updateCard = async (
     title: string;
     description: string;
     dueDate: string;
-    tags: [string];
+    tags: string[];
     imageUrl: string;
   },
 ): Promise<DetailCard> => {

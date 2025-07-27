@@ -19,6 +19,7 @@ import {
   DialogFooter,
   DialogDescription,
 } from '@/components/ui/Dialog';
+import { createCard, updateCard } from '@/lib/api/cardService';
 import { cardImageUpload } from '@/lib/api/columnService';
 import { mapCardToForm, getAssigneeFromCard } from '@/lib/utils/cardMapper';
 import DetailCard from '@/types/DetailCard';
@@ -56,6 +57,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
     [cardData, columnId],
   );
   const {
+    reset,
     control,
     setFocus,
     register,
@@ -70,9 +72,43 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
   // 스타일 변수
   const editModeClass = mode === 'edit' ? 'md:grid-cols-2' : '';
 
-  // api 연결 뮤테이션
+  /* 뮤테이션 정의 */
+  // 이미지 업로드 뮤테이션
   const uploadMutation = useMutation<string, Error, File>({
     mutationFn: (file) => cardImageUpload(columnId, file),
+  });
+
+  // 카드 생성 뮤테이션
+  const { mutate: createCardMutation, isPending: isCreating } = useMutation<
+    DetailCard,
+    Error,
+    TodoFormData
+  >({
+    mutationFn: (data) => createCard(data),
+    onSuccess: (data) => {
+      console.log('카드 생성 성공:', data);
+    },
+    onError: (error) => {
+      reset(defaultVals);
+      console.error('카드 생성 실패:', error);
+    },
+  });
+  // 카드 수정 뮤테이션
+  const { mutate: updateCardMutation, isPending: isUpdating } = useMutation<
+    DetailCard,
+    Error,
+    { cardId: number; data: TodoFormData }
+  >({
+    mutationFn: ({ cardId, data }) => {
+      return updateCard(cardId, data);
+    },
+    onSuccess: (data) => {
+      console.log('카드 수정 성공:', data);
+    },
+    onError: (error) => {
+      reset(defaultVals);
+      console.error('카드 수정 실패:', error);
+    },
   });
 
   // 핸들러
@@ -87,8 +123,13 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
     console.log('Submitted data:', data);
     if (mode === 'create') {
       // 생성 모드에서 새로운 할 일 생성
+      createCardMutation(data);
     } else {
       // 수정 모드에서 기존 할 일 수정
+      updateCardMutation({
+        cardId: cardData?.id || 0, // cardData가 없을 경우 0으로 설정
+        data,
+      });
     }
   };
 
@@ -97,6 +138,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
     console.log('defaultVals', defaultVals);
   }, []);
 
+  const loading = isCreating || isUpdating;
   const content = (
     <DialogContent
       className="dialog-scrollable-content"
@@ -275,7 +317,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
         <DialogClose asChild>
           <Button
             type="submit"
-            disabled={!isValid || isSubmitting}
+            disabled={!isValid || isSubmitting || loading}
             className="bg-taskify-violet-primary text-white hover:bg-violet-900"
             onClick={handleSubmit(onSubmit)}
           >
