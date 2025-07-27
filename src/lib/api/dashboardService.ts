@@ -50,3 +50,8 @@ export const createInvitations = async ({
   );
   return res.data;
 };
+
+export const getDashboardDetail = async (dashboardId: number) => {
+  const res = await axiosInstance.get(`/dashboards/${dashboardId}`);
+  return res.data;
+};
