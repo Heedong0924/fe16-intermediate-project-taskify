@@ -26,17 +26,17 @@ const LandingFooter = ({ className }: HTMLAttributes<HTMLDivElement>) => {
       </ul>
       <ul className="mt-14 flex items-center justify-between gap-5 md:mt-0 md:gap-3.5">
         <li>
-          <Link href="/">
+          <Link href="/" target="_blank" rel="noopener noreferrer">
             <Mail className="h-4 w-4 md:h-5.5 md:w-5.5" strokeWidth={2} />
           </Link>
         </li>
         <li>
-          <Link href="/">
+          <Link href="/" target="_blank" rel="noopener noreferrer">
             <Facebook className="h-4 w-4 md:h-5.5 md:w-5.5" strokeWidth={2} />
           </Link>
         </li>
         <li>
-          <Link href="/">
+          <Link href="/" target="_blank" rel="noopener noreferrer">
             <Instagram className="h-4 w-4 md:h-5.5 md:w-5.5" strokeWidth={2} />
           </Link>
         </li>
