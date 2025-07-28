@@ -7,9 +7,9 @@ import { notFound, useParams } from 'next/navigation';
 import Button from '@/components/ui/Buttons';
 import { useDeleteDashboard } from '@/hooks/useDashboardEdit';
 
-import DashboardInvitations from './components/DashboardInvitations_temp';
-import DashboardMembers from './components/DashboardMembers_temp';
-import DashboardUpdate from './components/DashboardUpdate_temp';
+import DashboardInvitations from './components/DashboardInvitations';
+import DashboardMembers from './components/DashboardMembers';
+import DashboardUpdate from './components/DashboardUpdate';
 
 export default function DashboardEditPage() {
   const { dashboardId } = useParams();

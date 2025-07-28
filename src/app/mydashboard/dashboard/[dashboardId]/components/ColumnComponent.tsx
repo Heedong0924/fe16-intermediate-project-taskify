@@ -16,7 +16,7 @@ import { useDialogStore } from '@/stores/useDialogStore';
 import Column from '@/types/Column';
 import { DetailCardResponse } from '@/types/DetailCard';
 
-import CardComponent from './CardComponent_temp';
+import CardComponent from './CardComponent';
 
 const ColumnComponent = ({
   column,
