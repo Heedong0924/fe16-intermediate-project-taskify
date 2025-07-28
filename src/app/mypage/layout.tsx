@@ -4,11 +4,12 @@ import Header from '@/components/common/header/Header';
 import Sidebar from '@/components/common/Sidebar';
 
 export const metadata = {
-  title: 'Dashboard | Taskify',
-  description: '대시보드 상세 페이지입니다.',
+  title: 'My Page | Taskify',
+  description:
+    '내 정보, 비밀번호 변경, 프로필 사진을 설정할 수 있는 마이페이지입니다.',
 };
 
-export default function DashboardLayout({
+export default function MypageLayout({
   children,
 }: {
   children: React.ReactNode;
