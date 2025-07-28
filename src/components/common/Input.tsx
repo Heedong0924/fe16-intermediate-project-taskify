@@ -30,6 +30,8 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   className?: string;
   /** 입력 필드 추가 클래스명 */
   inputClassName?: string;
+  /** 강조 표시 */
+  isHightLight?: boolean;
   /** 좌측 아이콘 클릭 핸들러 */
   onLeftIconClick?: () => void;
   /** 우측 아이콘 클릭 핸들러 */
@@ -60,6 +62,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       inputClassName,
       disabled = false,
       id,
+      isHightLight = false,
       onLeftIconClick,
       onRightIconClick,
       onFocus,
@@ -83,7 +86,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     /**
      * 상태별 border 클래스를 반환합니다
      */
-    const getBorderClass = (state: InputState): string => {
+    const getInputBorderClass = (state: InputState): string => {
       const borderClasses = {
         default: 'border-gray-300 hover:border-gray-400',
         focus: 'border-violet-500 ring-2 ring-violet-100',
@@ -119,7 +122,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     };
 
     const currentState = getInputState();
-    const borderClass = getBorderClass(currentState);
+    const borderClass = getInputBorderClass(currentState);
     const disabledClass = disabled
       ? 'bg-gray-50 cursor-not-allowed'
       : 'bg-white';
@@ -136,6 +139,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             )}
           >
             {label}
+            {isHightLight && (
+              <span className="text-taskify-violet-primary"> *</span>
+            )}
           </label>
         )}
 

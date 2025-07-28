@@ -2,7 +2,7 @@ import axiosInstance from '@/lib/axiosInstance';
 import DetailCard, {
   DetailCardProps,
   DetailCardResponse,
-} from '@/types/DatailCard';
+} from '@/types/DetailCard';
 
 export const getCard = async (cardId: number): Promise<DetailCard> => {
   const res = await axiosInstance.get(`/cards/${cardId}`);
@@ -23,10 +23,10 @@ export const createCard = async ({
   title: string;
   description: string;
   dueDate: string;
-  tags: [string];
+  tags: string[];
   imageUrl: string;
 }): Promise<DetailCard> => {
-  const res = await axiosInstance.post(`/cards}`, {
+  const res = await axiosInstance.post(`/cards`, {
     columnId,
     assigneeUserId,
     title,
@@ -54,7 +54,7 @@ export const updateCard = async (
     title: string;
     description: string;
     dueDate: string;
-    tags: [string];
+    tags: string[];
     imageUrl: string;
   },
 ): Promise<DetailCard> => {

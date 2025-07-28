@@ -14,7 +14,7 @@ import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { getCardList } from '@/lib/api/cardService';
 import { useDialogStore } from '@/stores/useDialogStore';
 import Column from '@/types/Column';
-import { DetailCardResponse } from '@/types/DatailCard';
+import { DetailCardResponse } from '@/types/DetailCard';
 
 import CardComponent from './CardComponent';
 

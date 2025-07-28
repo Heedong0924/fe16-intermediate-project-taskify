@@ -6,7 +6,7 @@ import caleandar from '@/../public/images/icon/calendar.svg';
 import { TagChip } from '@/components/common/Chips';
 import TaskCardDialog from '@/components/common/dialog/TaskCardDialog';
 import { useDialogStore } from '@/stores/useDialogStore';
-import DetailCard from '@/types/DatailCard';
+import DetailCard from '@/types/DetailCard';
 
 const CardComponent = ({
   card,
