@@ -207,6 +207,7 @@
   html {
     scroll-behavior: smooth; /* 부드러운 스크롤 */
     -webkit-tap-highlight-color: transparent; /* 모바일 탭 시 하이라이트 제거 */
+    overflow-y: scroll; /*헤더 선택 시 화면 움직임 최소화*/
   }
 
   body {
