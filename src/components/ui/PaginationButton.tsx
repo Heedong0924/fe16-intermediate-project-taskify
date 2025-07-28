@@ -28,10 +28,10 @@ const PaginationButton = ({
   const isPrevDisabled = currentPage === 1;
   const isNextDisabled = currentPage === totalPage;
 
-  const handlePrevCilck = () => {
+  const handlePrevClick = () => {
     if (currentPage > 1) onPageChange(currentPage - 1);
   };
-  const handleNextCilck = () => {
+  const handleNextClick = () => {
     if (currentPage < totalPage) onPageChange(currentPage + 1);
   };
 
@@ -46,7 +46,7 @@ const PaginationButton = ({
       <div className="flex">
         <button
           className={`${buttonBaseStyle} rounded-l-sm`}
-          onClick={handlePrevCilck}
+          onClick={handlePrevClick}
           disabled={isPrevDisabled}
           type="button"
         >
@@ -54,7 +54,7 @@ const PaginationButton = ({
         </button>
         <button
           className={`${buttonBaseStyle} rounded-r-sm`}
-          onClick={handleNextCilck}
+          onClick={handleNextClick}
           disabled={isNextDisabled}
           type="button"
         >

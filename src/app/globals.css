@@ -207,6 +207,7 @@
   html {
     scroll-behavior: smooth; /* 부드러운 스크롤 */
     -webkit-tap-highlight-color: transparent; /* 모바일 탭 시 하이라이트 제거 */
+    overflow-y: scroll; /*헤더 선택 시 화면 움직임 최소화*/
   }
 
   body {
@@ -268,7 +269,7 @@
   }
   .btn-addCol {
     /**칼럼 추가 버튼*/
-    @apply text-taskify-lg-bold md:text-taskify-2lg-bold h-[66px] w-[284px] md:h-[70px] md:w-[544px] xl:w-[534px];
+    @apply text-taskify-lg-bold md:text-taskify-2lg-bold h-[66px] xl:w-[534px];
   }
   .btn-addDash {
     /**대시보드 추가 버튼*/
@@ -284,7 +285,7 @@
   }
   .btn-addTodo {
     /**투두 추가 버튼*/
-    @apply h-8 w-[284px] md:h-10 md:w-[544px] xl:w-[314px];
+    @apply h-8 w-full md:h-10 xl:w-[314px];
   }
 
   /*  아바타, 프로필 CSS */
