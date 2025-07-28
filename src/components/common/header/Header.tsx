@@ -3,10 +3,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
 
 import MemberAvatars from '@/app/mydashboard/components/dashboard/MemberAvatars';
+import { getMyInfo } from '@/lib/api/auth';
+import { getDashboardMembers } from '@/lib/api/dashboardMemberService';
 import { headerConfig } from '@/lib/constants/headerConfig';
+import { useAuthStore } from '@/stores/useAuthStore';
 import { useDashboardStore } from '@/stores/useDashboardStore';
+import { useMemberStore } from '@/stores/useMemberStore';
 
 import InviteButton from './InviteButton';
 import ManageButton from './ManageButton';
@@ -31,6 +36,8 @@ const Header = () => {
     ...(matched?.config ?? {}),
   };
 
+  const { dashboardId } = useDashboardStore.getState();
+
   // 페이지에 따른 타이틀 override 조건문
   let headerTitle = '제목 없음';
   if ('titleFrom' in config) {
@@ -38,6 +45,22 @@ const Header = () => {
   } else if ('title' in config && typeof config.title === 'string') {
     headerTitle = config.title;
   }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userData = await getMyInfo();
+        useAuthStore.getState().setUser(userData);
+
+        const memberData = await getDashboardMembers({ dashboardId });
+        useMemberStore.getState().setMembers(memberData.members);
+      } catch (error) {
+        console.error('헤더에서 사용자/멤버 정보 가져오기 실패:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <header className="border-b-taskify-neutral-300 bg-taskify-neutral-0 fixed z-10 flex h-[60px] w-full items-center justify-between border-[1px]">
