@@ -75,3 +75,18 @@ export const getMyInfo = async (): Promise<MyInfoResponse> => {
   const res = await axiosInstance.get<MyInfoResponse>('/users/me');
   return res.data;
 };
+
+/**
+ * 비밀번호 변경
+ *
+ */
+export const changePassword = async (
+  password: string,
+  newPassword: string,
+): Promise<void> => {
+  const res = await axiosInstance.put(`/auth/password`, {
+    password,
+    newPassword,
+  });
+  return res.data;
+};

@@ -3,21 +3,104 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import sectionImg from 'public/images/section.jpg';
+import Button from '@/components/ui/Buttons';
+import sectionImg from 'public/images/hero.jpg';
+
+import LandingFooter from './components/LandingFooter';
+import PointCard from './components/PointCard';
+import SettingCard from './components/SettingCard';
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1>Welcome to My Next.js App!</h1>
-      <p>Start building your amazing application.</p>
-      <Image src={sectionImg} alt="테스트용 이미지" />
-      <div className="flex w-full items-center justify-center p-5">
-        <Link
-          href="/login"
-          className="bg-taskify-violet-primary rounded-md p-3 text-white"
-        >
-          로그인 하러가기
-        </Link>
+    <main className="bg-taskify-neutral-900 text-taskify-neutral-0 mx-auto my-0">
+      {/* padding-x container */}
+      <div className="px-4 md:px-10 xl:mx-auto xl:max-w-300 xl:px-0">
+        {/* grid */}
+        <div className="grid grid-cols-3 place-items-center">
+          {/* hero */}
+          <div className="relative col-span-3 mt-10 aspect-video w-[77vw] max-w-[722px] md:mt-23.5 md:w-[72vw]">
+            <Image
+              className="rounded-sm object-cover"
+              src={sectionImg}
+              alt="Taskify Hero 이미지"
+              fill
+              sizes="(max-width: 768px) 77vw, (max-width: 1200px) 72vw, 722px"
+              priority
+            />
+          </div>
+          <div className="col-span-3 mt-[26px] flex flex-col items-center justify-center md:mt-12 md:flex-row md:gap-6 md:leading-25 xl:gap-7">
+            <h1 className="col-span-3 text-[2.5rem] font-bold md:text-[3.5rem] xl:text-[4.75rem]">
+              새로운 일정 관리
+            </h1>
+            <h1 className="text-taskify-violet-primary text-[2.625rem] font-bold md:text-[3.5rem] xl:text-[4.75rem]">
+              Taskify
+            </h1>
+          </div>
+          <div className="col-span-3 mt-25 md:mt-22 xl:mt-23">
+            <Link href="/">
+              <Button className="h-[46px] w-[235px] md:h-[54px] md:w-[280px]">
+                <span className="text-taskify-md-medium md:text-taskify-2lg-medium">
+                  로그인하기
+                </span>
+              </Button>
+            </Link>
+          </div>
+
+          {/* point cards */}
+          <section className="col-span-3 mt-19 flex w-full flex-col gap-15 md:mt-45 md:gap-22.5">
+            <PointCard
+              className="md:mx-auto md:w-full md:max-w-192 xl:h-150 xl:max-w-none"
+              pointNum={1}
+              imageUrl="https://placehold.co/600x500/F1EFFD/760DDE.jpg?text=<Task Management>"
+              imagePosition="bottom-right"
+            >
+              일의 우선순위를
+              <br />
+              관리하세요
+            </PointCard>
+            <PointCard
+              className="md:mx-auto md:w-full md:max-w-192 xl:h-150 xl:max-w-none"
+              pointNum={2}
+              imageUrl="https://placehold.co/440x500/F1EFFD/760DDE.jpg?text=<Add a task>"
+              imagePosition="bottom"
+            >
+              해야 할 일을
+              <br />
+              등록하세요
+            </PointCard>
+          </section>
+
+          {/* setting cards */}
+          <section className="col-span-3 mt-22.5 flex w-full flex-col items-center justify-between gap-10 md:gap-12 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:gap-y-9">
+            <p className="text-center text-[1.375rem] font-bold md:text-[1.75rem] md:leading-8 xl:col-span-3 xl:text-left">
+              생산성을 높이는 다양한 설정 ⚡
+            </p>
+            <SettingCard
+              className="w-full"
+              title="대시보드 설정"
+              imageUrl="https://placehold.co/600x400/F1EFFD/760DDE.jpg?text=<Dashboard>&bg=0000FF&text_color=FFFFFF"
+            >
+              대시보드 사진과 이름을 변경할 수 있어요.
+            </SettingCard>
+            <SettingCard
+              className="w-full"
+              title="초대"
+              imageUrl="https://placehold.co/600x400/F1EFFD/760DDE.jpg?text=<Invitation>"
+            >
+              새로운 팀원을 초대할 수 있어요.
+            </SettingCard>
+            <SettingCard
+              className="w-full"
+              title="구성원"
+              imageUrl="https://placehold.co/600x400/F1EFFD/760DDE.jpg?text=<Member>"
+            >
+              구성원을 초대하고 내보낼 수 있어요.
+            </SettingCard>
+          </section>
+
+          {/* footer */}
+          <LandingFooter className="col-span-3 w-full" />
+        </div>
       </div>
     </main>
   );

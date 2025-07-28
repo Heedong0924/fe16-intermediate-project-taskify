@@ -13,3 +13,15 @@ export default interface DetailCard {
   createdAt: string; // ISO 8601 형식의 날짜 문자열
   updatedAt: string; // ISO 8601 형식의 날짜 문자열
 }
+export interface DetailCardResponse {
+  cursorId: number;
+  totalCount: number;
+  cards: DetailCard[];
+  pageParam: number;
+}
+
+export interface DetailCardProps {
+  size: number;
+  cursorId?: number;
+  columnId: number;
+}
