@@ -34,6 +34,23 @@ export const useDashboardInvitations = (
 };
 
 /*
+ * 초대 삭제 hooks
+ */
+export const useDeleteInvitation = (dashboardId: number) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (invitationId: number) =>
+      deleteDashboardInvitations(dashboardId, invitationId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['dashboard-invitations', dashboardId],
+      });
+    },
+  });
+};
+
+/*
  * 초대 훅 hooks
  */
 // export const useInviteDashboardUser = (dashboardId: number) => {
@@ -52,20 +69,3 @@ export const useDashboardInvitations = (
 //     },
 //   });
 // };
-
-/*
- * 초대 삭제 hooks
- */
-export const useDeleteInvitation = (dashboardId: number) => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: (invitationId: number) =>
-      deleteDashboardInvitations(dashboardId, invitationId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['dashboard-invitations', dashboardId],
-      });
-    },
-  });
-};
