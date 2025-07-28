@@ -35,7 +35,7 @@ export default function Home() {
             </h1>
           </div>
           <div className="col-span-3 mt-25 md:mt-22 xl:mt-23">
-            <Link href="/">
+            <Link href="/login">
               <Button className="h-[46px] w-[235px] md:h-[54px] md:w-[280px]">
                 <span className="text-taskify-md-medium md:text-taskify-2lg-medium">
                   로그인하기
