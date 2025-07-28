@@ -79,7 +79,6 @@ const InvitationList = ({ searchTerm }: InvitationProps) => {
       <MobileInvitationList
         key={invitation.id}
         invitation={invitation}
-        searchTerm={searchTerm}
         observerRef={
           index === allInvitations.length - 1 ? observerEl : undefined
         }
