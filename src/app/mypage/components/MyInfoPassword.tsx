@@ -22,7 +22,7 @@ export default function MyInfoPassword() {
     handleSubmit,
     getValues,
     formState: { errors, dirtyFields, isValid, isSubmitting },
-    // reset,
+    reset,
   } = useForm<FormValues>({
     mode: 'onChange',
     reValidateMode: 'onBlur',
@@ -33,6 +33,11 @@ export default function MyInfoPassword() {
 
   const onSubmit = (data: FormValues) => {
     changePassword(data);
+    reset({
+      password: '',
+      newPassword: '',
+      confirmPassword: '',
+    });
   };
 
   return (

@@ -11,14 +11,12 @@ import {
   useUploadProfileImage,
 } from '@/hooks/useMyInfoEdit';
 import { nicknameValidation } from '@/lib/validationRules';
-import { useAuthStore } from '@/stores/useAuthStore';
 
 type FormValues = {
   nickname: string;
 };
 
 export default function MyInfoProfile() {
-  const { user, setUser } = useAuthStore(); // 스토리지
   const {
     register,
     handleSubmit,
@@ -47,10 +45,11 @@ export default function MyInfoProfile() {
   }, [data, reset]);
 
   const handleFileSelect = async (file: File): Promise<string> => {
-    // 받은 파일 미리보기
+    // 업로드 전 미리보기 URL 생성
     const previewUrl = URL.createObjectURL(file);
     setProfileImageUrl(previewUrl);
 
+    // 파일 서버에 업로드, 실제 이미지 URL 받아옴
     const uploadedUrl = await uploadImage(file);
     setProfileImageUrl(uploadedUrl);
 
@@ -61,21 +60,10 @@ export default function MyInfoProfile() {
     const nicknameData = formData.nickname.trim() ?? '';
     const profileImageUrlData = profileImageUrl ?? data?.profileImageUrl ?? '';
 
-    mutation.mutate(
-      {
-        nickname: nicknameData,
-        profileImageUrl: profileImageUrlData,
-      },
-      {
-        onSuccess: () => {
-          setUser({
-            ...user!, // 기존 유저 정보 전체 유지
-            nickname: nicknameData,
-            profileImageUrl: profileImageUrlData,
-          });
-        },
-      },
-    );
+    mutation.mutate({
+      nickname: nicknameData,
+      profileImageUrl: profileImageUrlData || undefined,
+    });
   };
 
   return (

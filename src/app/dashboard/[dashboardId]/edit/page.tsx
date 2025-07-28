@@ -51,11 +51,9 @@ export default function DashboardEditPage() {
       <DashboardInvitations dashboardId={id} />
 
       {/*  대시보드 삭제하기 */}
-      {/* 모달 경고 창 떠야함 */}
       <Button
         color="white-black"
         className="btn-removeDash w-full border border-[#D9D9D9] bg-transparent sm:w-[320px]"
-        // onClick={() => deleteMutation.mutate(id)}
         onClick={() => {
           openDialog({
             dialogComponent: (

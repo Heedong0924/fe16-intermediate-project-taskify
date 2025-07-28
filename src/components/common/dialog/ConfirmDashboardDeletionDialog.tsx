@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { FormEvent, useState } from 'react';
+import { FormEvent } from 'react';
 
 import { Button } from '@/components/ui/Button';
 import {
@@ -11,7 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/Dialog';
-import { useDashboard, useDeleteDashboard } from '@/hooks/useDashboardEdit';
+import { useDeleteDashboard } from '@/hooks/useDashboardEdit';
 import { useDialogStore } from '@/stores/useDialogStore';
 
 interface ConfirmDashboardDeletionDialogProp {
@@ -22,15 +22,11 @@ interface ConfirmDashboardDeletionDialogProp {
 const ConfirmDashboardDeletionDialog = ({
   dashboardId,
 }: ConfirmDashboardDeletionDialogProp) => {
-  const [isDeleted, setIsDeleted] = useState(false);
-  useDashboard(dashboardId, !isDeleted);
-
   const router = useRouter();
   const { closeDialog, goBack } = useDialogStore();
 
   const deleteMutation = useDeleteDashboard({
     onSuccess: () => {
-      setIsDeleted(true); // 삭제 완료 시 데이터를 더 이상 불러오지 않도록 설정
       router.push('/mydashboard');
       closeDialog();
     },
