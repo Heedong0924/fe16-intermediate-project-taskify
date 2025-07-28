@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 
-import { Invitation } from '@/types/Invitation';
+import { getInvitations } from '@/lib/api/invitations';
 
 import InvitationListItem from './InvitationListItem';
 import NoResult from './Noresult';
@@ -16,14 +16,13 @@ const InvitationList = ({ searchTerm }: InvitationProps) => {
   const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteQuery({
     queryKey: ['invitations', searchTerm],
     queryFn: async ({ pageParam = 0 }) => {
-      const query = new URLSearchParams();
-      query.append('size', '10');
-      query.append('cursorId', pageParam.toString());
-      if (searchTerm) query.append('title', searchTerm);
-
-      const res = await fetch(`/api/invitations?${query.toString()}`);
-      if (!res.ok) throw new Error('Failed to fetch');
-      return res.json();
+      console.log('[QUERY] pageParam:', pageParam);
+      console.log('[QUERY] searchTerm:', searchTerm);
+      return getInvitations({
+        size: 10,
+        cursorId: pageParam === 0 ? undefined : pageParam,
+        title: searchTerm || undefined,
+      });
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.cursorId ?? null,
@@ -48,7 +47,13 @@ const InvitationList = ({ searchTerm }: InvitationProps) => {
   }, [hasNextPage, fetchNextPage]);
 
   const allInvitations =
-    data?.pages.flatMap((page) => page.invitations as Invitation[]) ?? [];
+    data?.pages.flatMap((page) =>
+      Array.isArray(page.invitations) ? page.invitations : [page.invitations],
+    ) ?? [];
+
+  console.log('✅ data:', data);
+  console.log('✅ data.pages:', data?.pages);
+  console.log('✅ allInvitations:', allInvitations);
 
   if (!isFetching && allInvitations.length === 0) {
     return <NoResult />;

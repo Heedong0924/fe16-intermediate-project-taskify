@@ -29,7 +29,7 @@ const InvitationDashboard = () => {
         초대받은 대시보드
       </h1>
       {/* 초대받은 대시보드가 없을 시 안내 페이지, 있을 시 검색 페이지 */}
-      {data?.invitations.length === 0 ? (
+      {!data || data.invitations.length === 0 ? (
         <div className="flex flex-1 items-center justify-center">
           <NoInvitation />
         </div>
