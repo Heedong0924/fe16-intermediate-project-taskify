@@ -44,12 +44,27 @@ export const getInvitations = async ({
   cursorId,
   title,
 }: GetInvitationsParams): Promise<GetInvitationsResponse> => {
-  const response = await axiosInstance.get<GetInvitationsResponse>(
-    `/invitations`,
-    { params: { size, cursorId, title } },
+  console.log('[axios baseURL]', axiosInstance.defaults.baseURL);
+  const params = Object.fromEntries(
+    Object.entries({ size, cursorId, title }).filter(
+      ([_, v]) => v !== undefined && v !== '',
+    ),
   );
+  const response = await axiosInstance.get(`/invitations`, { params });
+  const { data } = response;
 
-  return response.data;
+  return {
+    cursorId: data.cursorId ?? null,
+    invitations: Array.isArray(data.invitations)
+      ? data.invitations
+      : [data.invitations],
+  };
+  // const response = await axiosInstance.get<GetInvitationsResponse>(
+  //   `/invitations`,
+  //   { params },
+  // );
+
+  // return response.data;
 };
 
 // 2. PUT - 초대 응답
