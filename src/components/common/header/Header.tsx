@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import MemberAvatars from '@/app/mydashboard/components/dashboard/MemberAvatars';
 import { getMyInfo } from '@/lib/api/auth';
@@ -12,6 +12,7 @@ import { headerConfig } from '@/lib/constants/headerConfig';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useDashboardStore } from '@/stores/useDashboardStore';
 import { useMemberStore } from '@/stores/useMemberStore';
+import { Member } from '@/types/DashboardMember';
 
 import InviteButton from './InviteButton';
 import ManageButton from './ManageButton';
@@ -46,6 +47,7 @@ const Header = () => {
     headerTitle = config.title;
   }
 
+  // 유저 정보, 멤버 정보
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -61,6 +63,23 @@ const Header = () => {
 
     fetchData();
   }, []);
+
+  // 상세 목록
+  const [members, setMembers] = useState<Member[]>([]);
+
+  useEffect(() => {
+    const fetchMembers = async () => {
+      if (!dashboardId) return;
+      try {
+        const res = await getDashboardMembers({ dashboardId });
+        setMembers(res.members);
+      } catch (e) {
+        console.error('헤더에서 멤버 목록 가져오기 실패:', e);
+      }
+    };
+
+    fetchMembers();
+  }, [dashboardId]);
 
   return (
     <header className="border-b-taskify-neutral-300 bg-taskify-neutral-0 fixed z-10 flex h-[60px] w-full items-center justify-between border-[1px]">
@@ -88,7 +107,7 @@ const Header = () => {
         <div className="flex items-center gap-2">
           {config.showManageButton && <ManageButton />}
           {config.showInviteButton && <InviteButton />}
-          {config.showMemberAvatars && <MemberAvatars />}
+          {config.showMemberAvatars && <MemberAvatars members={members} />}
           {/* 구분선 */}
           <div className="bg-taskify-neutral-300 h-8 w-px" />
           {config.showUserAvatar && <UserAvatar />}
