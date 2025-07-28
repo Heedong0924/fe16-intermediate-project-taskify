@@ -8,7 +8,7 @@ import { AddCountChip } from '@/components/common/Chips';
 import CreateColumnDialog from '@/components/common/dialog/CreateColumnDialog';
 import Button from '@/components/ui/Buttons';
 import { getColumn } from '@/lib/api/columnService';
-import { getDashboardDetail } from '@/lib/api/dashboardService';
+import { getDashboardById } from '@/lib/api/dashboardService';
 import { useDashboardStore } from '@/stores/useDashboardStore';
 import { useDialogStore } from '@/stores/useDialogStore';
 import { ColumnResponse } from '@/types/Column';
@@ -29,7 +29,7 @@ const DashboardIdPage = () => {
   useEffect(() => {
     const fetchDashboardTitle = async () => {
       try {
-        const dashboard = await getDashboardDetail(dashboardId);
+        const dashboard = await getDashboardById(dashboardId);
         setDashboardTitle(dashboard.title);
       } catch (error) {
         console.error('Failed to fetch dashboard title:', error);

@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
@@ -22,6 +22,8 @@ interface SendInvitationDialogProps {
 }
 
 const SendInvitationDialog = ({ dashboardId }: SendInvitationDialogProps) => {
+  // queryClient 추가
+  const queryClient = useQueryClient();
   const { closeDialog } = useDialogStore();
   const [emailValue, setEmailValue] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
@@ -31,6 +33,9 @@ const SendInvitationDialog = ({ dashboardId }: SendInvitationDialogProps) => {
   const { mutate, isPending } = useMutation({
     mutationFn: createInvitations,
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['dashboard-invitations', dashboardId],
+      });
       closeDialog();
     },
     onError: (error) => {

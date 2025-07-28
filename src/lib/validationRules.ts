@@ -49,3 +49,15 @@ export const confirmPasswordValidation = (
   validate: (value: string) =>
     value === getValues().password || '비밀번호가 일치하지 않습니다',
 });
+
+/**
+ * 대시보드 이름 유효성 검사 규칙
+ * - 필수 입력
+ * - 빈 공백 X
+ */
+export const dashboardTitleValidation = {
+  required: '대시보드 이름을 입력해주세요',
+  validate: (value: string) =>
+    value.trim().length > 0 || '공백은 대시보드 이름으로 입력할 수 없습니다',
+  // minLength: { value: 2, message: '2자 이상 입력해주세요' },
+};
