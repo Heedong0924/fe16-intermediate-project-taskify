@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
@@ -20,6 +20,7 @@ import Input from '../Input';
 
 const CreateDashboardDialog = () => {
   const { closeDialog } = useDialogStore();
+  const queryClient = useQueryClient();
 
   const [createDashboardValue, setCreateDashboardValue] = useState<string>('');
   const [selectedColor, setSelectedColor] = useState<string>('#7AC555');
@@ -31,6 +32,7 @@ const CreateDashboardDialog = () => {
     mutationFn: createDashboard,
     onSuccess: () => {
       closeDialog();
+      queryClient.invalidateQueries({ queryKey: ['dashboards'] });
     },
     onError: (error) => {
       const axiosError = error as AxiosError<ServerErrorResponse>;

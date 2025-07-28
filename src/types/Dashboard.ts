@@ -19,4 +19,5 @@ export interface DashboardQueryParams {
   cursorId?: number;
   page?: number;
   size?: number;
+  id?: number;
 }
