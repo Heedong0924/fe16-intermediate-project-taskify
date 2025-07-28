@@ -20,6 +20,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'sprint-fe-project.s3.ap-northeast-2.amazonaws.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'placehold.co', // Placehold 도메인 (Placehold 이미지)
+      },
     ],
   },
   env: {
