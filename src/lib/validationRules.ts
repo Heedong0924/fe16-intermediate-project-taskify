@@ -57,7 +57,11 @@ export const confirmPasswordValidation = (
  */
 export const dashboardTitleValidation = {
   required: '대시보드 이름을 입력해주세요',
-  validate: (value: string) =>
-    value.trim().length > 0 || '공백은 대시보드 이름으로 입력할 수 없습니다',
-  // minLength: { value: 2, message: '2자 이상 입력해주세요' },
+  validate: (value: string) => {
+    const trimmed = value.trim();
+    return (
+      (trimmed.length !== 0 || '공백은 대시보드 이름으로 입력할 수 없습니다') &&
+      (trimmed.length <= 20 || '20자 이하 입력해주세요')
+    );
+  },
 };
