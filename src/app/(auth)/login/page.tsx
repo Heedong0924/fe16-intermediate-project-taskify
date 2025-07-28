@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Input from '@/components/common/Input';
+import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/hooks/useAuth';
 import { emailValidation, passwordValidation } from '@/lib/validationRules';
 
@@ -26,9 +27,10 @@ type FormValues = {
 
 const LoginPage = () => {
   const {
+    reset,
     register,
     handleSubmit,
-    formState: { errors, dirtyFields },
+    formState: { errors, dirtyFields, isValid, isSubmitting },
   } = useForm<FormValues>({
     mode: 'onChange',
     reValidateMode: 'onBlur',
@@ -36,13 +38,11 @@ const LoginPage = () => {
   // 비밀번호 표시 토글 상태
   const [showPassword, setShowPassword] = useState(false);
   const togglePassword = () => setShowPassword((prev) => !prev);
-  const { login, error } = useAuth();
+  const { login, isLoading } = useAuth();
   const onSubmit = (data: FormValues) => {
-    console.log(data); // 사용자가 입력한 값
-    login(data);
-    if (error) {
-      console.error('Login error:', error);
-    }
+    login(data, {
+      onSettled: () => reset(), // 로그인 후 폼 리셋
+    });
   };
 
   return (
@@ -86,12 +86,15 @@ const LoginPage = () => {
             {...register('password', passwordValidation)}
           />
         </div>
-        <button
+        <Button
+          variant="default"
+          size="lg"
+          disabled={!isValid || isSubmitting || isLoading}
           className="bg-taskify-violet-primary w-full rounded-lg py-2 text-white"
           type="submit"
         >
           로그인
-        </button>
+        </Button>
       </form>
       <p className="">
         회원이 아니신가요?{' '}
