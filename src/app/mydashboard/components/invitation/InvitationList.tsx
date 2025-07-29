@@ -20,7 +20,9 @@ const InvitationList = ({ searchTerm }: InvitationProps) => {
       query.append('size', '10');
       query.append('cursorId', pageParam.toString());
       if (searchTerm) query.append('title', searchTerm);
-
+      /**
+       * @todo: Axios로 변경하기
+       */
       const res = await fetch(`/api/invitations?${query.toString()}`);
       if (!res.ok) throw new Error('Failed to fetch');
       return res.json();

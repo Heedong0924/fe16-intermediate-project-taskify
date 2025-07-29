@@ -20,7 +20,7 @@ const DashboardIdPage = () => {
   const Prams = useParams();
   const { openDialog } = useDialogStore();
 
-  const rawDashboardId = Prams.id as string;
+  const rawDashboardId = Prams.dashboardId as string;
   const dashboardId = Number(rawDashboardId);
 
   const { dashboardTitle, setDashboardTitle, setDashboardId } =

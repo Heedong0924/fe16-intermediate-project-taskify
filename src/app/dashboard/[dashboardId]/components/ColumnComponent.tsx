@@ -8,7 +8,7 @@ import arrowDropDown from '@/../public/images/icon/arrowDropDown.svg';
 import settingIcon from '@/../public/images/icon/settings.svg';
 import { AddCountChip, CounterChip } from '@/components/common/Chips';
 import ColumnSettingsDialog from '@/components/common/dialog/ColumnSettingsDialog';
-import CreateColumnDialog from '@/components/common/dialog/CreateColumnDialog';
+import TodoEditDialog from '@/components/common/dialog/TodoDialog/TodoEditDialog';
 import Button from '@/components/ui/Buttons';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { getCardList } from '@/lib/api/cardService';
@@ -152,7 +152,9 @@ const ColumnComponent = ({
         <Button
           onClick={() =>
             openDialog({
-              dialogComponent: <CreateColumnDialog dashboardId={dashboardId} />,
+              dialogComponent: (
+                <TodoEditDialog columnId={columnId} mode="create" />
+              ),
             })
           }
           color="white-black"
