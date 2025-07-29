@@ -14,6 +14,7 @@ import DashboardCard from './DashboardCrad';
 import PaginationButton from '../ui/PaginationButton';
 import { LogoMd } from '../ui/SVGLogo';
 import CreateDashboardDialog from './dialog/CreateDashboardDialog';
+import { ScrollArea, ScrollBar } from '../ui/scroll-area';
 
 const Sidebar = () => {
   const [page, setPage] = useState<number>(1);
@@ -78,25 +79,28 @@ const Sidebar = () => {
             </div>
             <Image src={addIcon} alt="add to dashboard" />
           </button>
-          <div className="">
-            {dashboards.map((dashboard) => (
-              <DashboardCard
-                key={dashboard.id}
-                dashboard={dashboard}
-                className="hover:bg-taskify-neutral-200 h-[42px]"
+          <ScrollArea className="h-screen overflow-scroll pb-40">
+            <div>
+              {dashboards.map((dashboard) => (
+                <DashboardCard
+                  key={dashboard.id}
+                  dashboard={dashboard}
+                  className="hover:bg-taskify-neutral-200 h-[42px]"
+                />
+              ))}
+            </div>
+            {totalCount !== 0 && (
+              <PaginationButton
+                page={page}
+                size={itemsSize}
+                totalCount={totalCount}
+                text={false}
+                onPageChange={setPage}
+                className="mt-6"
               />
-            ))}
-          </div>
-          {totalCount !== 0 && (
-            <PaginationButton
-              page={page}
-              size={itemsSize}
-              totalCount={totalCount}
-              text={false}
-              onPageChange={setPage}
-              className="mt-6"
-            />
-          )}
+            )}
+            <ScrollBar className="hidden" />
+          </ScrollArea>
         </div>
       </div>
     </aside>
