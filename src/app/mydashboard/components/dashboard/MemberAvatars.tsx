@@ -1,11 +1,13 @@
 'use client';
 
 import { AvatarProfile } from '@/components/common/Profile';
-import { useMemberStore } from '@/stores/useMemberStore';
+import { Member } from '@/types/DashboardMember';
 
-const MemberAvatars = () => {
-  const members = useMemberStore((state) => state.getMembers());
+interface MemberAvatarsProps {
+  members: Member[];
+}
 
+const MemberAvatars = ({ members = [] }: Partial<MemberAvatarsProps>) => {
   // 아바타는 3명까지만 노출되며 그 이후는 +rest로 처리
   const visible = members.slice(0, 3);
   const rest = members.length - visible.length;
@@ -17,7 +19,7 @@ const MemberAvatars = () => {
           <AvatarProfile
             userName={member.nickname}
             profileImg={member.profileImageUrl}
-            size="sm"
+            size="md"
           />
         </div>
       ))}
