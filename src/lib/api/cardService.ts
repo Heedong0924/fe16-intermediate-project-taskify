@@ -3,6 +3,7 @@ import DetailCard, {
   DetailCardProps,
   DetailCardResponse,
 } from '@/types/DetailCard';
+import type { TodoFormData } from '@/types/TodoFormData';
 
 export const getCard = async (cardId: number): Promise<DetailCard> => {
   const res = await axiosInstance.get(`/cards/${cardId}`);
@@ -10,6 +11,7 @@ export const getCard = async (cardId: number): Promise<DetailCard> => {
 };
 
 export const createCard = async ({
+  dashboardId,
   columnId,
   assigneeUserId,
   title,
@@ -17,16 +19,9 @@ export const createCard = async ({
   dueDate,
   tags,
   imageUrl,
-}: {
-  columnId: number;
-  assigneeUserId: number;
-  title: string;
-  description: string;
-  dueDate: string;
-  tags: string[];
-  imageUrl: string;
-}): Promise<DetailCard> => {
+}: TodoFormData): Promise<DetailCard> => {
   const res = await axiosInstance.post(`/cards`, {
+    dashboardId,
     columnId,
     assigneeUserId,
     title,
@@ -48,15 +43,7 @@ export const updateCard = async (
     dueDate,
     tags,
     imageUrl,
-  }: {
-    columnId: number;
-    assigneeUserId: number;
-    title: string;
-    description: string;
-    dueDate: string;
-    tags: string[];
-    imageUrl: string;
-  },
+  }: TodoFormData,
 ): Promise<DetailCard> => {
   const res = await axiosInstance.put(`/cards/${cardId}`, {
     columnId,

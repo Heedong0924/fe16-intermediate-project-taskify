@@ -1,6 +1,7 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import React, { useCallback, useMemo, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
@@ -12,7 +13,6 @@ import UploadImageButton from '@/components/common/UploadImageButton';
 import { Button } from '@/components/ui/Button';
 import { DateTimePicker } from '@/components/ui/DateTimePicker';
 import {
-  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -22,12 +22,15 @@ import {
 import { createCard, updateCard } from '@/lib/api/cardService';
 import { cardImageUpload } from '@/lib/api/columnService';
 import { mapCardToForm, getAssigneeFromCard } from '@/lib/utils/cardMapper';
+import { useDashboardStore } from '@/stores/useDashboardStore';
 import { useDialogStore } from '@/stores/useDialogStore';
 import DetailCard from '@/types/DetailCard';
+import ServerErrorResponse from '@/types/ServerErrorResponse';
 import { TodoFormData } from '@/types/TodoFormData';
 
 import { ColumnSelector } from './ColumnSelector';
 import { UserSelector } from './UserSelector';
+import AlertDialog from '../AlertDialog';
 /**
  * 할 일 생성 및 수정 모달 컴포넌트
  * @returns {JSX.Element} 할 일 수정 모달
@@ -42,12 +45,14 @@ interface TodoEditDialogProps {
 
 const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
   // 폼 데이터를 관리
-  const { goBack } = useDialogStore();
+  const { openDialog, goBack } = useDialogStore();
+  const { dashboardId } = useDashboardStore();
   const defaultVals = useMemo<TodoFormData>(
     () =>
       cardData
         ? mapCardToForm(cardData)
         : {
+            dashboardId,
             columnId,
             assigneeUserId: 0,
             title: '',
@@ -56,7 +61,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
             tags: [],
             imageUrl: '',
           },
-    [cardData, columnId],
+    [cardData, dashboardId, columnId],
   );
   const {
     reset,
@@ -89,10 +94,21 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
     mutationFn: (data) => createCard(data),
     onSuccess: (data) => {
       console.log('카드 생성 성공:', data);
+      goBack();
     },
     onError: (error) => {
-      reset(defaultVals);
       console.error('카드 생성 실패:', error);
+      const axiosError = error as AxiosError<ServerErrorResponse>;
+      openDialog({
+        isNewOpen: true,
+        dialogComponent: (
+          <AlertDialog
+            description={axiosError.response?.data.message || '알 수 없는 에러'}
+            closeBtnText="확인"
+            isGoBack
+          />
+        ),
+      });
     },
   });
   // 카드 수정 뮤테이션
@@ -318,16 +334,14 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
           취소
         </Button>
 
-        <DialogClose asChild>
-          <Button
-            type="submit"
-            disabled={!isValid || isSubmitting || loading}
-            className="bg-taskify-violet-primary text-white hover:bg-violet-900"
-            onClick={handleSubmit(onSubmit)}
-          >
-            수정
-          </Button>
-        </DialogClose>
+        <Button
+          type="submit"
+          disabled={!isValid || isSubmitting || loading}
+          className="bg-taskify-violet-primary text-white hover:bg-violet-900"
+          onClick={handleSubmit(onSubmit)}
+        >
+          수정
+        </Button>
       </DialogFooter>
     </DialogContent>
   );
