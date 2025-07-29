@@ -1,10 +1,9 @@
 import Image from 'next/image';
-import Link from 'next/link';
 
-import Button from '@/components/ui/Buttons';
 import sectionImg from 'public/images/hero.jpg';
 
 import LandingFooter from './components/LandingFooter';
+import LandingLoginButton from './components/LandingLoginButton';
 import PointCard from './components/PointCard';
 import SettingCard from './components/SettingCard';
 
@@ -35,13 +34,7 @@ export default function Home() {
             </h1>
           </div>
           <div className="col-span-3 mt-25 md:mt-22 xl:mt-23">
-            <Link href="/login">
-              <Button className="h-[46px] w-[235px] md:h-[54px] md:w-[280px]">
-                <span className="text-taskify-md-medium md:text-taskify-2lg-medium">
-                  로그인하기
-                </span>
-              </Button>
-            </Link>
+            <LandingLoginButton className="h-[46px] w-[235px] md:h-[54px] md:w-[280px]" />
           </div>
 
           {/* point cards */}

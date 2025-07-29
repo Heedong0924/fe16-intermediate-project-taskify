@@ -14,7 +14,13 @@ const LandingFooter = ({ className }: HTMLAttributes<HTMLDivElement>) => {
       )}
     >
       <p className="text-taskify-xs-normal text-taskify-neutral-400 md:text-taskify-lg-regular">
-        <Link href="/">@codeit - 2023</Link>
+        <Link
+          href="https://www.codeit.kr"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          @codeit - 2023
+        </Link>
       </p>
       <ul className="text-taskify-xs-normal text-taskify-neutral-400 md:text-taskify-lg-regular flex items-center justify-between gap-5 md:grow-1 md:justify-center md:gap-8">
         <li>
@@ -26,17 +32,29 @@ const LandingFooter = ({ className }: HTMLAttributes<HTMLDivElement>) => {
       </ul>
       <ul className="mt-14 flex items-center justify-between gap-5 md:mt-0 md:gap-3.5">
         <li>
-          <Link href="/" target="_blank" rel="noopener noreferrer">
+          <Link
+            href="mailto:support@codeit.kr"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Mail className="h-4 w-4 md:h-5.5 md:w-5.5" strokeWidth={2} />
           </Link>
         </li>
         <li>
-          <Link href="/" target="_blank" rel="noopener noreferrer">
+          <Link
+            href="https://www.facebook.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Facebook className="h-4 w-4 md:h-5.5 md:w-5.5" strokeWidth={2} />
           </Link>
         </li>
         <li>
-          <Link href="/" target="_blank" rel="noopener noreferrer">
+          <Link
+            href="https://www.instagram.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Instagram className="h-4 w-4 md:h-5.5 md:w-5.5" strokeWidth={2} />
           </Link>
         </li>

@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={pretendard.variable}>
-        <LandingHeader />
+        <LandingHeader className="sticky top-0 z-50 h-15 w-full md:h-17.5" />
         <QueryProviders>
           {children}
           <GlobalDialog />
