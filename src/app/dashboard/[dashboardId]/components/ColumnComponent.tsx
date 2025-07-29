@@ -120,7 +120,7 @@ const ColumnComponent = ({
             <div className="flex gap-2">
               <button onClick={handleToggle} type="button">
                 {isOpen ? (
-                  <div className="text-taskify-sm-medium text-taskify-neutral-500 flex items-center">
+                  <div className="text-taskify-sm-medium text-taskify-neutral-500 flex cursor-pointer items-center">
                     CLOSE
                     <Image
                       src={arrowDropDown}
@@ -129,7 +129,7 @@ const ColumnComponent = ({
                     />
                   </div>
                 ) : (
-                  <div className="text-taskify-sm-medium text-taskify-neutral-500 flex items-center">
+                  <div className="text-taskify-sm-medium text-taskify-neutral-500 flex cursor-pointer items-center">
                     OPEN
                     <Image src={arrowDropDown} alt="close the toggle" />
                   </div>
@@ -166,7 +166,7 @@ const ColumnComponent = ({
               })
             }
             color="white-black"
-            className="btn-addTodo mt-5 mb-4 shrink-0"
+            className="btn-addTodo mt-5 mb-4 shrink-0 cursor-pointer"
           >
             <AddCountChip size="sm" />
           </Button>

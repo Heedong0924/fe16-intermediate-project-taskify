@@ -71,7 +71,7 @@ const Sidebar = () => {
                 dialogComponent: <CreateDashboardDialog />,
               })
             }
-            className="hover:bg-taskify-neutral-200 mb-[15px] flex h-5 w-full items-center justify-between"
+            className="hover:bg-taskify-neutral-200 mb-[15px] flex h-5 w-full cursor-pointer items-center justify-between"
             type="button"
           >
             <div className="text-taskify-md-semibold my-4 flex justify-between">
