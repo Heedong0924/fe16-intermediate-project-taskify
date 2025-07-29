@@ -22,6 +22,7 @@ import {
 import { createCard, updateCard } from '@/lib/api/cardService';
 import { cardImageUpload } from '@/lib/api/columnService';
 import { mapCardToForm, getAssigneeFromCard } from '@/lib/utils/cardMapper';
+import { useDialogStore } from '@/stores/useDialogStore';
 import DetailCard from '@/types/DetailCard';
 import { TodoFormData } from '@/types/TodoFormData';
 
@@ -41,6 +42,7 @@ interface TodoEditDialogProps {
 
 const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
   // 폼 데이터를 관리
+  const { goBack } = useDialogStore();
   const defaultVals = useMemo<TodoFormData>(
     () =>
       cardData
@@ -118,6 +120,9 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
     },
     [uploadMutation],
   );
+  const handleUndoClick = () => {
+    goBack();
+  };
 
   const onSubmit = (data: TodoFormData) => {
     console.log('Submitted data:', data);
@@ -309,11 +314,10 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
 
       {/* 버튼 영역 */}
       <DialogFooter className="grid grid-cols-2 gap-3 pt-4">
-        <DialogClose asChild>
-          <Button variant="outline" type="button">
-            취소
-          </Button>
-        </DialogClose>
+        <Button variant="outline" onClick={handleUndoClick} type="button">
+          취소
+        </Button>
+
         <DialogClose asChild>
           <Button
             type="submit"
