@@ -1,25 +1,23 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
-import { ChangeEvent, KeyboardEvent, MouseEvent, useState } from 'react';
 
-import { Button } from '@/components/ui/Button';
 import {
-  DialogClose,
   DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/Dialog';
+import SkeletonLine from '@/components/ui/SkeletonLIne';
+import SkeletonParagraph from '@/components/ui/SkeletonParagraph';
+import { useSkeleton } from '@/hooks/useSkeleton';
 import { getCard } from '@/lib/api/cardService';
-import { createComment } from '@/lib/api/commentService';
-import { useDialogStore } from '@/stores/useDialogStore';
-import closeBtn from 'public/images/icon/closeBtn.svg';
 
-import CardAuthor from '../CardAuthor';
-import { StatusChip, TagChip } from '../Chips';
-import Comments from './Comments';
-import { KebobMenu } from '../KebobMenu';
-import AlertDialog from './AlertDialog';
-import ConfirmTaskCardDeletionDialog from './ConfirmTaskCardDeletionDialog';
+import CardAuthor from './dialog-components/CardAuthor';
+import Comments from './dialog-components/Comments';
+import TaskCardChipStatus from './dialog-components/TaskCardChipStatus';
+import TaskCardDialogControlArea from './dialog-components/TaskCardDialogControlArea';
+import TaskDialogCreateCommentForm from './dialog-components/TaskDialogCreateCommentForm';
 
 interface TaskCardDialogProps {
   dashboardId: number;
@@ -34,127 +32,83 @@ const TaskCardDialog = ({
   cardId,
   columnName,
 }: TaskCardDialogProps) => {
-  const queryClient = useQueryClient();
-  const { openDialog } = useDialogStore();
-
-  const [createCommentValue, setCreateCommentValue] = useState<string>('');
-
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['detailCard', cardId],
     queryFn: () => getCard(cardId),
   });
 
-  const { mutate: createCommentMutate, isPending: isCreateCommentPending } =
-    useMutation({
-      mutationFn: createComment,
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['comments', cardId] });
-        setCreateCommentValue('');
-      },
-      onError: (error) => {
-        console.error('댓글 생성 실패', error.message);
-      },
-    });
+  const { showSkeleton, isFadingOut } = useSkeleton(isLoading, 1000);
 
-  const handleCreateCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setCreateCommentValue(e.target.value);
-  };
-
-  const handleCommentSubmit = () => {
-    createCommentMutate({
-      content: createCommentValue,
-      cardId,
-      columnId,
-      dashboardId,
-    });
-  };
-
-  const handleCommentSubmitClick = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    handleCommentSubmit();
-  };
-
-  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (!isCreateCommentPending && e.key === 'Enter') {
-      if (!e.shiftKey) {
-        e.preventDefault(); // textarea의 기본 줄바꿈 동작 방지
-        handleCommentSubmit(); // 폼 제출 함수 호출
-      }
-    }
-  };
-
-  const content = (
+  return (
     <DialogContent
-      className="dialog-scrollable-content h-[50vh] max-h-[710px] max-w-[327px] gap-2 overflow-auto px-4 md:max-w-[568px] md:px-6"
+      className="md:grid-cols-[repeat(4, 1fr)_181px] dialog-scrollable-content grid h-[50vh] max-h-[710px] max-w-[327px] grid-cols-4 gap-4 overflow-auto px-4 md:max-h-[766px] md:max-w-[678px] md:gap-6 md:px-8 lg:max-w-[732px]"
       showCloseButton={false}
-      onOpenAutoFocus={(event) => event.preventDefault()}
     >
-      <DialogHeader className="block">
-        <div className="absolute top-5 right-5 flex gap-5">
-          <KebobMenu
-            menuItems={[
-              {
-                key: 'edit',
-                label: '수정하기',
-                variant: 'default',
-                onSelect: () => {
-                  openDialog({
-                    dialogComponent: (
-                      <AlertDialog description="test" closeBtnText="확인" />
-                    ),
-                  });
-                },
-              },
-              {
-                key: 'delete',
-                label: '삭제하기',
-                variant: 'default',
-                onSelect: () => {
-                  openDialog({
-                    dialogComponent: (
-                      <ConfirmTaskCardDeletionDialog cardId={cardId} />
-                    ),
-                  });
-                },
-              },
-            ]}
+      {/** Header 영역 */}
+      <DialogHeader className="col-start-1 col-end-5 flex gap-0">
+        <TaskCardDialogControlArea
+          className="absolute top-5 right-5 flex gap-5"
+          cardId={cardId}
+          cardData={data}
+        />
+        {showSkeleton ? (
+          <SkeletonLine
+            className="mt-12 h-8 w-4/5 md:mt-0"
+            isFadingOut={isFadingOut}
           />
-          <DialogClose>
-            <Image
-              className="cursor-pointer"
-              src={closeBtn}
-              alt="다이얼로그 닫기"
-            />
-          </DialogClose>
-        </div>
-        <DialogTitle className="mt-8 text-left">
-          <span className="text-taskify-2xl-bold text-taskify-neutral-700">
-            {data?.title}
-          </span>
-        </DialogTitle>
+        ) : (
+          <DialogTitle className="mt-12 text-left md:mt-0">
+            <span className="text-taskify-2xl-bold text-taskify-neutral-700">
+              {data?.title}
+            </span>
+          </DialogTitle>
+        )}
+        <DialogTitle />
+        <DialogDescription />
       </DialogHeader>
-      <div className="grid grid-cols-4 gap-4">
+      {/* CardAuthor 영역 */}
+      {showSkeleton ? (
+        <SkeletonLine
+          className="col-start-1 col-end-5 h-[72px] w-full md:col-start-5 md:col-end-6 md:row-span-3 md:mt-15 md:h-[155px] md:w-[181px]"
+          isFadingOut={isFadingOut}
+        />
+      ) : (
         <CardAuthor
-          className="border-taskify-neutral-300 d col-span-4 rounded-lg border-1"
+          className="border-taskify-neutral-300 col-start-1 col-end-5 rounded-lg border-1 md:col-start-5 md:col-end-6 md:row-span-3 md:mt-15 md:h-[155px] md:w-[181px]"
           author={data?.assignee.nickname}
           dueDate={data?.dueDate}
         />
-        <div className="col-start-1 col-end-5 flex gap-2">
-          <StatusChip size="sm">{columnName}</StatusChip>
-          {data?.tags && <span className="text-taskify-neutral-300">|</span>}
-          {data?.tags.map((e) => (
-            <TagChip key={e} size="sm">
-              {e}
-            </TagChip>
-          ))}
-        </div>
-        <div className="text-taskify-xs-normal col-start-1 col-end-5">
-          {data?.description}
-        </div>
-        <div className="col-start-1 col-end-5 mt-4 mb-2">
+      )}
+
+      {showSkeleton ? (
+        <SkeletonLine
+          className="col-start-1 col-end-5 h-[27px] w-3/5"
+          isFadingOut={isFadingOut}
+        />
+      ) : (
+        <TaskCardChipStatus
+          className="col-start-1 col-end-5 flex flex-wrap gap-2"
+          columnName={columnName}
+          tags={data?.tags}
+        />
+      )}
+
+      {/** Contents 영역 */}
+      {showSkeleton ? (
+        <SkeletonParagraph
+          paragraphClassName="w-full col-start-1 col-end-5 gap-[6px] md:gap-[10px]"
+          lineClassName="h-[12px] md:h-[14px]"
+          lines={8}
+          isFadingOut={isFadingOut}
+        />
+      ) : (
+        <div className="col-start-1 col-end-5 gap-4">
+          <div className="text-taskify-xs-normal md:text-taskify-md-regular">
+            {data?.description}
+          </div>
           {data?.imageUrl && (
             <Image
-              className="overflow-hidden rounded-lg"
+              className="mt-4 mb-2 overflow-hidden rounded-lg"
               src="https://picsum.photos/id/684/600/400"
               alt="test"
               width={600}
@@ -162,34 +116,29 @@ const TaskCardDialog = ({
             />
           )}
         </div>
-        <div className="relative col-start-1 col-end-5 flex flex-col justify-between">
-          <p className="text-taskify-md-medium mb-1">댓글</p>
-          <form onSubmit={handleCommentSubmit}>
-            <textarea
-              className="border-taskify-neutral-300 text-taskify-xs-normal dialog-scrollable-content w-full resize-none rounded-lg border px-3 py-3"
-              placeholder="댓글 작성하기"
-              rows={3}
-              value={createCommentValue}
-              onChange={handleCreateCommentChange}
-              onKeyDown={handleKeyDown}
-            />
-            <Button
-              className="bg-taskify-neutral-0 hover:bg-taskify-neutral-0 text-taskify-violet-primary border-taskify-neutral-300 absolute right-4 bottom-4 cursor-pointer border"
-              type="submit"
-              disabled={isCreateCommentPending}
-              onClick={handleCommentSubmitClick}
-            >
-              입력
-            </Button>
-          </form>
-        </div>
-        <div className="col-start-1 col-end-5">
+      )}
+
+      {/* Footer 영역 (Comments) */}
+      {showSkeleton ? (
+        <SkeletonParagraph
+          paragraphClassName="col-start-1 col-end-5 gap-4"
+          lineClassName="h-[48px]"
+          lines={3}
+          isFadingOut={isFadingOut}
+        />
+      ) : (
+        <DialogFooter className="col-start-1 col-end-5 flex flex-col gap-4 sm:flex-col md:flex-col">
+          <TaskDialogCreateCommentForm
+            className="relative flex flex-col justify-between"
+            dashboardId={dashboardId}
+            columnId={columnId}
+            cardId={cardId}
+          />
           {data?.id && <Comments cardId={data!.id} />}
-        </div>
-      </div>
+        </DialogFooter>
+      )}
     </DialogContent>
   );
-
-  return content;
 };
+
 export default TaskCardDialog;

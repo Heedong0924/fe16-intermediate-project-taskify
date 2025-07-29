@@ -1,4 +1,11 @@
+import { User } from '@/types/User.type';
+
 import axiosInstance from '../axiosInstance';
+
+type UserWithTimestamps = User & {
+  createdAt: string;
+  updatedAt: string;
+};
 
 export const uploadProfileImage = async ({
   image,
@@ -15,4 +22,19 @@ export const uploadProfileImage = async ({
   });
 
   return response.data.profileImageUrl;
+};
+
+// 내 정보 수정
+export const updateMyInfo = async ({
+  nickname,
+  profileImageUrl,
+}: {
+  nickname: string;
+  profileImageUrl?: string;
+}): Promise<UserWithTimestamps> => {
+  const response = await axiosInstance.put(`/users/me`, {
+    nickname,
+    profileImageUrl,
+  });
+  return response.data;
 };

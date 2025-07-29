@@ -6,15 +6,27 @@ import CreateColumnDialog from '@/components/common/dialog/CreateColumnDialog';
 import CreateDashboardDialog from '@/components/common/dialog/CreateDashboardDialog';
 import SendInvitationDialog from '@/components/common/dialog/SendInvitationDialog';
 import TaskCardDialog from '@/components/common/dialog/TaskCardDialog';
+import { MOCK_CARD_DATA } from '@/components/common/dialog/TodoDialog/Dummy';
+import TodoEditDialog from '@/components/common/dialog/TodoDialog/TodoEditDialog';
 import { Button } from '@/components/ui/Button';
 import { useDialogStore } from '@/stores/useDialogStore';
 
 const DialogTest = () => {
   const { openDialog } = useDialogStore();
+  const dashboardId = 15564;
+  const columnId = 52469;
+  const cardId = 13429;
+
+  const _myToken =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTk1NiwidGVhbUlkIjoiMTYtMiIsImlhdCI6MTc1MzI1Mzg3OSwiaXNzIjoic3AtdGFza2lmeSJ9.u4K-XiW2Wix5ARLa8hVxR4H9vohuXqmDB4ED4szEzJE';
+  const _otherToken =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTk0MCwidGVhbUlkIjoiMTYtMiIsImlhdCI6MTc1MzQ0ODY4NCwiaXNzIjoic3AtdGFza2lmeSJ9.GZiKuL24THiyXIqSsVonD8cgd71bXBwWlygnK2cBJqA';
 
   return (
     <div className="flex flex-col gap-4">
-      테스트 중인 DashboardId: 15564
+      <div>테스트 중인 DashboardId: {dashboardId}</div>
+      <div>테스트 중인 ColumnId: {columnId}</div>
+      <div>테스트 중인 CardId: {cardId}</div>
       <Button
         onClick={() => {
           setTimeout(() => {
@@ -35,7 +47,10 @@ const DialogTest = () => {
         onClick={() =>
           openDialog({
             dialogComponent: (
-              <ColumnSettingsDialog columnId={52576} columnName="기존 컬럼" />
+              <ColumnSettingsDialog
+                columnId={columnId}
+                columnName="기존 컬럼"
+              />
             ),
           })
         }
@@ -45,7 +60,7 @@ const DialogTest = () => {
       <Button
         onClick={() =>
           openDialog({
-            dialogComponent: <CreateColumnDialog dashboardId={15564} />,
+            dialogComponent: <CreateColumnDialog dashboardId={dashboardId} />,
           })
         }
       >
@@ -61,7 +76,7 @@ const DialogTest = () => {
       <Button
         onClick={() =>
           openDialog({
-            dialogComponent: <SendInvitationDialog dashboardId={15564} />,
+            dialogComponent: <SendInvitationDialog dashboardId={dashboardId} />,
           })
         }
       >
@@ -72,16 +87,64 @@ const DialogTest = () => {
           openDialog({
             dialogComponent: (
               <TaskCardDialog
-                dashboardId={15564}
-                columnId={52469}
+                dashboardId={dashboardId}
+                columnId={columnId}
                 columnName="Todo"
-                cardId={13404}
+                cardId={cardId}
               />
             ),
           })
         }
       >
         글로벌 다이얼로그: 할 일 카드 테스트
+      </Button>
+      <Button
+        onClick={() =>
+          openDialog({
+            dialogComponent: (
+              <TodoEditDialog
+                columnId={52469}
+                cardData={MOCK_CARD_DATA}
+                mode="edit"
+              />
+            ),
+          })
+        }
+      >
+        글로벌 다이얼로그: 편집모드 테스트
+      </Button>
+      <Button
+        onClick={() =>
+          openDialog({
+            dialogComponent: <TodoEditDialog columnId={52469} mode="create" />,
+          })
+        }
+      >
+        글로벌 다이얼로그: 생성모드 테스트
+      </Button>
+      <Button
+        onClick={() => {
+          openDialog({
+            dialogComponent: (
+              <TaskCardDialog
+                dashboardId={dashboardId}
+                columnId={columnId}
+                columnName="Todo"
+                cardId={cardId}
+              />
+            ),
+          });
+          setTimeout(() => {
+            openDialog({
+              isNewOpen: true,
+              dialogComponent: (
+                <AlertDialog description="test" closeBtnText="확인" isGoBack />
+              ),
+            });
+          }, 3000);
+        }}
+      >
+        글로벌 다이얼로그: 중첩 다이얼로그 테스트
       </Button>
     </div>
   );

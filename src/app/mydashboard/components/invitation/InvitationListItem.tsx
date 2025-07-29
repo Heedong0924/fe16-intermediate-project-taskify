@@ -41,21 +41,21 @@ const InvitationListItem = ({
 
   return (
     <tr className="border-taskify-neutral-200 border-b" ref={observerRef}>
-      <td className="text-taskify-lg-regular text-taskify-neutral-700 pl-[76px]">
+      <td className="text-taskify-lg-regular text-taskify-neutral-700 truncate pr-5 md:max-w-[160px] md:pl-[50px] lg:pl-[76px]">
         {highlightText(dashboard.title, searchTerm)}
       </td>
       <td className="text-taskify-lg-regular text-taskify-neutral-700">
         {inviter.nickname}
       </td>
-      <td className="text-taskify-lg-regular text-taskify-neutral-700">
+      <td className="text-taskify-lg-regular text-taskify-neutral-700 hidden lg:table-cell">
         {timeAgo}
       </td>
       <td className="py-1">
-        <div className="flex gap-2.5">
+        <div className="flex md:ml-4 md:gap-0 lg:gap-2.5">
           <Button
             type="button"
             color="violet-white"
-            className="text-taskify-md-medium m-1.5 px-[29px] py-[7px]"
+            className="text-taskify-md-medium m-1.5 md:px-[23px] md:py-[6px] lg:px-[29px] lg:py-[7px]"
             onClick={() => {
               mutate({ invitationId: invitation.id, inviteAccepted: true });
             }}
@@ -66,7 +66,7 @@ const InvitationListItem = ({
           <Button
             type="button"
             color="white-violet"
-            className="border-taskify-neutral-300 text-taskify-md-medium m-1.5 border-[1px] px-[29px] py-[7px]"
+            className="border-taskify-neutral-300 text-taskify-md-medium m-1.5 border-[1px] md:px-[23px] md:py-[6px] lg:px-[29px] lg:py-[7px]"
             onClick={() => {
               mutate({ invitationId: invitation.id, inviteAccepted: false });
             }}

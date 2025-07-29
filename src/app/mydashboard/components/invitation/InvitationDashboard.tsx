@@ -24,19 +24,19 @@ const InvitationDashboard = () => {
   }
 
   return (
-    <div className="bg-taskify-neutral-0 flex h-[450px] w-[1022px] flex-col rounded-2xl p-6 px-[32px]">
+    <div className="bg-taskify-neutral-0 flex h-[550px] w-[340px] flex-col rounded-2xl p-6 md:h-[450px] md:w-[620px] lg:h-[450px] lg:w-[1022px] lg:px-[32px]">
       <h1 className="text-taskify-2xl-bold text-taskify-neutral-700">
         초대받은 대시보드
       </h1>
       {/* 초대받은 대시보드가 없을 시 안내 페이지, 있을 시 검색 페이지 */}
-      {data?.invitations.length === 0 ? (
+      {!data || data.invitations.length === 0 ? (
         <div className="flex flex-1 items-center justify-center">
           <NoInvitation />
         </div>
       ) : (
         <div className="mt-5">
           <SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-          <div className="h-[290px] overflow-auto">
+          <div className="h-[400px] overflow-auto md:h-[290px]">
             <InvitationList searchTerm={debouncedSearchTerm} />
           </div>
         </div>

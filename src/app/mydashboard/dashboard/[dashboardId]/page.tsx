@@ -2,22 +2,53 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
+import { useEffect } from 'react';
 
 import { AddCountChip } from '@/components/common/Chips';
 import CreateColumnDialog from '@/components/common/dialog/CreateColumnDialog';
 import Button from '@/components/ui/Buttons';
 import { getColumn } from '@/lib/api/columnService';
+import { getDashboardById } from '@/lib/api/dashboardService';
+import { useDashboardStore } from '@/stores/useDashboardStore';
 import { useDialogStore } from '@/stores/useDialogStore';
 import { ColumnResponse } from '@/types/Column';
 
 import ColumnComponent from './components/ColumnComponent';
 
+// 헤더 내 상세페이지 상태 연결(타이틀, 아이디)
 const DashboardIdPage = () => {
   const Prams = useParams();
   const { openDialog } = useDialogStore();
 
   const rawDashboardId = Prams.id as string;
   const dashboardId = Number(rawDashboardId);
+
+  const { dashboardTitle, setDashboardTitle, setDashboardId } =
+    useDashboardStore();
+
+  useEffect(() => {
+    const fetchDashboardTitle = async () => {
+      try {
+        const dashboard = await getDashboardById(dashboardId);
+        setDashboardTitle(dashboard.title);
+      } catch (error) {
+        console.error('Failed to fetch dashboard title:', error);
+      }
+    };
+
+    if (dashboardId) {
+      setDashboardId(dashboardId);
+      fetchDashboardTitle();
+    }
+  }, [dashboardId]);
+
+  // 메타데이터 동적 페이지 타이틀 설정
+
+  useEffect(() => {
+    if (dashboardTitle) {
+      document.title = `${dashboardTitle} | Taskify`;
+    }
+  }, [dashboardTitle]);
 
   const { data, isLoading, isError, error } = useQuery<ColumnResponse>({
     queryKey: ['columns', dashboardId],

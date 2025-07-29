@@ -207,6 +207,7 @@
   html {
     scroll-behavior: smooth; /* 부드러운 스크롤 */
     -webkit-tap-highlight-color: transparent; /* 모바일 탭 시 하이라이트 제거 */
+    overflow-y: scroll; /*헤더 선택 시 화면 움직임 최소화*/
   }
 
   body {
@@ -321,6 +322,36 @@
     @apply flex cursor-pointer items-center justify-center rounded-full;
   }
 
+  /* 대시보드 상세 페이지 */
+  .dashboard-update-title label {
+    @apply !text-[16px] sm:!text-[18px];
+  }
+  .dashboard-update-title input {
+    @apply !text-[14px] sm:!text-[16px];
+  }
+
+  .dashboard-section-action-item2 > div {
+    @apply flex items-center justify-between;
+  }
+
+  .dashboard-section-action-item4 > div {
+    @apply grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-3 sm:grid-cols-[auto_1fr_auto] sm:gap-y-[32px];
+  }
+
+  /* 마이페이지 이메일 인풋 스타일 */
+  .input-email label {
+    @apply text-gray-700!;
+  }
+  .input-email input {
+    @apply text-[var(--gray-9FA6B2)];
+  }
+  /* .input-style label {
+    @apply text-[14px];
+  }
+  .input-style input {
+    @apply text-[16px];
+  } */
+
   /* Dialog Scroll bar */
   /* 1. 스크롤바 트랙 (스크롤바 배경) */
   .dialog-scrollable-content::-webkit-scrollbar {
@@ -345,6 +376,44 @@
   .dialog-scrollable-content::-webkit-scrollbar-corner {
     background-color: transparent;
   }
+
+  /* Dialog UI */
+  /* CSS 우선순위가 라이브러리 기본 스타일에 묻히는건지 클래스 적용이 안 되는 중 */
+  /* .dialog-content {
+    @apply max-w-[327px] px-4 md:max-w-[568px] md:gap-7 md:px-6;
+  }
+
+  .dialog-header-title {
+    @apply text-taskify-xl-bold md:text-taskify-2xl-bold text-taskify-neutral-700;
+  }
+
+  .dialog-label {
+    @apply text-taskify-lg-medium md:text-taskify-2lg-medium text-taskify-neutral-700 text-left;
+  }
+
+  .dialog-input {
+    @apply text-taskify-neutral-700 text-taskify-md-regular md:text-taskify-lg-regular border-taskify-neutral-300 col-span-4 rounded-lg border px-4 py-3;
+  }
+
+  .dialog-footer-layout {
+    @apply flex flex-row justify-between;
+  }
+
+  .dialog-close {
+    @apply bg-taskify-neutral-0 border-taskify-neutral-300 hover:bg-taskify-neutral-0 h-auto grow-1 cursor-pointer rounded-lg border-1 px-4 py-[14px];
+  }
+
+  .dialog-close-text {
+    @apply text-taskify-lg-medium text-neutral-500;
+  }
+
+  .dialog-confirm-btn {
+    @apply bg-taskify-violet-primary hover:bg-taskify-violet-primary h-auto grow-1 cursor-pointer px-4 py-[14px];
+  }
+
+  .dialog-confirm-btn-text {
+    @apply text-taskify-lg-semibold;
+  } */
 }
 
 @theme inline {
