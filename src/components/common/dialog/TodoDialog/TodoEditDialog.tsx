@@ -2,6 +2,7 @@
 
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { format } from 'date-fns';
 import React, { useCallback, useMemo, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
@@ -44,15 +45,15 @@ interface TodoEditDialogProps {
 }
 
 const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
-  // 폼 데이터를 관리
   const { openDialog, goBack } = useDialogStore();
   const { dashboardId } = useDashboardStore();
+
+  // 폼 데이터를 관리
   const defaultVals = useMemo<TodoFormData>(
     () =>
       cardData
         ? mapCardToForm(cardData)
         : {
-            dashboardId,
             columnId,
             assigneeUserId: 0,
             title: '',
@@ -61,7 +62,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
             tags: [],
             imageUrl: '',
           },
-    [cardData, dashboardId, columnId],
+    [cardData, columnId],
   );
   const {
     reset,
@@ -141,15 +142,28 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
   };
 
   const onSubmit = (data: TodoFormData) => {
-    console.log('Submitted data:', data);
     if (mode === 'create') {
       // 생성 모드에서 새로운 할 일 생성
-      createCardMutation(data);
+      const { dueDate, imageUrl, ...rest } = data;
+      const payload = {
+        ...rest,
+        dashboardId,
+        dueDate: dueDate && dueDate.trim() !== '' ? dueDate : null,
+        imageUrl: imageUrl && imageUrl.trim() !== '' ? imageUrl : null,
+      };
+      console.log('Create Submit data:', payload);
+      createCardMutation(payload);
     } else {
       // 수정 모드에서 기존 할 일 수정
+      const { dueDate, imageUrl, ...rest } = data;
+      const payload = {
+        ...rest,
+        dueDate: dueDate && dueDate.trim() !== '' ? dueDate : null,
+        imageUrl: imageUrl && imageUrl.trim() !== '' ? imageUrl : null,
+      };
       updateCardMutation({
         cardId: cardData?.id || 0, // cardData가 없을 경우 0으로 설정
-        data,
+        data: payload,
       });
     }
   };
@@ -265,15 +279,13 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
             control={control}
             defaultValue={defaultVals.dueDate}
             render={({ field }) => {
-              // field.value: ISO string or ''
-              const selectedDate = field.value
-                ? new Date(field.value)
-                : undefined;
               return (
                 <DateTimePicker
-                  value={selectedDate}
+                  value={field.value ? new Date(field.value) : undefined}
                   onChange={(date) => {
-                    field.onChange(date ? date.toISOString() : '');
+                    field.onChange(
+                      date ? format(date, 'yyyy-MM-dd HH:mm') : '',
+                    );
                   }}
                   placeholder="마감일을 선택하세요"
                 />
