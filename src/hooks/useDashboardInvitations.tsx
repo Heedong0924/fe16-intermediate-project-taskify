@@ -5,12 +5,15 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
+import { useEffect } from 'react';
 
+import AlertDialog from '@/components/common/dialog/AlertDialog';
 import {
-  // createDashboardInvitations,
   getDashboardInvitations,
   deleteDashboardInvitations,
 } from '@/lib/api/dashboardInvitationsService';
+import { getErrorMessage } from '@/lib/utils/getErrorResponse';
+import { useDialogStore } from '@/stores/useDialogStore';
 import {
   InvitationsResponse,
   InvitationsQueryParams,
@@ -24,13 +27,31 @@ export const useDashboardInvitations = (
   params: InvitationsQueryParams,
 ) => {
   const { page, size } = params;
+  const { openDialog } = useDialogStore();
 
-  return useQuery<InvitationsResponse>({
+  const query = useQuery<InvitationsResponse>({
     queryKey: ['dashboard-invitations', dashboardId, page, size],
     queryFn: () => getDashboardInvitations(dashboardId, params),
     enabled: !!dashboardId,
     placeholderData: keepPreviousData,
+    retry: false,
   });
+
+  useEffect(() => {
+    if (!query.error) return;
+
+    openDialog({
+      dialogComponent: (
+        <AlertDialog
+          description={getErrorMessage(query.error)}
+          closeBtnText="확인"
+          navigate="/mydashboard"
+        />
+      ),
+    });
+  }, [query.error]);
+
+  return query;
 };
 
 /*
@@ -42,6 +63,7 @@ export const useDeleteInvitation = (dashboardId: number) => {
   return useMutation({
     mutationFn: (invitationId: number) =>
       deleteDashboardInvitations(dashboardId, invitationId),
+    retry: false,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['dashboard-invitations', dashboardId],

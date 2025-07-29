@@ -1,14 +1,20 @@
 import React from 'react';
 
+type ContentSectionProps = {
+  title: string | React.ReactNode;
+  children: React.ReactNode;
+  className?: string;
+};
+
+type ContentSectionWithActionProps = ContentSectionProps & {
+  titleRight: React.ReactNode;
+};
+
 export function ContentSection({
   title,
   children,
   className = '',
-}: {
-  title: string;
-  children: React.ReactNode;
-  className?: string;
-}) {
+}: ContentSectionProps) {
   return (
     <section
       className={`${className} mb-4 max-w-[none] rounded-[16px] bg-white px-[16px] py-[20px] sm:max-w-[700px] sm:px-[28px] sm:py-[32px]`}
@@ -25,21 +31,16 @@ export function ContentSectionWithAction({
   titleRight,
   children,
   className = '',
-}: {
-  title: string;
-  titleRight: React.ReactNode;
-  children: React.ReactNode;
-  className?: string;
-}) {
+}: ContentSectionWithActionProps) {
   return (
     <section
       className={`${className} mb-4 max-w-[none] rounded-[16px] bg-white py-[20px] sm:max-w-[700px] sm:py-[32px]`}
     >
-      {/* flex items-center justify-between */}
-      <div className="mb-[12px] px-[20px] sm:px-[28px]">
-        <h1 className="text-[20px] font-[700] sm:text-[24px]">{title}</h1>
+      <div className="class-flex class-grid mx-[20px] mb-[12px] sm:mx-[28px]">
+        <h1 className="w-full text-[20px] font-[700] sm:text-[24px]">
+          {title}
+        </h1>
         {titleRight}
-        {/* <div className="flex">{titleRight}</div> */}
       </div>
       {children}
     </section>
