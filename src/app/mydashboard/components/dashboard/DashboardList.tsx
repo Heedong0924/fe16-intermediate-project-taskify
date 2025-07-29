@@ -5,7 +5,9 @@ import { useEffect, useState } from 'react';
 
 import PaginationButton from '@/components/ui/PaginationButton';
 import { Skeleton } from '@/components/ui/skeleton';
+import { getDashboardMembers } from '@/lib/api/dashboardMemberService';
 import { getDashboards } from '@/lib/api/dashboardService';
+import { Member } from '@/types/DashboardMember';
 
 import DashboardListItem from './DashboardListItem';
 import NewDashboardCard from './NewDashboardCard';
@@ -13,6 +15,7 @@ import NewDashboardCard from './NewDashboardCard';
 const DashboardList = () => {
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(4);
+  const [membersMap, setMembersMap] = useState<Record<number, Member[]>>({});
 
   const { data, isPending, isError, error } = useQuery({
     queryKey: ['dashboards', page, itemsPerPage],
@@ -30,6 +33,29 @@ const DashboardList = () => {
   if (isError) <p>에러가 발생했습니다. {error.message}</p>;
 
   const dashboards = data?.dashboards ?? [];
+
+  useEffect(() => {
+    const fetchMembers = async () => {
+      if (!dashboards.length) return;
+
+      try {
+        const updatedMembersMap: Record<number, Member[]> = {}; // ✅ 이름 바꿈
+
+        const promises = dashboards.map((dashboard) =>
+          getDashboardMembers({ dashboardId: dashboard.id }).then((res) => {
+            updatedMembersMap[dashboard.id] = res.members;
+          }),
+        );
+
+        await Promise.all(promises);
+        setMembersMap(updatedMembersMap);
+      } catch (err) {
+        console.error('멤버 불러오기 실패', err);
+      }
+    };
+
+    fetchMembers();
+  }, [dashboards]);
 
   // 반응형 크기에 따라 페이지당 출력하는 대시보드 목록 변경하는 로직
   useEffect(() => {
@@ -55,11 +81,15 @@ const DashboardList = () => {
         <div className="mt-4.5 grid grid-cols-1 gap-2.5 md:grid-cols-2 lg:grid-cols-5">
           <NewDashboardCard />
           {dashboards.map((dashboard) => (
-            <DashboardListItem key={dashboard.id} dashboard={dashboard} />
+            <DashboardListItem
+              key={dashboard.id}
+              dashboard={dashboard}
+              members={membersMap[dashboard.id] ?? []}
+            />
           ))}
         </div>
       </div>
-      <div className="absolute top-[495px] left-[170px] flex justify-center md:top-[388px] md:left-[585px] lg:top-[350px] lg:left-[1145px]">
+      <div className="absolute top-[495px] left-[220px] flex justify-center md:top-[395px] md:left-[630px] lg:top-[370px] lg:left-[1190px]">
         <PaginationButton
           page={page}
           size={itemsPerPage}

@@ -30,7 +30,7 @@ export const updateMyInfo = async ({
   profileImageUrl,
 }: {
   nickname: string;
-  profileImageUrl: string;
+  profileImageUrl?: string;
 }): Promise<UserWithTimestamps> => {
   const response = await axiosInstance.put(`/users/me`, {
     nickname,

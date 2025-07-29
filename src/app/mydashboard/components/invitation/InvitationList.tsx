@@ -1,9 +1,10 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import { Invitation } from '@/types/Invitation';
+import { getInvitations } from '@/lib/api/invitations';
 
 import InvitationListItem from './InvitationListItem';
+import MobileInvitationList from './MobileInvitationList';
 import NoResult from './Noresult';
 
 type InvitationProps = {
@@ -12,20 +13,18 @@ type InvitationProps = {
 
 const InvitationList = ({ searchTerm }: InvitationProps) => {
   const observerEl = useRef<HTMLTableRowElement | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteQuery({
     queryKey: ['invitations', searchTerm],
     queryFn: async ({ pageParam = 0 }) => {
-      const query = new URLSearchParams();
-      query.append('size', '10');
-      query.append('cursorId', pageParam.toString());
-      if (searchTerm) query.append('title', searchTerm);
-      /**
-       * @todo: Axios로 변경하기
-       */
-      const res = await fetch(`/api/invitations?${query.toString()}`);
-      if (!res.ok) throw new Error('Failed to fetch');
-      return res.json();
+      console.log('[QUERY] pageParam:', pageParam);
+      console.log('[QUERY] searchTerm:', searchTerm);
+      return getInvitations({
+        size: 10,
+        cursorId: pageParam === 0 ? undefined : pageParam,
+        title: searchTerm || undefined,
+      });
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.cursorId ?? null,
@@ -50,13 +49,42 @@ const InvitationList = ({ searchTerm }: InvitationProps) => {
   }, [hasNextPage, fetchNextPage]);
 
   const allInvitations =
-    data?.pages.flatMap((page) => page.invitations as Invitation[]) ?? [];
+    data?.pages.flatMap((page) =>
+      Array.isArray(page.invitations) ? page.invitations : [page.invitations],
+    ) ?? [];
+
+  console.log('✅ data:', data);
+  console.log('✅ data.pages:', data?.pages);
+  console.log('✅ allInvitations:', allInvitations);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile(); // 초기 실행
+    window.addEventListener('resize', checkMobile);
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
 
   if (!isFetching && allInvitations.length === 0) {
     return <NoResult />;
   }
 
-  return (
+  return isMobile ? (
+    // 모바일 카드형 UI
+    allInvitations.map((invitation, index) => (
+      <MobileInvitationList
+        key={invitation.id}
+        invitation={invitation}
+        observerRef={
+          index === allInvitations.length - 1 ? observerEl : undefined
+        }
+      />
+    ))
+  ) : (
     <table className="w-full text-left">
       <thead className="bg-taskify-neutral-0 sticky top-0 z-10">
         <tr>
@@ -69,13 +97,13 @@ const InvitationList = ({ searchTerm }: InvitationProps) => {
           </th>
         </tr>
         <tr>
-          <th className="text-taskify-lg-regular text-taskify-neutral-400 pl-[76px]">
+          <th className="text-taskify-lg-regular text-taskify-neutral-400 md:pl-[50px] lg:pl-[76px]">
             이름
           </th>
           <th className="text-taskify-lg-regular text-taskify-neutral-400">
             초대자
           </th>
-          <th className="text-taskify-lg-regular text-taskify-neutral-400">
+          <th className="text-taskify-lg-regular text-taskify-neutral-400 hidden lg:table-cell">
             초대한 시점
           </th>
           <th className="text-taskify-lg-regular text-taskify-neutral-400 pl-[65px]">

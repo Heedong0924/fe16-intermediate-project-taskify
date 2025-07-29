@@ -17,10 +17,11 @@ import ColumnComponent from './components/ColumnComponent';
 
 // 헤더 내 상세페이지 상태 연결(타이틀, 아이디)
 const DashboardIdPage = () => {
-  const Prams = useParams();
+  const Params = useParams();
   const { openDialog } = useDialogStore();
 
-  const rawDashboardId = Prams.dashboardId as string;
+  const rawDashboardId = Params.dashboardId as string;
+
   const dashboardId = Number(rawDashboardId);
 
   const { dashboardTitle, setDashboardTitle, setDashboardId } =

@@ -38,11 +38,13 @@ const PaginationButton = ({
   const buttonBaseStyle =
     'text-taskify-neutral-700 btn-bass-white-black bg-taskify-neutral-0 disabled:bg-taskify-neutral-0 flex h-9 w-9 items-center justify-center border-1 border-gray-400 disabled:text-gray-400 md:h-10 md:w-10';
 
-  const baseWarraperStyle = `flex flex-row items-center gap-3 md:gap-4 ${className || ''}`;
+  const baseWarraperStyle = `flex flex-row items-center text-taskify-neutral-500 gap-3 md:gap-4 ${className || ''}`;
 
   return (
     <div className={baseWarraperStyle}>
-      {text && <p>{`${currentPage} 페이지 중 ${totalPage}`}</p>}
+      {text && (
+        <p className="whitespace-nowrap">{`${currentPage} of ${totalPage}`}</p>
+      )}
       <div className="flex">
         <button
           className={`${buttonBaseStyle} rounded-l-sm`}

@@ -43,13 +43,13 @@ const TaskCardDialog = ({
     <DialogContent
       className="md:grid-cols-[repeat(4, 1fr)_181px] dialog-scrollable-content grid h-[50vh] max-h-[710px] max-w-[327px] grid-cols-4 gap-4 overflow-auto px-4 md:max-h-[766px] md:max-w-[678px] md:gap-6 md:px-8 lg:max-w-[732px]"
       showCloseButton={false}
-      onOpenAutoFocus={(event) => event.preventDefault()}
     >
       {/** Header 영역 */}
       <DialogHeader className="col-start-1 col-end-5 flex gap-0">
         <TaskCardDialogControlArea
           className="absolute top-5 right-5 flex gap-5"
           cardId={cardId}
+          cardData={data}
         />
         {showSkeleton ? (
           <SkeletonLine
@@ -63,6 +63,7 @@ const TaskCardDialog = ({
             </span>
           </DialogTitle>
         )}
+        <DialogTitle />
         <DialogDescription />
       </DialogHeader>
       {/* CardAuthor 영역 */}

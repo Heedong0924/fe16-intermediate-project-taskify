@@ -2,8 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 
-import { useMemberStore } from '@/stores/useMemberStore';
 import { Dashboard } from '@/types/Dashboard';
+import { Member } from '@/types/DashboardMember';
 
 import DashboardHeader from './DashboardHeader';
 import MemberAvatars from './MemberAvatars';
@@ -11,11 +11,11 @@ import MemberCountText from './MemberCountText';
 
 interface DashboardListItemProps {
   dashboard: Dashboard;
+  members: Member[];
 }
 
-const DashboardListItem = ({ dashboard }: DashboardListItemProps) => {
+const DashboardListItem = ({ dashboard, members }: DashboardListItemProps) => {
   const router = useRouter();
-  const members = useMemberStore((state) => state.members);
 
   // 카드 개별 구성
   // PC : 헤더 + 멤버아바타 + 멤버카운트, 태블릿 : 헤더 + 호버 시 멤버 아바타, 모바일 : 헤더
@@ -37,10 +37,10 @@ const DashboardListItem = ({ dashboard }: DashboardListItemProps) => {
         createdByMe={dashboard.createdByMe}
       />
       <div className="hidden transition-all duration-200 group-hover:opacity-100 md:absolute md:top-5 md:left-44 md:group-hover:block lg:relative lg:top-auto lg:left-auto lg:-mt-6 lg:block">
-        <MemberAvatars />
+        <MemberAvatars members={members} />
       </div>
       <div className="hidden lg:mb-2 lg:block">
-        <MemberCountText count={members.length} />
+        <MemberCountText count={members?.length ?? 0} />
       </div>
     </div>
   );
