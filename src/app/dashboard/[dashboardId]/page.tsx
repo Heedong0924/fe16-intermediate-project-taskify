@@ -59,11 +59,7 @@ const DashboardIdPage = () => {
   });
 
   if (isLoading) {
-    return (
-      <div className="p-4 text-center text-lg font-medium">
-        칼럼 불러오는 중...
-      </div>
-    );
+    return <div>로딩중...</div>;
   }
 
   if (isError) {
@@ -74,16 +70,15 @@ const DashboardIdPage = () => {
 
   return (
     <div className="mt-[59px] flex h-full max-w-full grow flex-col xl:flex-row">
-      {columns &&
-        columns?.map((column) =>
-          column ? (
-            <ColumnComponent
-              dashboardId={dashboardId}
-              key={column.id}
-              column={column}
-            />
-          ) : null,
-        )}
+      {columns?.map((column) =>
+        column ? (
+          <ColumnComponent
+            dashboardId={dashboardId}
+            key={column.id}
+            column={column}
+          />
+        ) : null,
+      )}
       <div className="h-24 shrink-0 xl:hidden" />
       <Button
         onClick={() =>

@@ -110,72 +110,79 @@ const ColumnComponent = ({
   return (
     <section className="shrink-0 border-r-1 px-5 xl:max-w-[354px]">
       <div className="border-taskify-neutral-300 flex h-full shrink-0 flex-col border-t-1 pt-[22px]">
-        <div className="flex shrink-0 items-center justify-between">
-          <div className="flex items-center">
-            <p className="bg-taskify-violet-primary h-2 w-2 shrink-0 rounded-full" />
-            <span className="text-taskify-2lg-bold mx-2">{column.title}</span>
-            <CounterChip>{totalCount}</CounterChip>
-          </div>
-          <div className="flex gap-2">
-            <button onClick={handleToggle} type="button">
-              {isOpen ? (
-                <Image
-                  src={arrowDropDown}
-                  className="scale-y-[-1] transform"
-                  alt="open the toggle"
-                />
-              ) : (
-                <Image src={arrowDropDown} alt="close the toggle" />
-              )}
-            </button>
-            <button
-              onClick={() =>
-                openDialog({
-                  dialogComponent: (
-                    <ColumnSettingsDialog
-                      columnId={columnId}
-                      columnName={column.title}
+        <div className="bg-taskify-neutral-100 xl:statick sticky top-15 z-5">
+          <div className="flex shrink-0 items-center justify-between">
+            <div className="flex items-center">
+              <p className="bg-taskify-violet-primary h-2 w-2 shrink-0 rounded-full" />
+              <span className="text-taskify-2lg-bold mx-2">{column.title}</span>
+              <CounterChip>{totalCount}</CounterChip>
+            </div>
+            <div className="flex gap-2">
+              <button onClick={handleToggle} type="button">
+                {isOpen ? (
+                  <div className="text-taskify-sm-medium text-taskify-neutral-500 flex items-center">
+                    CLOSE
+                    <Image
+                      src={arrowDropDown}
+                      className="scale-y-[-1] transform"
+                      alt="open the toggle"
                     />
-                  ),
-                })
-              }
-              className="cursor-pointer"
-              type="button"
-            >
-              <Image
-                src={settingIcon}
-                alt="칼럼 수정 버튼"
-                className="lx:w-6 lx:h-6 h-5 w-5 md:h-[22px] md:w-[22px]"
-              />
-            </button>
+                  </div>
+                ) : (
+                  <div className="text-taskify-sm-medium text-taskify-neutral-500 flex items-center">
+                    OPEN
+                    <Image src={arrowDropDown} alt="close the toggle" />
+                  </div>
+                )}
+              </button>
+              <button
+                onClick={() =>
+                  openDialog({
+                    dialogComponent: (
+                      <ColumnSettingsDialog
+                        columnId={columnId}
+                        columnName={column.title}
+                      />
+                    ),
+                  })
+                }
+                className="cursor-pointer"
+                type="button"
+              >
+                <Image
+                  src={settingIcon}
+                  alt="칼럼 수정 버튼"
+                  className="lx:w-6 lx:h-6 h-5 w-5 md:h-[22px] md:w-[22px]"
+                />
+              </button>
+            </div>
           </div>
+          <Button
+            onClick={() =>
+              openDialog({
+                dialogComponent: (
+                  <TodoEditDialog columnId={columnId} mode="create" />
+                ),
+              })
+            }
+            color="white-black"
+            className="btn-addTodo mt-5 mb-4 shrink-0"
+          >
+            <AddCountChip size="sm" />
+          </Button>
         </div>
-        <Button
-          onClick={() =>
-            openDialog({
-              dialogComponent: (
-                <TodoEditDialog columnId={columnId} mode="create" />
-              ),
-            })
-          }
-          color="white-black"
-          className="btn-addTodo mt-5 mb-4 shrink-0"
+        <ScrollArea
+          className={`max-h-full ${isOpen ? 'max-h-full opacity-100' : 'max-h-0'} w-full grow flex-col overflow-auto transition-all duration-300 ease-in-out`}
         >
-          <AddCountChip size="sm" />
-        </Button>
-        <ScrollArea className="max-h-full w-full grow flex-col overflow-auto">
-          {cards &&
-            isOpen &&
-            cards?.map((card) => (
-              <CardComponent
-                key={card.id}
-                card={card}
-                dashboardId={dashboardId}
-                columId={columnId}
-                columnName={column.title}
-              />
-            ))}
-          {isFetchingNextPage && <div>로딩중...</div>}
+          {cards?.map((card) => (
+            <CardComponent
+              key={card.id}
+              card={card}
+              dashboardId={dashboardId}
+              columId={columnId}
+              columnName={column.title}
+            />
+          ))}
           {cards.length === 0 && !isFetching && (
             <div className="text-taskify-gray-400 mt-5 p-4 text-center">
               아직 할 일이 없습니다.
