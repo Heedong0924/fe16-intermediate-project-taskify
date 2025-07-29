@@ -89,14 +89,13 @@ const Sidebar = () => {
                 />
               ))}
             </div>
-            {totalCount !== 0 && (
+            {totalCount > 15 && (
               <PaginationButton
                 page={page}
                 size={itemsSize}
                 totalCount={totalCount}
-                text={false}
                 onPageChange={setPage}
-                className="mt-6"
+                className="mt-6 mr-1 flex justify-end"
               />
             )}
             <ScrollBar className="hidden" />

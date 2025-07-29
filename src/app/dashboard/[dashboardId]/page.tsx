@@ -73,7 +73,7 @@ const DashboardIdPage = () => {
   const columns = data?.data;
 
   return (
-    <div className="flex h-full max-w-full grow flex-col xl:flex-row">
+    <div className="mt-[59px] flex h-full max-w-full grow flex-col xl:flex-row">
       {columns &&
         columns?.map((column) =>
           column ? (
