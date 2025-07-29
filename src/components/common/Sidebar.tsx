@@ -59,7 +59,7 @@ const Sidebar = () => {
   const totalCount: number = data?.totalCount || 0;
 
   return (
-    <aside className="text-taskify-neutral-500 bg-taskify-neutral-0 left-0ntop-0 fixed z-40 hidden h-full min-h-screen w-[160px] shadow-md md:block xl:w-[300px]">
+    <aside className="text-taskify-neutral-500 bg-taskify-neutral-0 left-0ntop-0 fixed z-40 hidden h-screen w-[160px] shadow-md md:block xl:w-[300px]">
       <div className="px-2 py-5">
         <Link href="/">
           <LogoMd />
@@ -79,8 +79,8 @@ const Sidebar = () => {
             </div>
             <Image src={addIcon} alt="add to dashboard" />
           </button>
-          <ScrollArea className="h-screen overflow-scroll pb-40">
-            <div>
+          <ScrollArea className="h-screen pb-40">
+            <div className="w-[144px] xl:w-[284px]">
               {dashboards.map((dashboard) => (
                 <DashboardCard
                   key={dashboard.id}
@@ -95,7 +95,7 @@ const Sidebar = () => {
                 size={itemsSize}
                 totalCount={totalCount}
                 onPageChange={setPage}
-                className="mt-6 mr-1 flex justify-end"
+                className="mt-6 flex justify-end xl:mr-2"
               />
             )}
             <ScrollBar className="hidden" />
