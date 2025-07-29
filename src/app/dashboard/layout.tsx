@@ -16,7 +16,7 @@ export default function DashboardLayout({
   return (
     <div className="relative flex min-h-screen">
       <Sidebar />
-      <main className="bg-taskify-neutral-100 flex-1 md:ml-[160px] xl:ml-[300px]">
+      <main className="bg-taskify-neutral-100 flex-1 transition-all duration-300 md:ml-[160px] xl:ml-[300px]">
         <Header />
         {children}
       </main>
