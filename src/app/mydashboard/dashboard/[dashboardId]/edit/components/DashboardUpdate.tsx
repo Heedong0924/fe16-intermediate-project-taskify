@@ -10,10 +10,6 @@ import Button from '@/components/ui/Buttons';
 import { useDashboard, useUpdateDashboard } from '@/hooks/useDashboardEdit';
 import { dashboardTitleValidation } from '@/lib/validationRules';
 
-// import { useDialogStore } from '@/stores/useDialogStore';
-// import AlertDialog from '@/components/common/dialog/AlertDialog';
-// import { useRouter } from 'next/navigation';
-
 type FormValues = {
   dashboardTitle: string;
 };
@@ -24,16 +20,12 @@ export default function DashboardUpdate({
 }: {
   dashboardId: number;
 }) {
-  // const { openDialog } = useDialogStore();
-
   const [color, setColor] = useState('');
-
-  // const router = useRouter();
 
   const {
     register,
     handleSubmit,
-    formState: { errors, dirtyFields, isValid, isSubmitting },
+    formState: { errors, dirtyFields },
     reset,
   } = useForm<FormValues>({
     mode: 'onChange', // 입력이 바뀔 때마다 검사
@@ -41,15 +33,7 @@ export default function DashboardUpdate({
   });
 
   const { data, isPending, isError } = useDashboard(dashboardId);
-  // console.log(isError);
-
   const mutation = useUpdateDashboard(dashboardId);
-
-  // const { isError } = useDashboard(id);
-
-  // if (!isError) {
-  //   router.push('/mydashboard');
-  // }
 
   useEffect(() => {
     // 대시보드가 정상적으로 로드 됐을 때
@@ -89,7 +73,6 @@ export default function DashboardUpdate({
         color="violet-white"
         className="h-[54px] w-full"
         onClick={handleSubmit(handleUpdate)}
-        disabled={!isValid || isSubmitting}
       >
         변경
       </Button>

@@ -4,17 +4,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound, useParams } from 'next/navigation';
 
-import ConfirmDashboardDeletionDialog from '@/components/common/dialog/ConfirmDashboardDeletionDialog';
 import Button from '@/components/ui/Buttons';
-import { useDialogStore } from '@/stores/useDialogStore';
+import { useDeleteDashboard } from '@/hooks/useDashboardEdit';
 
 import DashboardInvitations from './components/DashboardInvitations';
 import DashboardMembers from './components/DashboardMembers';
 import DashboardUpdate from './components/DashboardUpdate';
 
 export default function DashboardEditPage() {
-  const { openDialog } = useDialogStore();
-
   const { dashboardId } = useParams();
 
   // ID 체크
@@ -22,6 +19,9 @@ export default function DashboardEditPage() {
   if (Number.isNaN(id)) {
     notFound();
   }
+
+  // 대시보드 삭제
+  const deleteMutation = useDeleteDashboard();
 
   return (
     <div className="min-h-screen bg-[var(--gray-FAFAFA)] p-[20px]">
@@ -51,16 +51,11 @@ export default function DashboardEditPage() {
       <DashboardInvitations dashboardId={id} />
 
       {/*  대시보드 삭제하기 */}
+      {/* 모달 경고 창 떠야함 */}
       <Button
         color="white-black"
         className="btn-removeDash w-full border border-[#D9D9D9] bg-transparent sm:w-[320px]"
-        onClick={() => {
-          openDialog({
-            dialogComponent: (
-              <ConfirmDashboardDeletionDialog dashboardId={id} />
-            ),
-          });
-        }}
+        onClick={() => deleteMutation.mutate(id)}
       >
         대시보드 삭제하기
       </Button>

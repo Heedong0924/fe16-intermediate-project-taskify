@@ -4,15 +4,21 @@ import Image from 'next/image';
 import { ChangeEvent, useRef, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { LuPencilLine } from 'react-icons/lu';
+import { twMerge } from 'tailwind-merge';
 
 // onUpload로 파일 업로드, onChange로 폼으로 url 전달
 
 type UploadImageButtonProps = {
   onUpload: (file: File) => Promise<string>;
   onChange: (url: string) => void;
+  size?: 'sm' | 'lg';
 };
 
-const UploadImageButton = ({ onUpload, onChange }: UploadImageButtonProps) => {
+const UploadImageButton = ({
+  onUpload,
+  onChange,
+  size = 'lg',
+}: UploadImageButtonProps) => {
   // 디폴트 이미지 없음
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
@@ -29,10 +35,11 @@ const UploadImageButton = ({ onUpload, onChange }: UploadImageButtonProps) => {
     setImageUrl(uploadedUrl);
     onChange(uploadedUrl);
   };
-  console.log('test');
   // 커스텀 UI 클릭 시 숨겨진 파일 input 클릭 유도
   const triggerUpload = () => fileInputRef.current?.click();
 
+  const ImageButtonSize =
+    size === 'sm' ? 'w-14 h-14 md:h-19 md:w-19' : 'h-32 w-32';
   // css 추후 수정 예정
   // 키다운 다시 설정 필요함.
   return (
@@ -43,7 +50,10 @@ const UploadImageButton = ({ onUpload, onChange }: UploadImageButtonProps) => {
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') triggerUpload();
       }}
-      className="group relative h-32 w-32 cursor-pointer overflow-hidden rounded-lg border border-dashed border-gray-300"
+      className={twMerge(
+        'group relative h-32 w-32 cursor-pointer overflow-hidden rounded-lg border border-dashed border-gray-300',
+        ImageButtonSize,
+      )}
     >
       {imageUrl ? (
         <>

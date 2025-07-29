@@ -73,9 +73,13 @@ export const useDialogStore = create<DialogState>((set) => ({
   closeDialog: () => {
     set({
       isOpen: false,
-      dialogComponent: null,
       stateHistory: [],
     });
+    setTimeout(() => {
+      set({
+        dialogComponent: null,
+      });
+    }, 200);
   },
 
   goBack: () => {

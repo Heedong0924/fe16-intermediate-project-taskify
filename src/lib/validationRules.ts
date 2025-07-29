@@ -26,6 +26,7 @@ export const emailValidation = {
 export const nicknameValidation = {
   required: '닉네임을 입력해주세요',
   minLength: { value: 2, message: '2자 이상 입력해주세요' },
+  maxLength: { value: 10, message: '10자 이하로 입력해주세요' },
 };
 
 /**
@@ -57,7 +58,14 @@ export const confirmPasswordValidation = (
  */
 export const dashboardTitleValidation = {
   required: '대시보드 이름을 입력해주세요',
+  minLength: {
+    value: 2,
+    message: '2자 이상 입력해주세요',
+  },
+  maxLength: {
+    value: 20,
+    message: '20자 이하 입력해주세요',
+  },
   validate: (value: string) =>
-    value.trim().length > 0 || '공백은 대시보드 이름으로 입력할 수 없습니다',
-  // minLength: { value: 2, message: '2자 이상 입력해주세요' },
+    value.trim().length > 0 || '공백만 입력할 수 없습니다',
 };

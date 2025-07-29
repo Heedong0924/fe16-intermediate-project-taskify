@@ -1,3 +1,8 @@
 {
-  "cSpell.words": ["Taskify"]
+  "cSpell.words": ["Taskify"],
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/dist/**": true
+  },
+  "autoimport.exclude": ["**/node_modules/**", "**/dist/**", "**/build/**"]
 }

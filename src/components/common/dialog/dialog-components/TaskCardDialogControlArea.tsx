@@ -3,20 +3,23 @@ import { HTMLAttributes } from 'react';
 
 import { DialogClose } from '@/components/ui/Dialog';
 import { useDialogStore } from '@/stores/useDialogStore';
+import DetailCard from '@/types/DetailCard';
 import closeBtn from 'public/images/icon/closeBtn.svg';
 
 import { KebobMenu } from '../../KebobMenu';
-import AlertDialog from '../AlertDialog';
 import ConfirmTaskCardDeletionDialog from '../ConfirmTaskCardDeletionDialog';
+import TodoEditDialog from '../TodoDialog/TodoEditDialog';
 
 interface TaskCardDialogControlAreaProps
   extends HTMLAttributes<HTMLDivElement> {
   cardId: number;
+  cardData: DetailCard | undefined;
 }
 
 const TaskCardDialogControlArea = ({
   className,
   cardId,
+  cardData,
 }: TaskCardDialogControlAreaProps) => {
   const { openDialog } = useDialogStore();
 
@@ -30,10 +33,15 @@ const TaskCardDialogControlArea = ({
             variant: 'default',
             onSelect: () => {
               openDialog({
-                dialogComponent: (
+                dialogComponent:
                   // 할 일 카드 수정 다이얼로그 완성 시 붙여줘야함
-                  <AlertDialog description="test" closeBtnText="확인" />
-                ),
+                  cardData && (
+                    <TodoEditDialog
+                      columnId={cardData.columnId}
+                      mode="edit"
+                      cardData={cardData}
+                    />
+                  ),
               });
             },
           },
