@@ -63,10 +63,10 @@ const SignupPage = () => {
   return (
     <div className="flex w-full flex-col items-center justify-center gap-6">
       <form
-        className="flex w-full flex-col items-center justify-center gap-6"
+        className="flex w-full flex-col items-center justify-center gap-4 md:gap-6"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div className="flex w-full flex-col items-center justify-center gap-4">
+        <div className="flex w-full flex-col items-center justify-center gap-4 md:gap-6">
           <Input
             label="이메일"
             type="email"
