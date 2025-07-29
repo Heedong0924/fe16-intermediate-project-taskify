@@ -8,7 +8,7 @@ import arrowDropDown from '@/../public/images/icon/arrowDropDown.svg';
 import settingIcon from '@/../public/images/icon/settings.svg';
 import { AddCountChip, CounterChip } from '@/components/common/Chips';
 import ColumnSettingsDialog from '@/components/common/dialog/ColumnSettingsDialog';
-import CreateColumnDialog from '@/components/common/dialog/CreateColumnDialog';
+import TodoEditDialog from '@/components/common/dialog/TodoDialog/TodoEditDialog';
 import Button from '@/components/ui/Buttons';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { getCardList } from '@/lib/api/cardService';
@@ -45,7 +45,8 @@ const ColumnComponent = ({
   } = useInfiniteQuery<DetailCardResponse>({
     queryKey: ['cards', columnId],
     queryFn: async ({ pageParam }) => {
-      const currentCursorId = pageParam as number;
+      const currentCursorId =
+        pageParam === 0 ? undefined : (pageParam as number);
       return getCardList({
         size: itemSize,
         cursorId: currentCursorId,
@@ -152,7 +153,9 @@ const ColumnComponent = ({
         <Button
           onClick={() =>
             openDialog({
-              dialogComponent: <CreateColumnDialog dashboardId={dashboardId} />,
+              dialogComponent: (
+                <TodoEditDialog columnId={columnId} mode="create" />
+              ),
             })
           }
           color="white-black"
@@ -179,7 +182,7 @@ const ColumnComponent = ({
               <br /> 새 할 일을 추가해보세요!
             </div>
           )}
-          <div ref={observer} className="h-5" />
+          <div ref={observer} className="h-20" />
           <ScrollBar className="hidden" />
         </ScrollArea>
       </div>
