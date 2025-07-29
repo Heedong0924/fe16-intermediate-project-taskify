@@ -352,7 +352,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
           className="bg-taskify-violet-primary text-white hover:bg-violet-900"
           onClick={handleSubmit(onSubmit)}
         >
-          수정
+          {mode === 'edit' ? '수정' : '생성'}
         </Button>
       </DialogFooter>
     </DialogContent>
