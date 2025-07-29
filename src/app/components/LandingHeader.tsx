@@ -6,8 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { HTMLAttributes } from 'react';
 
-import { UserProfile } from '@/components/common/Profile';
-import { getUserStateFromLocalstorage } from '@/lib/utils/getUserStateFromLocalstorage';
+import UserAvatar from '@/components/common/header/UserAvatar';
 import { useAuthStore } from '@/stores/useAuthStore';
 import landingLogo from 'public/images/landingLogo.svg';
 import landingLogoMobile from 'public/images/landingLogo_mobile.svg';
@@ -17,7 +16,6 @@ import landingLogoMobile from 'public/images/landingLogo_mobile.svg';
 const LandingHeader = ({ className }: HTMLAttributes<HTMLDivElement>) => {
   const { isAuth } = useAuthStore();
   const pathname = usePathname();
-  const { user } = getUserStateFromLocalstorage();
 
   return (
     pathname === '/' && (
@@ -48,12 +46,7 @@ const LandingHeader = ({ className }: HTMLAttributes<HTMLDivElement>) => {
           />
         </Link>
         {isAuth ? (
-          <UserProfile
-            userName={user.nickname as string}
-            profileImg={
-              user.profileImageUrl && (user.profileImageUrl as string)
-            }
-          />
+          <UserAvatar />
         ) : (
           <ul className="flex items-center justify-between gap-6 md:gap-9">
             <li>
