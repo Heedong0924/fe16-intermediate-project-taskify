@@ -24,6 +24,7 @@ const DashboardIdPage = () => {
   const { setColumns } = useColumnStore();
 
   const rawDashboardId = Params.dashboardId as string;
+
   const dashboardId = Number(rawDashboardId);
 
   const { dashboardTitle, setDashboardTitle, setDashboardId } =
