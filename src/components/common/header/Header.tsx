@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
 import MemberAvatars from '@/app/mydashboard/components/dashboard/MemberAvatars';
+import useIsMobile from '@/hooks/useIsMobile';
 import { getMyInfo } from '@/lib/api/auth';
 import { getDashboardMembers } from '@/lib/api/dashboardMemberService';
 import { getDashboardById } from '@/lib/api/dashboardService';
@@ -84,6 +85,8 @@ const Header = () => {
     },
   });
 
+  const isMobile = useIsMobile();
+
   return (
     <header className="border-b-taskify-neutral-300 bg-taskify-neutral-0 fixed z-10 flex h-[60px] w-full items-center justify-between border-[1px]">
       <div className="flex h-full w-full items-center justify-between px-4 md:ml-[160px] md:px-7 lg:ml-[300px]">
@@ -110,7 +113,7 @@ const Header = () => {
           {/* 관리와 초대하기 버튼은 대시보드 생성자만 볼 수 있음 */}
           {config.showManageButton && isOwner && <ManageButton />}
           {config.showInviteButton && isOwner && <InviteButton />}
-          {config.showMemberAvatars && (
+          {config.showMemberAvatars && !isMobile && (
             <MemberAvatars members={members} type="header" />
           )}
           {/* 구분선 */}
