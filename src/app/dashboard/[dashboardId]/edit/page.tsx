@@ -58,20 +58,23 @@ export default function DashboardEditPage() {
           </Link>
         </nav>
 
-      {/* 대시보드 타이틀, 컬러 수정 */}
-      <DashboardUpdate dashboardId={id} isSkeletonVisible={isSkeletonVisible} />
+        {/* 대시보드 타이틀, 컬러 수정 */}
+        <DashboardUpdate
+          dashboardId={id}
+          isSkeletonVisible={isSkeletonVisible}
+        />
 
-      {/* 구성원 */}
-      <DashboardMembers
-        dashboardId={id}
-        isSkeletonVisible={isSkeletonVisible}
-      />
+        {/* 구성원 */}
+        <DashboardMembers
+          dashboardId={id}
+          isSkeletonVisible={isSkeletonVisible}
+        />
 
-      {/* 초대 내역 */}
-      <DashboardInvitations
-        dashboardId={id}
-        isSkeletonVisible={isSkeletonVisible}
-      />
+        {/* 초대 내역 */}
+        <DashboardInvitations
+          dashboardId={id}
+          isSkeletonVisible={isSkeletonVisible}
+        />
 
         {/*  대시보드 삭제하기 */}
         <Button
