@@ -4,6 +4,7 @@ import { format, setHours, setMinutes } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { Calendar as CalendarIcon } from 'lucide-react';
 import * as React from 'react';
+import { twMerge } from 'tailwind-merge';
 
 import { Button } from '@/components/ui/Button';
 import { Calendar } from '@/components/ui/Calendar';
@@ -35,18 +36,20 @@ export function DateTimePicker({
     value ? format(value, 'HH:mm') : format(new Date(), 'HH:mm'),
   );
 
-  // 날짜만 바뀌었을 때: 이전 time을 적용
+  // 날짜만 바뀌었을 때 이전 시간을 적용
   const handleDateSelect = (date: Date | undefined) => {
+    // 선택된 날짜가 없으면 초기화
     if (!date) {
       onChange(undefined);
       return;
     }
+    // 선택된 날짜가 오늘보다 이전이면 오늘로 설정
     const [hour, minute] = time.split(':').map(Number);
     const withTime = setMinutes(setHours(date, hour), minute);
     onChange(withTime);
   };
 
-  // 시간만 바뀌었을 때: 이전 date를 기억
+  // 시간만 바뀌었을 때 이전 date를 적용
   const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTime = e.target.value;
     setTime(newTime);
@@ -64,7 +67,10 @@ export function DateTimePicker({
         <Button
           variant="outline"
           data-empty={!value}
-          className={`data-[empty=true]:text-muted-foreground w-full justify-start text-left font-normal ${className ?? ''}`}
+          className={twMerge(
+            'data-[empty=true]:text-muted-foreground w-full justify-start px-4 py-3 text-left',
+            className,
+          )}
         >
           <CalendarIcon className="mr-2" />
           {value ? (
@@ -80,7 +86,13 @@ export function DateTimePicker({
 
       <PopoverContent className="w-auto space-y-4 p-4">
         {/* 달력 */}
-        <Calendar mode="single" selected={value} onSelect={handleDateSelect} />
+        <Calendar
+          mode="single"
+          selected={value}
+          onSelect={handleDateSelect}
+          disabled={{ before: new Date() }}
+          captionLayout="dropdown"
+        />
 
         {/* 시간 입력 */}
         <div className="flex items-center gap-2">

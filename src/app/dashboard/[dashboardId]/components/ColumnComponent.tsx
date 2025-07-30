@@ -171,6 +171,7 @@ const ColumnComponent = ({
             <AddCountChip size="sm" />
           </Button>
         </div>
+
         <ScrollArea
           className={`max-h-full ${isOpen ? 'max-h-full opacity-100' : 'max-h-0'} w-full grow flex-col overflow-auto transition-all duration-300 ease-in-out`}
         >
