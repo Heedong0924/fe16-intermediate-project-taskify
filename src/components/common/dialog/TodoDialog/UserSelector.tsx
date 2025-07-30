@@ -36,7 +36,7 @@ export const UserSelector = ({
   const users: Member[] = useMemberStore((state) => state.getMembers());
   // const users = mockMembers;
 
-  const selected = users.find((user) => user.id === assigneeUserId);
+  const selected = users.find((user) => user.userId === assigneeUserId);
   // todo: 선택된 User 가 없을 때의 처리
   if (!selected && assigneeUserId) {
     console.warn(
@@ -54,7 +54,7 @@ export const UserSelector = ({
       </label>
       <Select
         // Select 컴포넌트는 string 만 다루므로 toString()/parseInt() 로 변환
-        value={selected?.id.toString() ?? ''}
+        value={selected?.userId.toString() ?? ''}
         onValueChange={(val) => onChange(parseInt(val, 10))}
       >
         <SelectTrigger className="w-full">
@@ -81,7 +81,7 @@ export const UserSelector = ({
 
         <SelectContent>
           {users.map((user) => (
-            <SelectItem key={user.id} value={user.id.toString()}>
+            <SelectItem key={user.userId} value={user.userId.toString()}>
               <div className="flex items-center gap-3">
                 {user.profileImageUrl ? (
                   <Image
