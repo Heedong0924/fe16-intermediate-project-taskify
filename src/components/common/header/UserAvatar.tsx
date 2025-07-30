@@ -35,6 +35,11 @@ const UserAvatar = () => {
   const { logout } = useAuth();
   const router = useRouter();
 
+  const nicknameLength = user?.nickname.length;
+  const baseWidth = 100; // 최소 100px
+  const perCharWidth = 8; // 글자당 8px 추가
+  const menuWidth = Math.min(250, baseWidth + nicknameLength * perCharWidth);
+
   // 임시로 값이 없을 시 처리
   if (!user) return null;
 
@@ -50,9 +55,10 @@ const UserAvatar = () => {
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        align="end"
-        sideOffset={8}
+        align="start"
+        sideOffset={10}
         className="z-50"
+        style={{ width: `${menuWidth}px` }}
         forceMount
       >
         <DropdownMenuItem onClick={() => router.push('/mypage')}>
