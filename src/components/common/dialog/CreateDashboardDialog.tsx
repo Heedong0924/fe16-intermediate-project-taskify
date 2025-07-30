@@ -48,7 +48,7 @@ const CreateDashboardDialog = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isPending)
-      mutate({ title: createDashboardValue, color: selectedColor });
+      mutate({ title: createDashboardValue.trim(), color: selectedColor });
   };
 
   return (
@@ -74,6 +74,7 @@ const CreateDashboardDialog = () => {
             placeholder="대시보드 이름을 입력해주세요."
             value={createDashboardValue}
             onChange={handleCreateDashboardChange}
+            maxLength={20}
             isError={errorMessage !== undefined}
             errorMessage={errorMessage}
             inputClassName="text-taskify-neutral-700 text-taskify-md-regular md:text-taskify-lg-regular px-4 py-3"
