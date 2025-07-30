@@ -18,7 +18,11 @@ type FormValues = {
   nickname: string;
 };
 
-export default function MyInfoProfile() {
+export default function MyInfoProfile({
+  isSkeletonVisible,
+}: {
+  isSkeletonVisible: boolean;
+}) {
   const {
     register,
     handleSubmit,
@@ -29,7 +33,7 @@ export default function MyInfoProfile() {
     reValidateMode: 'onBlur',
   });
 
-  const { data, isPending, isError } = useMyInfo();
+  const { data } = useMyInfo();
   const mutation = useUpdateMyInfo();
   const { mutateAsync: uploadImage } = useUploadProfileImage();
 
@@ -68,12 +72,12 @@ export default function MyInfoProfile() {
     });
   };
 
-  const { showSkeleton, isFadingOut } = useSkeleton(isPending, 1200);
+  const { showSkeleton, isFadingOut } = useSkeleton(isSkeletonVisible, 1200);
 
   return (
     <ContentSection
       title={
-        showSkeleton || isError ? (
+        showSkeleton ? (
           <SkeletonLine className="h-10 w-full" isFadingOut={isFadingOut} />
         ) : (
           '프로필'
@@ -81,7 +85,7 @@ export default function MyInfoProfile() {
       }
     >
       <div className="sm:mt-6 sm:grid sm:grid-cols-[auto_1fr] sm:gap-10">
-        {showSkeleton || isError ? (
+        {showSkeleton ? (
           <>
             <SkeletonLine
               className="my-10 size-[100px] sm:my-0 sm:size-[182px]"
