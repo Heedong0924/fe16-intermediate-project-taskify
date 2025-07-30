@@ -19,6 +19,7 @@ const DashboardListItem = ({ dashboard, members }: DashboardListItemProps) => {
 
   // 카드 개별 구성
   // PC : 헤더 + 멤버아바타 + 멤버카운트, 태블릿 : 헤더 + 호버 시 멤버 아바타, 모바일 : 헤더
+
   return (
     <div
       role="button"

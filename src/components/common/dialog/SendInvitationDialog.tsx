@@ -51,7 +51,7 @@ const SendInvitationDialog = ({ dashboardId }: SendInvitationDialogProps) => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!isPending) mutate({ dashboardId, email: emailValue });
+    if (!isPending) mutate({ dashboardId, email: emailValue.trim() });
   };
 
   return (
@@ -78,6 +78,7 @@ const SendInvitationDialog = ({ dashboardId }: SendInvitationDialogProps) => {
             value={emailValue}
             onChange={handleEmailChange}
             isError={errorMessage !== undefined}
+            maxLength={40}
             errorMessage={errorMessage}
             inputClassName="text-taskify-neutral-700 text-taskify-md-regular md:text-taskify-lg-regular px-4 py-3"
           />

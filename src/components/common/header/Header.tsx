@@ -1,13 +1,15 @@
 'use client';
 
+import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import MemberAvatars from '@/app/mydashboard/components/dashboard/MemberAvatars';
 import { getMyInfo } from '@/lib/api/auth';
 import { getDashboardMembers } from '@/lib/api/dashboardMemberService';
+import { getDashboardById } from '@/lib/api/dashboardService';
 import { headerConfig } from '@/lib/constants/headerConfig';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useDashboardStore } from '@/stores/useDashboardStore';
@@ -29,6 +31,7 @@ const Header = () => {
   // pathname에 따라 headerconfig 조건 분기
   const pathname = usePathname();
   const dashboardTitle = useDashboardStore((s) => s.dashboardTitle);
+  const isOwner = useDashboardStore((s) => s.createdByMe);
 
   // headerconfig 기본값 override
   const matched = headerConfig.find((entry) => entry.match(pathname));
@@ -38,6 +41,7 @@ const Header = () => {
   };
 
   const { dashboardId } = useDashboardStore.getState();
+  const members = useMemberStore((state) => state.members);
 
   // 페이지에 따른 타이틀 override 조건문
   let headerTitle = '제목 없음';
@@ -47,39 +51,63 @@ const Header = () => {
     headerTitle = config.title;
   }
 
-  // 유저 정보, 멤버 정보
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userData = await getMyInfo();
-        useAuthStore.getState().setUser(userData);
-
-        const memberData = await getDashboardMembers({ dashboardId });
-        useMemberStore.getState().setMembers(memberData.members);
-      } catch (error) {
-        console.error('헤더에서 사용자/멤버 정보 가져오기 실패:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  // 상세 목록
-  const [members, setMembers] = useState<Member[]>([]);
+  const userQuery = useQuery({
+    queryKey: ['my-info'],
+    queryFn: getMyInfo,
+    staleTime: 1000 * 60 * 5,
+  });
 
   useEffect(() => {
-    const fetchMembers = async () => {
-      if (!dashboardId) return;
-      try {
-        const res = await getDashboardMembers({ dashboardId });
-        setMembers(res.members);
-      } catch (e) {
-        console.error('헤더에서 멤버 목록 가져오기 실패:', e);
-      }
-    };
+    const currentUser = useAuthStore.getState().user;
+    if (userQuery.data && currentUser?.id !== userQuery.data.id) {
+      useAuthStore.getState().setUser(userQuery.data);
+    }
+  }, [userQuery.data]);
 
-    fetchMembers();
-  }, [dashboardId]);
+  // 2 액세스 토큰
+
+  // const accessToken =
+  //   typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
+
+  // useQuery({
+  //   queryKey: ['my-info'],
+  //   queryFn: getMyInfo,
+  //   enabled: !!accessToken,
+  //   select: (data) => {
+  //     useAuthStore.getState().setUser(data);
+  //     return data;
+  //   },
+  // });
+
+  // 1 로그인 문제
+  // useQuery({
+  //   queryKey: ['my-info'],
+  //   queryFn: getMyInfo,
+  //   select: (data) => {
+  //     useAuthStore.getState().setUser(data);
+  //     return data;
+  //   },
+  // });
+
+  useQuery<{ members: Member[] }>({
+    queryKey: ['dashboard-members', dashboardId],
+    queryFn: () => getDashboardMembers({ dashboardId }),
+    enabled: !!dashboardId,
+    select: (data) => {
+      useMemberStore.getState().setMembers(data.members);
+      return data;
+    },
+  });
+
+  useQuery({
+    queryKey: ['dashboard', dashboardId],
+    queryFn: () => getDashboardById(dashboardId!),
+    enabled: !!dashboardId,
+    select: (data) => {
+      useDashboardStore.getState().setCreatedByMe(data.createdByMe);
+      useDashboardStore.getState().setDashboardTitle(data.title);
+    },
+  });
 
   return (
     <header className="border-b-taskify-neutral-300 bg-taskify-neutral-0 fixed z-10 flex h-[60px] w-full items-center justify-between border-[1px]">
@@ -105,9 +133,12 @@ const Header = () => {
         </div>
         {/* 버튼 요소 */}
         <div className="flex items-center gap-2">
-          {config.showManageButton && <ManageButton />}
-          {config.showInviteButton && <InviteButton />}
-          {config.showMemberAvatars && <MemberAvatars members={members} />}
+          {/* 관리와 초대하기 버튼은 대시보드 생성자만 볼 수 있음 */}
+          {config.showManageButton && isOwner && <ManageButton />}
+          {config.showInviteButton && isOwner && <InviteButton />}
+          {config.showMemberAvatars && (
+            <MemberAvatars members={members} type="header" />
+          )}
           {/* 구분선 */}
           <div className="bg-taskify-neutral-300 h-8 w-px" />
           {config.showUserAvatar && <UserAvatar />}

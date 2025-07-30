@@ -5,9 +5,14 @@ import { Member } from '@/types/DashboardMember';
 
 interface MemberAvatarsProps {
   members: Member[];
+  type?: 'header' | 'card';
 }
 
-const MemberAvatars = ({ members = [] }: Partial<MemberAvatarsProps>) => {
+// 멤버 usememberstore
+const MemberAvatars = ({
+  members,
+  type: _type = 'card',
+}: MemberAvatarsProps) => {
   // 아바타는 3명까지만 노출되며 그 이후는 +rest로 처리
   const visible = members.slice(0, 3);
   const rest = members.length - visible.length;

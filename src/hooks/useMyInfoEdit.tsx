@@ -1,7 +1,6 @@
 'use client';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 import AlertDialog from '@/components/common/dialog/AlertDialog';
@@ -21,18 +20,19 @@ export const useUploadProfileImage = () => {
 // 내 정보 가져오기
 export const useMyInfo = () => {
   const { openDialog } = useDialogStore();
-  const router = useRouter();
 
   const query = useQuery({
     queryKey: ['my-info'],
     queryFn: getMyInfo,
     enabled: true,
+    retry: false,
   });
 
   useEffect(() => {
     if (!query.error) return;
 
     const status = getErrorStatus(query.error);
+
     openDialog({
       dialogComponent: (
         <AlertDialog
@@ -42,11 +42,10 @@ export const useMyInfo = () => {
               : '로그인이 만료되었습니다.'
           }
           closeBtnText="확인"
+          navigate="/"
         />
       ),
     });
-
-    router.push('/');
   }, [query.error]);
 
   return query;
@@ -60,6 +59,7 @@ export const useUpdateMyInfo = () => {
 
   return useMutation({
     mutationFn: updateMyInfo,
+    retry: false,
     onSuccess: (upDateData) => {
       queryClient.invalidateQueries({ queryKey: ['my-info'] });
       // 스토리지 업로드
@@ -100,6 +100,7 @@ export const useChangePassword = () => {
       password: string;
       newPassword: string;
     }) => changePassword(password, newPassword),
+    retry: false,
     onSuccess: () => {
       openDialog({
         dialogComponent: (
