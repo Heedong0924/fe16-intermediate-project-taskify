@@ -111,8 +111,7 @@ const Header = () => {
 
   return (
     <header className="border-b-taskify-neutral-300 bg-taskify-neutral-0 fixed z-10 flex h-[60px] w-full items-center justify-between border-[1px]">
-      {/* xl로 우선 지정 -> lg로 논의 후 조건 수정해야함. */}
-      <div className="flex h-full w-full items-center justify-between px-4 md:ml-[160px] md:px-7 xl:ml-[300px]">
+      <div className="flex h-full w-full items-center justify-between px-4 md:ml-[160px] md:px-7 lg:ml-[300px]">
         <div className="flex gap-2">
           {/* 모바일에서만 로고 보이기 */}
           <div className="md:hidden">
