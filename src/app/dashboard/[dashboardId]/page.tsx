@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { AddCountChip } from '@/components/common/Chips';
 import CreateColumnDialog from '@/components/common/dialog/CreateColumnDialog';
@@ -19,6 +19,7 @@ import ColumnComponentSkeleton from './components/ColumnComponentSkeleton';
 
 // 헤더 내 상세페이지 상태 연결(타이틀, 아이디)
 const DashboardIdPage = () => {
+  const [ShowAddColumnButton, setShowAddColumnButton] = useState<boolean>();
   const Params = useParams();
   const { openDialog } = useDialogStore();
   const { setColumns } = useColumnStore();
@@ -68,6 +69,17 @@ const DashboardIdPage = () => {
     if (columns) setColumns(columns);
   }, [columns]);
 
+  useEffect(() => {
+    if (!isLoading) {
+      const timer = setTimeout(() => {
+        setShowAddColumnButton(true);
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+    return undefined;
+  }, [isLoading]);
+
   if (isLoading) {
     return <ColumnComponentSkeleton />;
   }
@@ -87,19 +99,30 @@ const DashboardIdPage = () => {
           />
         ) : null,
       )}
+
+      {columns?.length === 0 && (
+        <div className="text-taskify-gray-400 flex h-full w-[354px] shrink-0 items-center justify-center p-4 text-center">
+          아직 컬럼이 없습니다.
+          <br />
+          새로운 컬럼을 추가해보세요!
+        </div>
+      )}
       <div className="h-24 shrink-0 lg:hidden" />
-      <Button
-        onClick={() =>
-          openDialog({
-            dialogComponent: <CreateColumnDialog dashboardId={dashboardId} />,
-          })
-        }
-        color="violet-white"
-        className="btn-addCol fixed right-5 bottom-0 left-5 z-5 my-5 flex shrink-0 md:ml-[160px] lg:static lg:mx-5 lg:w-[534px]"
-      >
-        <span className="mr-3">새로운 컬럼 시작하기</span>
-        <AddCountChip size="sm" />
-      </Button>
+
+      {ShowAddColumnButton && (
+        <Button
+          onClick={() =>
+            openDialog({
+              dialogComponent: <CreateColumnDialog dashboardId={dashboardId} />,
+            })
+          }
+          color="violet-white"
+          className="btn-addCol fixed right-5 bottom-0 left-5 z-5 my-5 flex shrink-0 md:ml-[160px] lg:static lg:mx-5 lg:w-[534px]"
+        >
+          <span className="mr-3">새로운 컬럼 시작하기</span>
+          <AddCountChip size="sm" />
+        </Button>
+      )}
     </div>
   );
 };

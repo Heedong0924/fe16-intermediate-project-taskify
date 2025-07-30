@@ -64,7 +64,7 @@ const CardComponent = ({
               />
               <div>{card.dueDate}</div>
             </div>
-            {card.assignee.profileImageUrl ? (
+            {card.assignee?.profileImageUrl ? (
               <Image
                 src={card.assignee.profileImageUrl}
                 alt="작성자 프로필 이미지"
