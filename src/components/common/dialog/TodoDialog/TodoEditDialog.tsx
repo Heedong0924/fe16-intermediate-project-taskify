@@ -329,11 +329,11 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
               name="imageUrl"
               control={control}
               defaultValue={defaultVals.imageUrl}
-              render={({ field: { onChange } }) => (
+              render={({ field }) => (
                 <UploadImageButton
                   onUpload={handleUpload}
-                  onChange={(url) => onChange(url)}
-                  size="sm"
+                  onChange={field.onChange}
+                  value={field.value}
                 />
               )}
             />

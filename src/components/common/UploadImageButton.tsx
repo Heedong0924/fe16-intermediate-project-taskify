@@ -1,83 +1,229 @@
 'use client';
 
 import Image from 'next/image';
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, useRef, useState, useEffect } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { LuPencilLine } from 'react-icons/lu';
 import { twMerge } from 'tailwind-merge';
 
-// onUpload로 파일 업로드, onChange로 폼으로 url 전달
+import { useDialogStore } from '@/stores/useDialogStore';
 
+import AlertDialog from './dialog/AlertDialog';
+
+/**
+ * 이미지 업로드 버튼 컴포넌트 (sm 사이즈 고정)
+ * @param onUpload - 파일 업로드 처리 함수 (문자열 URL 또는 {imageUrl: string} 객체 반환)
+ * @param onChange - 폼으로 URL 전달 함수
+ * @param value - 현재 이미지 URL
+ */
 type UploadImageButtonProps = {
-  onUpload: (file: File) => Promise<string>;
+  onUpload: (file: File) => Promise<string | { imageUrl: string }>;
   onChange: (url: string) => void;
-  size?: 'sm' | 'lg';
+  value?: string | null;
 };
 
 const UploadImageButton = ({
   onUpload,
   onChange,
-  size = 'lg',
+  value,
 }: UploadImageButtonProps) => {
-  // 디폴트 이미지 없음
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const { openDialog } = useDialogStore();
+  const [imageUrl, setImageUrl] = useState<string | null>(value ?? null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [imageError, setImageError] = useState<boolean>(false);
 
-  // 숨겨진 input에 접근하기 위한 useRef
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // 사용자가 선택한 첫 번째 파일 가져오기, 없으면 종료
+  // value prop 변경 시 내부 상태 동기화
+  useEffect(() => {
+    setImageUrl(value ?? null);
+    setImageError(false); // URL이 변경되면 에러 상태 초기화
+  }, [value]);
+
+  /**
+   * URL에서 파일 확장자를 정규화
+   * @param url - 원본 URL (문자열 또는 객체)
+   * @returns 정규화된 URL
+   */
+  const normalizeImageUrl = (url: string | { imageUrl: string }): string => {
+    // url이 객체인 경우 imageUrl 속성 추출
+    const urlString = typeof url === 'string' ? url : url.imageUrl;
+
+    // .svg+xml을 .svg로 변경 (파일명 어디에 있든 상관없이)
+    return urlString.replace(/\.svg\+xml/g, '.svg');
+  };
+
+  /**
+   * 파일이 SVG인지 확인
+   * @param url - 이미지 URL
+   * @returns SVG 여부
+   */
+  const isSvgImage = (url: string): boolean => {
+    const urlString = normalizeImageUrl(url);
+    const lowerUrl = urlString.toLowerCase();
+    return lowerUrl.includes('.svg') || lowerUrl.includes('.svg+xml');
+  };
+
+  /**
+   * 파일 변경 핸들러
+   * @param e - 파일 입력 이벤트
+   */
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // 업로드 함수 실행 -> 반환된 이미지 URL을 상태 및 onChange로 전달
-    const uploadedUrl = await onUpload(file);
-    setImageUrl(uploadedUrl);
-    onChange(uploadedUrl);
-  };
-  // 커스텀 UI 클릭 시 숨겨진 파일 input 클릭 유도
-  const triggerUpload = () => fileInputRef.current?.click();
-
-  const ImageButtonSize =
-    size === 'sm' ? 'w-14 h-14 md:h-19 md:w-19' : 'h-32 w-32';
-  // css 추후 수정 예정
-  // 키다운 다시 설정 필요함.
-  return (
-    <div
-      role="button"
-      tabIndex={0}
-      onClick={triggerUpload}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') triggerUpload();
-      }}
-      className={twMerge(
-        'group relative h-32 w-32 cursor-pointer overflow-hidden rounded-lg border border-dashed border-gray-300',
-        ImageButtonSize,
-      )}
-    >
-      {imageUrl ? (
-        <>
-          <Image
-            src={imageUrl}
-            alt="preview"
-            className="h-full w-full object-cover"
+    // 파일 유효성 검사
+    if (!file.type.startsWith('image/')) {
+      openDialog({
+        dialogComponent: (
+          <AlertDialog
+            description="이미지 파일만 업로드 가능합니다."
+            closeBtnText="확인"
+            isGoBack
           />
-          <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition group-hover:opacity-100">
-            <LuPencilLine className="h-6 w-6 text-white" />
+        ),
+        isNewOpen: true,
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    setImageError(false);
+
+    try {
+      const uploadedUrl = await onUpload(file);
+      console.log('Uploaded URL:', uploadedUrl);
+      console.log('URL type:', typeof uploadedUrl);
+
+      const normalizedUrl = normalizeImageUrl(uploadedUrl);
+      console.log('Normalized URL:', normalizedUrl);
+      console.log('Is SVG:', isSvgImage(normalizedUrl));
+
+      setImageUrl(normalizedUrl);
+      onChange(normalizedUrl);
+    } catch (err) {
+      openDialog({
+        dialogComponent: (
+          <AlertDialog
+            description="이미지 업로드에 실패했습니다."
+            closeBtnText="확인"
+            isGoBack
+          />
+        ),
+        isNewOpen: true,
+      });
+      console.error('Upload error:', err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  /**
+   * 이미지 로드 에러 핸들러
+   */
+  const handleImageError = () => {
+    console.error('Image load error:', imageUrl);
+    setImageError(true);
+
+    openDialog({
+      dialogComponent: (
+        <AlertDialog
+          description="이미지 로드에 실패했습니다."
+          closeBtnText="확인"
+          isGoBack
+        />
+      ),
+      isNewOpen: true,
+    });
+
+    // 에러 시 기본 상태로 복원
+    setImageUrl(null);
+    onChange('');
+  };
+
+  /**
+   * 파일 선택 트리거
+   */
+  const triggerUpload = () => {
+    if (!isLoading) {
+      fileInputRef.current?.click();
+    }
+  };
+
+  /**
+   * 키보드 이벤트 핸들러
+   * @param e - 키보드 이벤트
+   */
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if ((e.key === 'Enter' || e.key === ' ') && !isLoading) {
+      e.preventDefault();
+      triggerUpload();
+    }
+  };
+
+  return (
+    <div className="space-y-2">
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={triggerUpload}
+        onKeyDown={handleKeyDown}
+        className={twMerge(
+          'group relative h-14 w-14 cursor-pointer overflow-hidden rounded-lg border border-dashed border-gray-300 transition-colors hover:border-gray-400 md:h-19 md:w-19',
+          isLoading && 'cursor-not-allowed opacity-50',
+        )}
+        aria-label="이미지 업로드"
+      >
+        {imageUrl && !imageError ? (
+          <div className="relative h-full w-full">
+            {isSvgImage(imageUrl) ? (
+              // SVG는 img 태그 사용 (Next.js Image 컴포넌트가 SVG를 완전히 지원하지 않음)
+              <img
+                src={imageUrl}
+                alt="업로드된 이미지 미리보기"
+                className="h-full w-full object-contain"
+                onError={handleImageError}
+              />
+            ) : (
+              // 일반 이미지는 Next.js Image 컴포넌트 사용
+              <Image
+                src={imageUrl}
+                alt="업로드된 이미지 미리보기"
+                fill
+                className="object-cover"
+                onError={handleImageError}
+                sizes="(max-width: 768px) 56px, 76px"
+                unoptimized={process.env.NODE_ENV === 'development'} // 개발 환경에서는 최적화 비활성화
+              />
+            )}
+
+            {/* 호버 오버레이 */}
+            <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
+              <LuPencilLine className="h-6 w-6 text-white" />
+            </div>
           </div>
-        </>
-      ) : (
-        <div className="flex h-full w-full flex-col items-center justify-center bg-gray-50 text-sm text-gray-500">
-          <FaPlus className="text-taskify-violet-primary mb-1 h-6 w-6" />
-        </div>
-      )}
-      <input
-        type="file"
-        accept="image/*"
-        className="hidden"
-        ref={fileInputRef}
-        onChange={handleFileChange}
-      />
+        ) : (
+          <div className="flex h-full w-full flex-col items-center justify-center bg-gray-50 text-sm text-gray-500">
+            {isLoading ? (
+              <div className="h-6 w-6 animate-spin rounded-full border-2 border-violet-500 border-t-transparent" />
+            ) : (
+              <FaPlus className="mb-1 h-6 w-6 text-violet-500" />
+            )}
+            <span className="mt-1 text-xs">
+              {isLoading ? '업로드 중...' : '이미지 추가'}
+            </span>
+          </div>
+        )}
+
+        <input
+          type="file"
+          accept="image/*"
+          className="hidden"
+          ref={fileInputRef}
+          onChange={handleFileChange}
+          disabled={isLoading}
+        />
+      </div>
     </div>
   );
 };
