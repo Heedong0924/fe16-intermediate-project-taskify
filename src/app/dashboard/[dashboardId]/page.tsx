@@ -87,7 +87,7 @@ const DashboardIdPage = () => {
           })
         }
         color="violet-white"
-        className="btn-addCol fixed right-5 bottom-0 left-5 my-5 flex shrink-0 md:ml-[160px] xl:static xl:mx-5 xl:w-[534px]"
+        className="btn-addCol fixed right-5 bottom-0 left-5 z-5 my-5 flex shrink-0 md:ml-[160px] xl:static xl:mx-5 xl:w-[534px]"
       >
         <span className="mr-3">새로운 컬럼 시작하기</span>
         <AddCountChip size="sm" />

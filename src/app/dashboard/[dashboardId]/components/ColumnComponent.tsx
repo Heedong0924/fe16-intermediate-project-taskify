@@ -110,7 +110,7 @@ const ColumnComponent = ({
   return (
     <section className="shrink-0 border-r-1 px-5 xl:max-w-[354px]">
       <div className="border-taskify-neutral-300 flex h-full shrink-0 flex-col border-t-1 pt-[22px]">
-        <div className="bg-taskify-neutral-100 xl:statick sticky top-15 z-5">
+        <div className="bg-taskify-neutral-100 xl:statick sticky top-15 z-2">
           <div className="flex shrink-0 items-center justify-between">
             <div className="flex items-center">
               <p className="bg-taskify-violet-primary h-2 w-2 shrink-0 rounded-full" />
