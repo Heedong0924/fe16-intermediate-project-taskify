@@ -108,16 +108,16 @@ const ColumnComponent = ({
   const totalCount = totalCountRes ?? 0;
 
   return (
-    <section className="shrink-0 border-r-1 px-5 xl:max-w-[354px]">
-      <div className="border-taskify-neutral-300 flex h-full shrink-0 flex-col border-t-1 pt-[22px]">
-        <div className="bg-taskify-neutral-100 xl:statick sticky top-15 z-2">
-          <div className="flex shrink-0 items-center justify-between">
+    <section className="mb-4 shrink-0 border-r-1 px-5 xl:max-w-[354px]">
+      <div className="border-taskify-neutral-300 bg-taskify-neutral-100 flex h-full shrink-0 flex-col border-t-1 pt-[20px]">
+        <div className="bg-taskify-neutral-100 xl:statick sticky top-30 z-2 items-end pt-4 md:top-15">
+          <div className="flex shrink-0 items-end justify-between">
             <div className="flex items-center">
               <p className="bg-taskify-violet-primary h-2 w-2 shrink-0 rounded-full" />
               <span className="text-taskify-2lg-bold mx-2">{column.title}</span>
               <CounterChip>{totalCount}</CounterChip>
             </div>
-            <div className="flex gap-2">
+            <div className="flex">
               <button onClick={handleToggle} type="button">
                 {isOpen ? (
                   <div className="text-taskify-sm-medium text-taskify-neutral-500 flex cursor-pointer items-center">
@@ -174,7 +174,6 @@ const ColumnComponent = ({
 
         <ScrollArea
           className={`max-h-full ${isOpen ? 'max-h-full opacity-100' : 'max-h-0'} w-full grow flex-col overflow-auto transition-all duration-300 ease-in-out`}
-
         >
           {cards?.map((card) => (
             <CardComponent
