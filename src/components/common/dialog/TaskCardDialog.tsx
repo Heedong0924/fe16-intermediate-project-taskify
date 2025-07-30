@@ -32,12 +32,12 @@ const TaskCardDialog = ({
   cardId,
   columnName,
 }: TaskCardDialogProps) => {
-  const { data, isLoading } = useQuery({
+  const { data, isPending } = useQuery({
     queryKey: ['detailCard', cardId],
     queryFn: () => getCard(cardId),
   });
 
-  const { showSkeleton, isFadingOut } = useSkeleton(isLoading, 1000);
+  const { showSkeleton, isFadingOut } = useSkeleton(isPending, 1000);
 
   return (
     <DialogContent
@@ -47,24 +47,29 @@ const TaskCardDialog = ({
       {/** Header 영역 */}
       <DialogHeader className="col-start-1 col-end-5 flex gap-0">
         <TaskCardDialogControlArea
-          className="absolute top-5 right-5 flex gap-5"
+          className="absolute top-5 right-5 flex h-8 gap-x-5"
           cardId={cardId}
           cardData={data}
         />
         {showSkeleton ? (
-          <SkeletonLine
-            className="mt-12 h-8 w-4/5 md:mt-0"
-            isFadingOut={isFadingOut}
-          />
+          <>
+            <SkeletonLine
+              className="mt-12 h-8 w-4/5 md:mt-0"
+              isFadingOut={isFadingOut}
+            />
+            <DialogTitle className="hidden" />
+            <DialogDescription className="hidden" />
+          </>
         ) : (
-          <DialogTitle className="mt-12 text-left md:mt-0">
-            <span className="text-taskify-2xl-bold text-taskify-neutral-700">
-              {data?.title}
-            </span>
-          </DialogTitle>
+          <>
+            <DialogTitle className="mt-12 text-left md:mt-0">
+              <span className="text-taskify-2xl-bold text-taskify-neutral-700">
+                {data?.title}
+              </span>
+            </DialogTitle>
+            <DialogDescription className="hidden" />
+          </>
         )}
-        <DialogTitle />
-        <DialogDescription />
       </DialogHeader>
       {/* CardAuthor 영역 */}
       {showSkeleton ? (
