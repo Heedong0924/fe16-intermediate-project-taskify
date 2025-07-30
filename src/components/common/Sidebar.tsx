@@ -14,6 +14,7 @@ import DashboardCard from './DashboardCrad';
 import PaginationButton from '../ui/PaginationButton';
 import { LogoMd } from '../ui/SVGLogo';
 import CreateDashboardDialog from './dialog/CreateDashboardDialog';
+import { ScrollArea, ScrollBar } from '../ui/scroll-area';
 
 const Sidebar = () => {
   const [page, setPage] = useState<number>(1);
@@ -58,7 +59,7 @@ const Sidebar = () => {
   const totalCount: number = data?.totalCount || 0;
 
   return (
-    <aside className="text-taskify-neutral-500 bg-taskify-neutral-0 left-0ntop-0 fixed z-40 hidden h-full min-h-screen w-[160px] shadow-md md:block xl:w-[300px]">
+    <aside className="text-taskify-neutral-500 bg-taskify-neutral-0 left-0ntop-0 fixed z-40 hidden h-screen w-[160px] shadow-md transition-all duration-300 md:block xl:w-[300px]">
       <div className="px-2 py-5">
         <Link href="/">
           <LogoMd />
@@ -70,7 +71,7 @@ const Sidebar = () => {
                 dialogComponent: <CreateDashboardDialog />,
               })
             }
-            className="hover:bg-taskify-neutral-200 mb-[15px] flex h-5 w-full items-center justify-between"
+            className="hover:bg-taskify-neutral-200 mb-[15px] flex h-5 w-full cursor-pointer items-center justify-between"
             type="button"
           >
             <div className="text-taskify-md-semibold my-4 flex justify-between">
@@ -78,25 +79,27 @@ const Sidebar = () => {
             </div>
             <Image src={addIcon} alt="add to dashboard" />
           </button>
-          <div className="">
-            {dashboards.map((dashboard) => (
-              <DashboardCard
-                key={dashboard.id}
-                dashboard={dashboard}
-                className="hover:bg-taskify-neutral-200 h-[42px]"
+          <ScrollArea className="h-screen pb-40">
+            <div className="w-[144px] transition-all duration-300 xl:w-[284px]">
+              {dashboards.map((dashboard) => (
+                <DashboardCard
+                  key={dashboard.id}
+                  dashboard={dashboard}
+                  className="hover:bg-taskify-neutral-200 h-[42px]"
+                />
+              ))}
+            </div>
+            {totalCount > 15 && (
+              <PaginationButton
+                page={page}
+                size={itemsSize}
+                totalCount={totalCount}
+                onPageChange={setPage}
+                className="mt-6 flex justify-end xl:mr-2"
               />
-            ))}
-          </div>
-          {totalCount !== 0 && (
-            <PaginationButton
-              page={page}
-              size={itemsSize}
-              totalCount={totalCount}
-              text={false}
-              onPageChange={setPage}
-              className="mt-6"
-            />
-          )}
+            )}
+            <ScrollBar className="hidden" />
+          </ScrollArea>
         </div>
       </div>
     </aside>

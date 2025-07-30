@@ -59,11 +59,7 @@ const DashboardIdPage = () => {
   });
 
   if (isLoading) {
-    return (
-      <div className="p-4 text-center text-lg font-medium">
-        칼럼 불러오는 중...
-      </div>
-    );
+    return <div>로딩중...</div>;
   }
 
   if (isError) {
@@ -73,17 +69,16 @@ const DashboardIdPage = () => {
   const columns = data?.data;
 
   return (
-    <div className="flex h-full max-w-full grow flex-col xl:flex-row">
-      {columns &&
-        columns?.map((column) =>
-          column ? (
-            <ColumnComponent
-              dashboardId={dashboardId}
-              key={column.id}
-              column={column}
-            />
-          ) : null,
-        )}
+    <div className="mt-[59px] flex h-full max-w-full grow flex-col xl:flex-row">
+      {columns?.map((column) =>
+        column ? (
+          <ColumnComponent
+            dashboardId={dashboardId}
+            key={column.id}
+            column={column}
+          />
+        ) : null,
+      )}
       <div className="h-24 shrink-0 xl:hidden" />
       <Button
         onClick={() =>
@@ -92,7 +87,7 @@ const DashboardIdPage = () => {
           })
         }
         color="violet-white"
-        className="btn-addCol fixed right-5 bottom-0 left-5 my-5 flex shrink-0 md:ml-[160px] xl:static xl:mx-5 xl:w-[534px]"
+        className="btn-addCol fixed right-5 bottom-0 left-5 z-5 my-5 flex shrink-0 md:ml-[160px] xl:static xl:mx-5 xl:w-[534px]"
       >
         <span className="mr-3">새로운 컬럼 시작하기</span>
         <AddCountChip size="sm" />
