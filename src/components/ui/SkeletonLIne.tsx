@@ -11,10 +11,14 @@ const SkeletonLine = ({
   isFadingOut = false,
 }: SkeletonLineProps) => (
   <div
-    className={clsx('bg-taskify-neutral-300 animate-pulse rounded', className, {
-      'opacity-0 transition-opacity duration-300': isFadingOut,
-      'animate-pulse': !isFadingOut,
-    })}
+    className={clsx(
+      'bg-taskify-neutral-300 animate-pulse rounded-4xl',
+      className,
+      {
+        'opacity-0 transition-opacity duration-300': isFadingOut,
+        'animate-pulse': !isFadingOut,
+      },
+    )}
   />
 );
 
