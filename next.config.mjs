@@ -24,6 +24,12 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'placehold.co', // Placehold 도메인 (Placehold 이미지)
       },
+      {
+        protocol: 'https',
+        hostname: 'randomuser.me',
+        port: '', // 빈 문자열이어도 ok
+        pathname: '/api/portraits/**', // /** 로 하위 모든 경로 허용
+      },
     ],
   },
   env: {

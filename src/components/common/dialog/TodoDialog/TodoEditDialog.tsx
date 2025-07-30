@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/Dialog';
 import { createCard, updateCard } from '@/lib/api/cardService';
 import { cardImageUpload } from '@/lib/api/columnService';
-import { mapCardToForm, getAssigneeFromCard } from '@/lib/utils/cardMapper';
+import { mapCardToForm } from '@/lib/utils/cardMapper';
 import { useDashboardStore } from '@/stores/useDashboardStore';
 import { useDialogStore } from '@/stores/useDialogStore';
 import DetailCard from '@/types/DetailCard';
@@ -55,7 +55,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
         ? mapCardToForm(cardData)
         : {
             columnId,
-            assigneeUserId: 0,
+            assigneeUserId: undefined,
             title: '',
             description: '',
             dueDate: '',
@@ -213,7 +213,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
             defaultValue={defaultVals.assigneeUserId}
             render={({ field }) => (
               <UserSelector
-                assignee={getAssigneeFromCard(cardData)}
+                assigneeUserId={field.value}
                 onChange={field.onChange}
                 placeholder="담당자를 선택하세요"
                 className="flex flex-col gap-2 md:gap-[10px]"

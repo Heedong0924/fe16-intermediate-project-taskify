@@ -30,10 +30,18 @@ export function ColumnSelector({
   className,
 }: ColumnSelectorProps) {
   // 스토어에서 Column 리스트 가져오기
+
   const columns = useColumnStore((state) => state.getColumns());
+  console.log('ColumnSelector columns:', columns);
   // 현재 선택된 id 에 해당하는 title 찾기
   const current = columns.find((column) => column.id === columnId);
-
+  console.log('ColumnSelector current:', current);
+  if (!columns && columnId) {
+    console.warn(
+      'Store에서 카드의 columnId에 해당하는 Column을 찾을 수 없습니다:',
+      columnId,
+    );
+  }
   return (
     <div className={className}>
       <label
