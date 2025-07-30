@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
@@ -28,10 +28,12 @@ const CreateColumnDialog = ({ dashboardId }: CreateColumnDialogProps) => {
   );
 
   const { closeDialog } = useDialogStore();
+  const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
     mutationFn: createColumn,
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['columns', dashboardId] });
       closeDialog();
     },
     onError: (error) => {
