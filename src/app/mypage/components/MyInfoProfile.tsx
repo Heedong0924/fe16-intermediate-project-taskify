@@ -35,7 +35,12 @@ export default function MyInfoProfile({
 
   const { data } = useMyInfo();
   const mutation = useUpdateMyInfo();
-  const { mutateAsync: uploadImage } = useUploadProfileImage();
+  // 이미지 업로드
+  const {
+    mutateAsync: uploadImage,
+    isPending: imgPending,
+    isError: imgError,
+  } = useUploadProfileImage();
 
   const [profileImageUrl, setProfileImageUrl] = useState<string | undefined>(
     data?.profileImageUrl,
@@ -128,9 +133,9 @@ export default function MyInfoProfile({
                 color="violet-white"
                 className="btn-modal-db w-full"
                 onClick={handleSubmit(handleUpload)}
-                disabled={!isValid || isSubmitting}
+                disabled={!isValid || isSubmitting || imgPending || imgError}
               >
-                저장
+                {imgPending ? '이미지 업로드 중...' : '저장'}
               </Button>
             </div>
           </>
