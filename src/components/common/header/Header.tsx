@@ -64,31 +64,6 @@ const Header = () => {
     }
   }, [userQuery.data]);
 
-  // 2 액세스 토큰
-
-  // const accessToken =
-  //   typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
-
-  // useQuery({
-  //   queryKey: ['my-info'],
-  //   queryFn: getMyInfo,
-  //   enabled: !!accessToken,
-  //   select: (data) => {
-  //     useAuthStore.getState().setUser(data);
-  //     return data;
-  //   },
-  // });
-
-  // 1 로그인 문제
-  // useQuery({
-  //   queryKey: ['my-info'],
-  //   queryFn: getMyInfo,
-  //   select: (data) => {
-  //     useAuthStore.getState().setUser(data);
-  //     return data;
-  //   },
-  // });
-
   useQuery<{ members: Member[] }>({
     queryKey: ['dashboard-members', dashboardId],
     queryFn: () => getDashboardMembers({ dashboardId }),
