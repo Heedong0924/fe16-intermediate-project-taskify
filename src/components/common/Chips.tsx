@@ -64,7 +64,7 @@ const getTrimmedOrNull = (value: unknown): string | null => {
 export function AddCountChip({ size = 'sm' }: BaseChipProps) {
   const { container, addImage } = ChipSizeMap[size];
   return (
-    <span className={`${container} chip-add`}>
+    <span className={`${container} chip-add cursor-pointer`}>
       <Image src="/images/add-icon.svg" alt="추가하기" {...addImage} />
     </span>
   );

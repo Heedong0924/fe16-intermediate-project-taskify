@@ -183,6 +183,9 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
         setFocus('title'); // 모달 열릴 때 제목 입력 필드에 포커스
       }}
       showCloseButton={false}
+      onPointerDownOutside={(event) => {
+        event.preventDefault();
+      }}
     >
       <DialogHeader>
         <DialogTitle className="text-taskify-neutral-800 text-xl font-bold">

@@ -25,7 +25,7 @@ const DashboardCard = ({
     >
       <div className="flex min-w-0 items-center gap-4">
         <div
-          className="bg- h-2 w-2 shrink-0 rounded-full"
+          className="h-2 w-2 shrink-0 rounded-full"
           style={{ backgroundColor: dashboard.color }}
         />
         <div className="flex min-w-0 gap-1">

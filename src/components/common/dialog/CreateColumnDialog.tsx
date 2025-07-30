@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
@@ -28,10 +28,12 @@ const CreateColumnDialog = ({ dashboardId }: CreateColumnDialogProps) => {
   );
 
   const { closeDialog } = useDialogStore();
+  const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
     mutationFn: createColumn,
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['columns', dashboardId] });
       closeDialog();
     },
     onError: (error) => {
@@ -47,7 +49,7 @@ const CreateColumnDialog = ({ dashboardId }: CreateColumnDialogProps) => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!isPending) mutate({ title: createColumnValue, dashboardId });
+    if (!isPending) mutate({ title: createColumnValue.trim(), dashboardId });
   };
 
   return (
@@ -73,6 +75,7 @@ const CreateColumnDialog = ({ dashboardId }: CreateColumnDialogProps) => {
             placeholder="컬럼 이름을 입력해주세요."
             value={createColumnValue}
             onChange={handleCreateColumnChange}
+            maxLength={20}
             isError={errorMessage !== undefined}
             errorMessage={errorMessage}
             inputClassName="text-taskify-neutral-700 text-taskify-md-regular md:text-taskify-lg-regular px-4 py-3"

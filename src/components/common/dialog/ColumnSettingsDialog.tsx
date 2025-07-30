@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
@@ -33,10 +33,12 @@ const ColumnSettingsDialog = ({
   );
 
   const { openDialog, closeDialog } = useDialogStore();
+  const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
     mutationFn: updateColumn,
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['columns'] });
       closeDialog();
     },
     onError: (error) => {
@@ -58,7 +60,7 @@ const ColumnSettingsDialog = ({
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!isPending) mutate({ columnId, title: updateColumnValue });
+    if (!isPending) mutate({ columnId, title: updateColumnValue.trim() });
   };
 
   return (
@@ -82,6 +84,7 @@ const ColumnSettingsDialog = ({
             defaultValue={updateColumnValue}
             value={updateColumnValue}
             onChange={handleUpdateChange}
+            maxLength={20}
             isError={errorMessage !== undefined}
             errorMessage={errorMessage}
             inputClassName="text-taskify-neutral-700 text-taskify-md-regular md:text-taskify-lg-regular px-4 py-3"

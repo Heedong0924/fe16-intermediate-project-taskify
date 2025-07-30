@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormEvent } from 'react';
 
 import { Button } from '@/components/ui/Button';
@@ -10,6 +10,7 @@ import {
   DialogTitle,
 } from '@/components/ui/Dialog';
 import { deleteColumn } from '@/lib/api/columnService';
+import { useDashboardStore } from '@/stores/useDashboardStore';
 import { useDialogStore } from '@/stores/useDialogStore';
 
 import AlertDialog from './AlertDialog';
@@ -22,10 +23,14 @@ const ConfirmColumnDeletionDialog = ({
   columnId,
 }: ConfirmColumnDeletionDialogProps) => {
   const { openDialog, closeDialog, goBack } = useDialogStore();
+  const queryClient = useQueryClient();
+
+  const { dashboardId } = useDashboardStore();
 
   const { mutate, isPending } = useMutation({
     mutationFn: deleteColumn,
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['columns', dashboardId] });
       closeDialog();
     },
     onError: (_error) => {
@@ -71,6 +76,7 @@ const ConfirmColumnDeletionDialog = ({
           <Button
             className="bg-taskify-violet-primary hover:bg-taskify-violet-primary h-auto grow-1 cursor-pointer py-[14px]"
             type="submit"
+            autoFocus
           >
             <span className="text-taskify-lg-semibold">삭제</span>
           </Button>

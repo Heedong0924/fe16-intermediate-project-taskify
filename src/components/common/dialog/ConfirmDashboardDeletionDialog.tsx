@@ -1,5 +1,6 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { FormEvent } from 'react';
 
@@ -24,9 +25,11 @@ const ConfirmDashboardDeletionDialog = ({
 }: ConfirmDashboardDeletionDialogProp) => {
   const router = useRouter();
   const { closeDialog, goBack } = useDialogStore();
+  const queryClient = useQueryClient();
 
   const deleteMutation = useDeleteDashboard({
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['dashboards'] });
       router.push('/mydashboard');
       closeDialog();
     },
