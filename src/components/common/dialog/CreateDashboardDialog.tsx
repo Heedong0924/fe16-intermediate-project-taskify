@@ -47,7 +47,7 @@ const CreateDashboardDialog = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!isPending)
+    if (!isPending && createDashboardValue !== '')
       mutate({ title: createDashboardValue.trim(), color: selectedColor });
   };
 
