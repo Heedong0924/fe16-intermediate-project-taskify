@@ -5,7 +5,6 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 import AlertDialog from '@/components/common/dialog/AlertDialog';
@@ -14,7 +13,7 @@ import {
   getDashboardById,
   deleteDashboard,
 } from '@/lib/api/dashboardService';
-import { getErrorMessage } from '@/lib/utils/getErrorResponse';
+import { getErrorMessage, getErrorStatus } from '@/lib/utils/getErrorResponse';
 import { useDialogStore } from '@/stores/useDialogStore';
 import { Dashboard } from '@/types/Dashboard';
 
@@ -23,28 +22,33 @@ import { Dashboard } from '@/types/Dashboard';
  */
 export const useDashboard = (dashboardsId: number) => {
   const { openDialog } = useDialogStore();
-  const router = useRouter();
 
   const query = useQuery<Dashboard, AxiosError>({
     queryKey: ['dashboard', dashboardsId] as const,
     queryFn: () => getDashboardById(dashboardsId),
     enabled: !!dashboardsId,
+    retry: false,
   });
 
   // 에러 발생 시 처리
   useEffect(() => {
     if (!query.error) return;
 
+    const status = getErrorStatus(query.error);
+
     openDialog({
       dialogComponent: (
         <AlertDialog
-          description={getErrorMessage(query.error)}
+          description={
+            status !== 401
+              ? getErrorMessage(query.error)
+              : '로그인이 만료되었습니다.'
+          }
           closeBtnText="확인"
+          navigate="/mydashboard"
         />
       ),
     });
-
-    router.push('/mydashboard');
   }, [query.error]);
 
   return query;
@@ -63,6 +67,7 @@ export const useUpdateDashboard = (dashboardsId: number) => {
     // 객체를 받아서 대시보드를 업데이트
     mutationFn: (data: { title: string; color: string }) =>
       updateDashboard(dashboardsId, data),
+    retry: false,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['dashboard', dashboardsId] });
       queryClient.invalidateQueries({ queryKey: ['dashboards'] });
@@ -104,6 +109,7 @@ export const useDeleteDashboard = (
       options?.onSuccess?.(...args);
     },
     ...options,
+    retry: false,
     onError: (error) => {
       const errorMessage = getErrorMessage(error);
       openDialog({

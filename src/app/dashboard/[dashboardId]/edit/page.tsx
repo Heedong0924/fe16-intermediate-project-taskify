@@ -6,6 +6,8 @@ import { notFound, useParams } from 'next/navigation';
 
 import ConfirmDashboardDeletionDialog from '@/components/common/dialog/ConfirmDashboardDeletionDialog';
 import Button from '@/components/ui/Buttons';
+import { useDashboard } from '@/hooks/useDashboardEdit';
+import { useDashboardInvitations } from '@/hooks/useDashboardInvitations';
 import { useDialogStore } from '@/stores/useDialogStore';
 
 import DashboardInvitations from './components/DashboardInvitations';
@@ -22,6 +24,19 @@ export default function DashboardEditPage() {
   if (Number.isNaN(id)) {
     notFound();
   }
+
+  const page = 0;
+  const size = 0;
+
+  const { isPending: dashboardPending, isError: dashboardError } =
+    useDashboard(id);
+  const { isError: invitationError } = useDashboardInvitations(id, {
+    page,
+    size,
+  });
+
+  const isSkeletonVisible =
+    dashboardPending || dashboardError || invitationError;
 
   return (
     <div className="min-h-screen bg-[var(--gray-FAFAFA)] p-[20px]">
@@ -42,13 +57,19 @@ export default function DashboardEditPage() {
       </nav>
 
       {/* 대시보드 타이틀, 컬러 수정 */}
-      <DashboardUpdate dashboardId={id} />
+      <DashboardUpdate dashboardId={id} isSkeletonVisible={isSkeletonVisible} />
 
       {/* 구성원 */}
-      <DashboardMembers dashboardId={id} />
+      <DashboardMembers
+        dashboardId={id}
+        isSkeletonVisible={isSkeletonVisible}
+      />
 
       {/* 초대 내역 */}
-      <DashboardInvitations dashboardId={id} />
+      <DashboardInvitations
+        dashboardId={id}
+        isSkeletonVisible={isSkeletonVisible}
+      />
 
       {/*  대시보드 삭제하기 */}
       <Button

@@ -1,14 +1,18 @@
 'use client';
 
 import Image from 'next/image';
-// import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+
+import { useMyInfo } from '@/hooks/useMyInfoEdit';
 
 import MyInfoPassword from './components/MyInfoPassword';
 import MyInfoProfile from './components/MyInfoProfile';
 
 export default function MyPage() {
   const router = useRouter();
+
+  const { isPending, isError } = useMyInfo();
+  const isSkeletonVisible = isPending || isError;
 
   return (
     <div className="min-h-screen bg-[var(--gray-FAFAFA)] p-[20px]">
@@ -29,9 +33,9 @@ export default function MyPage() {
         </button>
       </nav>
       {/* 프로필 */}
-      <MyInfoProfile />
+      <MyInfoProfile isSkeletonVisible={isSkeletonVisible} />
       {/* 비밀번호 변경 */}
-      <MyInfoPassword />
+      <MyInfoPassword isSkeletonVisible={isSkeletonVisible} />
     </div>
   );
 }

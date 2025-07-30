@@ -21,6 +21,7 @@ export const useDashboardMember = (params: MemberQueryParams) => {
     queryFn: () => getDashboardMembers(params),
     enabled: !!dashboardId,
     placeholderData: keepPreviousData,
+    retry: false,
   });
 };
 
@@ -32,6 +33,7 @@ export const useDeleteMember = () => {
 
   return useMutation({
     mutationFn: (memberId: number) => deleteDashboardMembers(memberId),
+    retry: false,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['dashboard-member'],
