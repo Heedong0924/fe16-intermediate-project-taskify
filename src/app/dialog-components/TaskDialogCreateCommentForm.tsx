@@ -5,8 +5,8 @@ import { Button } from '@/components/ui/Button';
 import { createComment } from '@/lib/api/commentService';
 import { useDialogStore } from '@/stores/useDialogStore';
 
-import { useCommentFormInput } from '../../../../hooks/useCommentFormInput';
-import AlertDialog from '../AlertDialog';
+import AlertDialog from '../../components/common/dialog/AlertDialog';
+import { useCommentFormInput } from '../../hooks/useCommentFormInput';
 
 interface TaskDialogCommentAreaProps extends HTMLAttributes<HTMLDivElement> {
   dashboardId: number;

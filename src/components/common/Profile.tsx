@@ -1,3 +1,5 @@
+import { HTMLAttributes } from 'react';
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { getTextBasedColorClasses } from '@/lib/utils/colorUtils';
 
@@ -5,7 +7,7 @@ type AvatarProfileProps = {
   profileImg?: string | null;
   userName: string;
   size?: 'sm' | 'md' | 'lg';
-};
+} & HTMLAttributes<HTMLDivElement>;
 
 type UserProfileProps = AvatarProfileProps;
 
@@ -41,9 +43,11 @@ export function AvatarProfile({
   const { container, textSize } = ChipSizeMap[size];
   const { bgClass } = getTextBasedColorClasses(userName, 'profile');
   return (
-    <Avatar className={`${container} profile-avatar`}>
+    <Avatar
+      className={`${container} profile-avatar size-[34px] transition-all md:size-[38px]`}
+    >
       <AvatarImage src={profileImg ?? undefined} />
-      <AvatarFallback className={`${bgClass} ${textSize}`}>
+      <AvatarFallback className={`${bgClass} ${textSize} text-base`}>
         {userName.toUpperCase().slice(0, 1)}
       </AvatarFallback>
     </Avatar>

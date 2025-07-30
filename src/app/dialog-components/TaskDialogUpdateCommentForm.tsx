@@ -6,7 +6,7 @@ import { useCommentFormInput } from '@/hooks/useCommentFormInput';
 import { updateComment } from '@/lib/api/commentService';
 import { useDialogStore } from '@/stores/useDialogStore';
 
-import AlertDialog from '../AlertDialog';
+import AlertDialog from '../../components/common/dialog/AlertDialog';
 
 interface TaskDialogUpdateCommentFormProps
   extends HTMLAttributes<HTMLDivElement> {

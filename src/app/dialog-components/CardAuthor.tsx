@@ -2,7 +2,7 @@ import React, { HTMLAttributes } from 'react';
 
 import { formattedDate } from '@/lib/utils/fotmattedDate';
 
-import { AvatarProfile } from '../../Profile';
+import { AvatarProfile } from '../../components/common/Profile';
 
 interface CardAuthorProps extends HTMLAttributes<HTMLDivElement> {
   author?: string;
