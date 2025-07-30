@@ -29,8 +29,6 @@ export default function DashboardMembers({
     dashboardId,
   });
 
-  // const { isPending, isError } = useDashboard(dashboardId);
-
   const { showSkeleton, isFadingOut } = useSkeleton(isSkeletonVisible, 1200);
 
   const deleteMutation = useDeleteMember();

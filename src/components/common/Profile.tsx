@@ -38,16 +38,19 @@ const ChipSizeMap = {
 export function AvatarProfile({
   profileImg = null,
   userName,
-  size = 'lg',
+  size,
 }: AvatarProfileProps) {
-  const { container, textSize } = ChipSizeMap[size];
+  const { container, textSize } = size
+    ? ChipSizeMap[size]
+    : {
+        container: 'size-[34px] transition-all md:size-[38px]',
+        textSize: 'text-base',
+      };
   const { bgClass } = getTextBasedColorClasses(userName, 'profile');
   return (
-    <Avatar
-      className={`${container} profile-avatar size-[34px] transition-all md:size-[38px]`}
-    >
+    <Avatar className={`${container} profile-avatar`}>
       <AvatarImage src={profileImg ?? undefined} />
-      <AvatarFallback className={`${bgClass} ${textSize} text-base`}>
+      <AvatarFallback className={`${bgClass} ${textSize}`}>
         {userName.toUpperCase().slice(0, 1)}
       </AvatarFallback>
     </Avatar>
@@ -68,7 +71,7 @@ export function AvatarProfile({
 export function UserProfile({
   profileImg = null,
   userName = '',
-  size = 'lg',
+  size,
 }: UserProfileProps) {
   return (
     <div className="flex cursor-pointer items-center gap-3 text-base">

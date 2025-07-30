@@ -1,14 +1,15 @@
 import Image from 'next/image';
+import { HTMLAttributes } from 'react';
 
 import { getTextBasedColorClasses } from '@/lib/utils/colorUtils';
 
 type BaseChipProps = {
   size?: 'sm' | 'md';
-};
+} & HTMLAttributes<HTMLDivElement>;
 
 type ChildrenProp = {
   children: string | number;
-};
+} & HTMLAttributes<HTMLDivElement>;
 
 type ContentChipProps = BaseChipProps & {
   children?: string;
@@ -26,16 +27,16 @@ const ChipSizeMap = {
     statusContainer: 'px-[8px] py-[4px] text-[12px]',
     tagContainer: 'px-[6px] py-[4px] text-[12px]',
     colorPickerContainer: 'size-[28px]',
-    addImage: { width: 14, height: 14 },
-    colorPickerImage: { width: 22, height: 22 },
+    addImage: 'size-[14px]',
+    colorPickerImage: 'size-[22px]',
   },
   md: {
     container: 'size-[22px]',
     statusContainer: 'px-[10px] py-[4px] text-[14px]',
     tagContainer: 'px-[6px] py-[4px] text-[14px]',
     colorPickerContainer: 'size-[30px]',
-    addImage: { width: 16, height: 16 },
-    colorPickerImage: { width: 24, height: 24 },
+    addImage: 'size-[16px]',
+    colorPickerImage: 'size-[24px]',
   },
 } as const;
 
@@ -61,11 +62,18 @@ const getTrimmedOrNull = (value: unknown): string | null => {
  * Props:
  * size: 'sm' (작은 사이즈) 또는 'md' (큰 사이즈)를 지정합니다. 기본값은 'sm'
  */
-export function AddCountChip({ size = 'sm' }: BaseChipProps) {
-  const { container, addImage } = ChipSizeMap[size];
+export function AddCountChip({ size }: BaseChipProps) {
+  const { container, addImage } = size
+    ? ChipSizeMap[size]
+    : {
+        container: 'transition-all size-[20px] md:size-[22px]',
+        addImage: 'size-[14px] md:size-[16px]',
+      };
   return (
     <span className={`${container} chip-add cursor-pointer`}>
-      <Image src="/images/add-icon.svg" alt="추가하기" {...addImage} />
+      <span className={`${addImage} relative`}>
+        <Image src="/images/add-icon.svg" alt="추가하기" fill />
+      </span>
     </span>
   );
 }
@@ -92,8 +100,13 @@ export function CounterChip({ children = 0 }: ChildrenProp) {
  * size: 'sm' (작은 사이즈) 또는 'md' (큰 사이즈)를 지정합니다. 기본값은 'sm'
  * children: 표시될 값.
  */
-export function StatusChip({ size = 'sm', children }: ContentChipProps) {
-  const { statusContainer } = ChipSizeMap[size];
+export function StatusChip({ size, children }: ContentChipProps) {
+  const { statusContainer } = size
+    ? ChipSizeMap[size]
+    : {
+        statusContainer:
+          'transition-all px-[8px] py-[4px] text-[12px] md:px-[10px] md:py-[4px] md:text-[14px]',
+      };
   return (
     <span className={`${statusContainer} chip-status`}>
       <i> </i>
@@ -110,11 +123,16 @@ export function StatusChip({ size = 'sm', children }: ContentChipProps) {
  * size: 'sm' (작은 사이즈) 또는 'md' (큰 사이즈)를 지정합니다. 기본값은 'sm'
  * children: 표시될 값.
  */
-export function TagChip({ size = 'sm', children }: ContentChipProps) {
+export function TagChip({ size, children }: ContentChipProps) {
   const trimmed = getTrimmedOrNull(children);
   if (!trimmed) return null;
 
-  const { tagContainer } = ChipSizeMap[size];
+  const { tagContainer } = size
+    ? ChipSizeMap[size]
+    : {
+        tagContainer:
+          'transition-all px-[6px] py-[4px] text-[12px] md:text-[14px]',
+      };
   const { bgClass, textClass } = getTextBasedColorClasses(trimmed, 'chip');
   return (
     <span className={`${bgClass} ${textClass} ${tagContainer} chip-tag`}>
@@ -134,11 +152,16 @@ export function TagChip({ size = 'sm', children }: ContentChipProps) {
  * onChange: 색상 변경 콜백
  */
 export function ColorPickerChip({
-  size = 'sm',
+  size,
   value,
   onChange,
 }: ColorPickerChipProp) {
-  const { colorPickerContainer, colorPickerImage } = ChipSizeMap[size];
+  const { colorPickerContainer, colorPickerImage } = size
+    ? ChipSizeMap[size]
+    : {
+        colorPickerContainer: 'transition-all size-[28px] md:size-[30px]',
+        colorPickerImage: 'size-[22px] md:size-[24px]',
+      };
   return (
     <form className="chip-colorPick">
       {ColorPickerChips.map(({ id, value: val, label }) => (
@@ -158,12 +181,11 @@ export function ColorPickerChip({
             onChange={() => onChange(val)}
             className="peer hidden"
           />
-          <Image
-            src="/images/check-white.svg"
-            alt="색상 체크"
-            className="opacity-0 transition-opacity duration-200 peer-checked:opacity-100"
-            {...colorPickerImage}
-          />
+          <span
+            className={`${colorPickerImage} relative opacity-0 transition-opacity duration-200 peer-checked:opacity-100`}
+          >
+            <Image src="/images/check-white.svg" alt="색상 체크" fill />
+          </span>
         </label>
       ))}
     </form>
