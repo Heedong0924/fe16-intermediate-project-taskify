@@ -11,6 +11,7 @@ import ColumnSettingsDialog from '@/components/common/dialog/ColumnSettingsDialo
 import TodoEditDialog from '@/components/common/dialog/TodoDialog/TodoEditDialog';
 import Button from '@/components/ui/Buttons';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import SkeletonParagraph from '@/components/ui/SkeletonParagraph';
 import { getCardList } from '@/lib/api/cardService';
 import { useDialogStore } from '@/stores/useDialogStore';
 import Column from '@/types/Column';
@@ -87,7 +88,13 @@ const ColumnComponent = ({
   }, [hasNextPage, fetchNextPage, isFetchingNextPage]);
 
   if (isLoading) {
-    return <div>카드를 불러오는 중입니다...</div>;
+    return (
+      <SkeletonParagraph
+        lines={3}
+        lineClassName="bg-taskify-neutral-300 w-full h-20 my-4"
+        isFadingOut
+      />
+    );
   }
 
   if (isError) {

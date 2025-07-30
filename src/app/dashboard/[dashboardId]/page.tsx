@@ -15,6 +15,7 @@ import { useDialogStore } from '@/stores/useDialogStore';
 import { ColumnResponse } from '@/types/Column';
 
 import ColumnComponent from './components/ColumnComponent';
+import ColumnComponentSkeleton from './components/ColumnComponentSkeleton';
 
 // 헤더 내 상세페이지 상태 연결(타이틀, 아이디)
 const DashboardIdPage = () => {
@@ -67,7 +68,7 @@ const DashboardIdPage = () => {
   }, [columns]);
 
   if (isLoading) {
-    return <div>로딩중...</div>;
+    return <ColumnComponentSkeleton />;
   }
 
   if (isError) {

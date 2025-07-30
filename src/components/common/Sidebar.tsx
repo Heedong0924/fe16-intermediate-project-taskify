@@ -45,12 +45,12 @@ const Sidebar = () => {
 
   if (isLoading) {
     return (
-      <aside className="text-taskify-neutral-500 bg-taskify-neutral-0 fixed z-40 hidden h-screen w-[160px] animate-pulse rounded-md shadow-md transition-all duration-300 md:block xl:w-[300px]">
+      <aside className="text-taskify-neutral-500 bg-taskify-neutral-0 fixed z-40 hidden h-screen w-[160px] animate-pulse rounded-md shadow-md transition-all duration-300 md:block lg:w-[300px]">
         <div className="px-2 py-5">
           <Skeleton className="h-[34px] w-[110px] rounded-xl" />
 
-          <div className="mt-14">
-            <Skeleton className="mb-[15px] h-5 w-full rounded-xl" />
+          <div className="mt-10">
+            <Skeleton className="mb-1 h-10 w-full rounded-xl" />
 
             <SkeletonParagraph
               paragraphClassName="gap-2"
@@ -79,17 +79,17 @@ const Sidebar = () => {
         <Link href="/">
           <LogoMd width={110} height={34} />
         </Link>
-        <div className="mt-14">
+        <div className="mt-10">
           <button
             onClick={() =>
               openDialog({
                 dialogComponent: <CreateDashboardDialog />,
               })
             }
-            className="hover:bg-taskify-neutral-200 mb-[15px] flex h-5 w-full cursor-pointer items-center justify-between"
+            className="hover:bg-taskify-violet-light mb-1 flex h-10 w-full cursor-pointer items-center justify-between rounded-sm"
             type="button"
           >
-            <div className="text-taskify-md-semibold my-4 flex justify-between">
+            <div className="text-taskify-md-semibold flex justify-between">
               Dash Boards
             </div>
             <Image
@@ -105,7 +105,7 @@ const Sidebar = () => {
                 <DashboardCard
                   key={dashboard.id}
                   dashboard={dashboard}
-                  className="hover:bg-taskify-neutral-200 h-[42px]"
+                  className="hover:bg-taskify-violet-light h-[42px] rounded-sm"
                 />
               ))}
             </div>
