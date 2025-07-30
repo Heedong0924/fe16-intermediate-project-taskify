@@ -79,21 +79,23 @@ export default function MyInfoProfile({
 
   const { showSkeleton, isFadingOut } = useSkeleton(isSkeletonVisible, 1200);
 
+  const shouldShowSkeleton = showSkeleton || !data;
+
   return (
     <ContentSection
       title={
-        showSkeleton ? (
+        shouldShowSkeleton ? (
           <SkeletonLine className="h-10 w-full" isFadingOut={isFadingOut} />
         ) : (
           '프로필'
         )
       }
     >
-      <div className="sm:mt-6 sm:grid sm:grid-cols-[auto_1fr] sm:gap-10">
-        {showSkeleton ? (
+      <div className="md:mt-6 md:grid md:grid-cols-[auto_1fr] md:gap-10">
+        {shouldShowSkeleton ? (
           <>
             <SkeletonLine
-              className="my-10 size-[100px] sm:my-0 sm:size-[182px]"
+              className="my-10 size-[100px] md:my-0 md:size-[182px]"
               isFadingOut={isFadingOut}
             />
             <div className="h-[239px]">
@@ -106,7 +108,7 @@ export default function MyInfoProfile({
         ) : (
           <>
             <UploadImageButtonCopy
-              className="my-10 size-[100px] sm:my-0 sm:size-[182px]"
+              className="my-10 size-[100px] transition-all md:my-0 md:size-[182px]"
               initialImageUrl={profileImageUrl}
               onUpload={handleFileSelect}
               onImageChange={(url) => setProfileImageUrl(url)}

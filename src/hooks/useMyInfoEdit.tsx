@@ -70,7 +70,7 @@ export const useMyInfo = () => {
     });
   }, [query.error]);
 
-  return query;
+  return { ...query };
 };
 
 // 내 정보 업데이트

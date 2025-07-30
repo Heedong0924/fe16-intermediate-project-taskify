@@ -15,7 +15,8 @@ type ContentChipProps = BaseChipProps & {
   children?: string;
 };
 
-type ColorPickerChipProp = BaseChipProps & {
+type ColorPickerChipProp = {
+  size?: 'sm' | 'md';
   value: string;
   onChange: (color: string) => void;
 };
