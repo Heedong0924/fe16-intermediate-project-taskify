@@ -39,7 +39,7 @@ const DashboardList = () => {
       if (!dashboards.length) return;
 
       try {
-        const updatedMembersMap: Record<number, Member[]> = {}; // ✅ 이름 바꿈
+        const updatedMembersMap: Record<number, Member[]> = {};
 
         const promises = dashboards.map((dashboard) =>
           getDashboardMembers({ dashboardId: dashboard.id }).then((res) => {
@@ -49,8 +49,8 @@ const DashboardList = () => {
 
         await Promise.all(promises);
         setMembersMap(updatedMembersMap);
-      } catch (err) {
-        console.error('멤버 불러오기 실패', err);
+      } catch {
+        console.log('something');
       }
     };
 
