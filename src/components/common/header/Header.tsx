@@ -1,11 +1,11 @@
 'use client';
 
+import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
-import MemberAvatars from '@/app/mydashboard/components/dashboard/MemberAvatars';
+// import MemberAvatars from '@/app/mydashboard/components/dashboard/MemberAvatars';
 import { getMyInfo } from '@/lib/api/auth';
 import { getDashboardMembers } from '@/lib/api/dashboardMemberService';
 import { headerConfig } from '@/lib/constants/headerConfig';
@@ -47,39 +47,27 @@ const Header = () => {
     headerTitle = config.title;
   }
 
-  // 유저 정보, 멤버 정보
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userData = await getMyInfo();
-        useAuthStore.getState().setUser(userData);
+  // 유저 정보, 멤버 정보 (React Query)
+  useQuery({
+    queryKey: ['my-info'],
+    queryFn: getMyInfo,
+    select: (data) => {
+      console.log('my-info 쿼리 결과:', data);
+      useAuthStore.getState().setUser(data);
+      return data;
+    },
+  });
 
-        const memberData = await getDashboardMembers({ dashboardId });
-        useMemberStore.getState().setMembers(memberData.members);
-      } catch (error) {
-        console.error('헤더에서 사용자/멤버 정보 가져오기 실패:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  // 상세 목록
-  const [members, setMembers] = useState<Member[]>([]);
-
-  useEffect(() => {
-    const fetchMembers = async () => {
-      if (!dashboardId) return;
-      try {
-        const res = await getDashboardMembers({ dashboardId });
-        setMembers(res.members);
-      } catch (e) {
-        console.error('헤더에서 멤버 목록 가져오기 실패:', e);
-      }
-    };
-
-    fetchMembers();
-  }, [dashboardId]);
+  useQuery<{ members: Member[] }>({
+    queryKey: ['dashboard-members', dashboardId],
+    queryFn: () => getDashboardMembers({ dashboardId }),
+    enabled: !!dashboardId,
+    select: (data) => {
+      console.log('dashboard-members', data);
+      useMemberStore.getState().setMembers(data.members);
+      return data;
+    },
+  });
 
   return (
     <header className="border-b-taskify-neutral-300 bg-taskify-neutral-0 fixed z-10 flex h-[60px] w-full items-center justify-between border-[1px]">
@@ -107,7 +95,7 @@ const Header = () => {
         <div className="flex items-center gap-2">
           {config.showManageButton && <ManageButton />}
           {config.showInviteButton && <InviteButton />}
-          {config.showMemberAvatars && <MemberAvatars members={members} />}
+          {/* config.showMemberAvatars && <MemberAvatars /> 임시로 주석처리 해두었습니다. */}
           {/* 구분선 */}
           <div className="bg-taskify-neutral-300 h-8 w-px" />
           {config.showUserAvatar && <UserAvatar />}
