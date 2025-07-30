@@ -10,7 +10,7 @@ const SearchInput = ({ val, onChange }: SearchInputProps) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value);
   };
-  console.log(val);
+
   return (
     <div className="relative">
       <input

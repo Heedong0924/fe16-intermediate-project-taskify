@@ -1,6 +1,6 @@
 'use client';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
@@ -42,11 +42,12 @@ export const useAuth = () => {
   // Zustand 스토어에서 상태·액션 가져오기
   const setUser = useAuthStore((state) => state.setUser);
   const setToken = useAuthStore((state) => state.setToken);
-  const logout = useAuthStore((state) => state.logout);
+  const zustandLogout = useAuthStore((state) => state.logout);
   const user = useAuthStore((state) => state.user);
   const isAuth = useAuthStore((state) => state.isAuth);
   const accessToken = useAuthStore((state) => state.accessToken);
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   // 다이얼로그 스토어에서 openDialog 액션 가져오기
   const { openDialog } = useDialogStore();
@@ -104,6 +105,12 @@ export const useAuth = () => {
       errorDialog('회원가입에 실패했습니다.', err);
     },
   });
+
+  // 로그아웃 함수: Zustand 상태 초기화 + React Query 캐시 초기화
+  const logout = () => {
+    zustandLogout();
+    queryClient.clear();
+  };
 
   return {
     user,

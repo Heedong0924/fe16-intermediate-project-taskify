@@ -18,8 +18,6 @@ const InvitationList = ({ searchTerm }: InvitationProps) => {
   const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteQuery({
     queryKey: ['invitations', searchTerm],
     queryFn: async ({ pageParam = 0 }) => {
-      console.log('[QUERY] pageParam:', pageParam);
-      console.log('[QUERY] searchTerm:', searchTerm);
       return getInvitations({
         size: 10,
         cursorId: pageParam === 0 ? undefined : pageParam,
@@ -33,15 +31,11 @@ const InvitationList = ({ searchTerm }: InvitationProps) => {
   useEffect(() => {
     const currentEl = observerEl.current;
     const io = new IntersectionObserver((entries) => {
-      console.log('👀 entries:', entries);
-      console.log('👉 isIntersecting:', entries[0].isIntersecting);
-      console.log('🧾 hasNextPage:', hasNextPage);
       if (entries[0].isIntersecting && hasNextPage) {
-        console.log('📦 fetchNextPage 실행!');
         fetchNextPage();
       }
     });
-    console.log('observer 실행됨!');
+
     if (currentEl) io.observe(currentEl);
     return () => {
       if (currentEl) io.disconnect();
@@ -52,10 +46,6 @@ const InvitationList = ({ searchTerm }: InvitationProps) => {
     data?.pages.flatMap((page) =>
       Array.isArray(page.invitations) ? page.invitations : [page.invitations],
     ) ?? [];
-
-  console.log('✅ data:', data);
-  console.log('✅ data.pages:', data?.pages);
-  console.log('✅ allInvitations:', allInvitations);
 
   useEffect(() => {
     const checkMobile = () => {

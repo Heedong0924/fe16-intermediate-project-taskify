@@ -142,25 +142,26 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
   };
 
   const onSubmit = (data: TodoFormData) => {
+    const payload = {
+      ...data,
+      dashboardId,
+    };
+
+    // 빈 문자열이면 해당 필드를 삭제
+    if (!data.dueDate?.trim()) {
+      delete payload.dueDate;
+    }
+
+    if (!data.imageUrl?.trim()) {
+      delete payload.imageUrl;
+    }
+
     if (mode === 'create') {
       // 생성 모드에서 새로운 할 일 생성
-      const { dueDate, imageUrl, ...rest } = data;
-      const payload = {
-        ...rest,
-        dashboardId,
-        dueDate: dueDate && dueDate.trim() !== '' ? dueDate : null,
-        imageUrl: imageUrl && imageUrl.trim() !== '' ? imageUrl : null,
-      };
       console.log('Create Submit data:', payload);
       createCardMutation(payload);
     } else {
       // 수정 모드에서 기존 할 일 수정
-      const { dueDate, imageUrl, ...rest } = data;
-      const payload = {
-        ...rest,
-        dueDate: dueDate && dueDate.trim() !== '' ? dueDate : null,
-        imageUrl: imageUrl && imageUrl.trim() !== '' ? imageUrl : null,
-      };
       updateCardMutation({
         cardId: cardData?.id || 0, // cardData가 없을 경우 0으로 설정
         data: payload,

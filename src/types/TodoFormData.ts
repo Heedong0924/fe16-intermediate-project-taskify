@@ -5,7 +5,7 @@ export type TodoFormData = {
   columnId: number;
   title: string;
   description: string;
-  dueDate: string | null;
+  dueDate?: string;
   tags: string[];
-  imageUrl: string | null;
+  imageUrl?: string;
 };
