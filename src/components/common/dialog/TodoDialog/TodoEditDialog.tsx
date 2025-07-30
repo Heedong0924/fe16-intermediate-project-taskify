@@ -1,6 +1,8 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { format } from 'date-fns';
 import React, { useCallback, useMemo, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
@@ -12,7 +14,6 @@ import UploadImageButton from '@/components/common/UploadImageButton';
 import { Button } from '@/components/ui/Button';
 import { DateTimePicker } from '@/components/ui/DateTimePicker';
 import {
-  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -21,12 +22,16 @@ import {
 } from '@/components/ui/Dialog';
 import { createCard, updateCard } from '@/lib/api/cardService';
 import { cardImageUpload } from '@/lib/api/columnService';
-import { mapCardToForm, getAssigneeFromCard } from '@/lib/utils/cardMapper';
+import { mapCardToForm } from '@/lib/utils/cardMapper';
+import { useDashboardStore } from '@/stores/useDashboardStore';
+import { useDialogStore } from '@/stores/useDialogStore';
 import DetailCard from '@/types/DetailCard';
+import ServerErrorResponse from '@/types/ServerErrorResponse';
 import { TodoFormData } from '@/types/TodoFormData';
 
 import { ColumnSelector } from './ColumnSelector';
 import { UserSelector } from './UserSelector';
+import AlertDialog from '../AlertDialog';
 /**
  * 할 일 생성 및 수정 모달 컴포넌트
  * @returns {JSX.Element} 할 일 수정 모달
@@ -40,6 +45,9 @@ interface TodoEditDialogProps {
 }
 
 const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
+  const { openDialog, goBack } = useDialogStore();
+  const { dashboardId } = useDashboardStore();
+
   // 폼 데이터를 관리
   const defaultVals = useMemo<TodoFormData>(
     () =>
@@ -47,7 +55,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
         ? mapCardToForm(cardData)
         : {
             columnId,
-            assigneeUserId: 0,
+            assigneeUserId: undefined,
             title: '',
             description: '',
             dueDate: '',
@@ -87,10 +95,21 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
     mutationFn: (data) => createCard(data),
     onSuccess: (data) => {
       console.log('카드 생성 성공:', data);
+      goBack();
     },
     onError: (error) => {
-      reset(defaultVals);
       console.error('카드 생성 실패:', error);
+      const axiosError = error as AxiosError<ServerErrorResponse>;
+      openDialog({
+        isNewOpen: true,
+        dialogComponent: (
+          <AlertDialog
+            description={axiosError.response?.data.message || '알 수 없는 에러'}
+            closeBtnText="확인"
+            isGoBack
+          />
+        ),
+      });
     },
   });
   // 카드 수정 뮤테이션
@@ -118,17 +137,34 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
     },
     [uploadMutation],
   );
+  const handleUndoClick = () => {
+    goBack();
+  };
 
   const onSubmit = (data: TodoFormData) => {
-    console.log('Submitted data:', data);
+    const payload = {
+      ...data,
+      dashboardId,
+    };
+
+    // 빈 문자열이면 해당 필드를 삭제
+    if (!data.dueDate?.trim()) {
+      delete payload.dueDate;
+    }
+
+    if (!data.imageUrl?.trim()) {
+      delete payload.imageUrl;
+    }
+
     if (mode === 'create') {
       // 생성 모드에서 새로운 할 일 생성
-      createCardMutation(data);
+      console.log('Create Submit data:', payload);
+      createCardMutation(payload);
     } else {
       // 수정 모드에서 기존 할 일 수정
       updateCardMutation({
         cardId: cardData?.id || 0, // cardData가 없을 경우 0으로 설정
-        data,
+        data: payload,
       });
     }
   };
@@ -181,7 +217,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
             defaultValue={defaultVals.assigneeUserId}
             render={({ field }) => (
               <UserSelector
-                assignee={getAssigneeFromCard(cardData)}
+                assigneeUserId={field.value}
                 onChange={field.onChange}
                 placeholder="담당자를 선택하세요"
                 className="flex flex-col gap-2 md:gap-[10px]"
@@ -247,15 +283,13 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
             control={control}
             defaultValue={defaultVals.dueDate}
             render={({ field }) => {
-              // field.value: ISO string or ''
-              const selectedDate = field.value
-                ? new Date(field.value)
-                : undefined;
               return (
                 <DateTimePicker
-                  value={selectedDate}
+                  value={field.value ? new Date(field.value) : undefined}
                   onChange={(date) => {
-                    field.onChange(date ? date.toISOString() : '');
+                    field.onChange(
+                      date ? format(date, 'yyyy-MM-dd HH:mm') : '',
+                    );
                   }}
                   placeholder="마감일을 선택하세요"
                 />
@@ -298,11 +332,11 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
               name="imageUrl"
               control={control}
               defaultValue={defaultVals.imageUrl}
-              render={({ field: { onChange } }) => (
+              render={({ field }) => (
                 <UploadImageButton
                   onUpload={handleUpload}
-                  onChange={(url) => onChange(url)}
-                  size="sm"
+                  onChange={field.onChange}
+                  value={field.value}
                 />
               )}
             />
@@ -312,21 +346,18 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
 
       {/* 버튼 영역 */}
       <DialogFooter className="grid grid-cols-2 gap-3 pt-4">
-        <DialogClose asChild>
-          <Button variant="outline" type="button">
-            취소
-          </Button>
-        </DialogClose>
-        <DialogClose asChild>
-          <Button
-            type="submit"
-            disabled={!isValid || isSubmitting || loading}
-            className="bg-taskify-violet-primary text-white hover:bg-violet-900"
-            onClick={handleSubmit(onSubmit)}
-          >
-            수정
-          </Button>
-        </DialogClose>
+        <Button variant="outline" onClick={handleUndoClick} type="button">
+          취소
+        </Button>
+
+        <Button
+          type="submit"
+          disabled={!isValid || isSubmitting || loading}
+          className="bg-taskify-violet-primary text-white hover:bg-violet-900"
+          onClick={handleSubmit(onSubmit)}
+        >
+          {mode === 'edit' ? '수정' : '생성'}
+        </Button>
       </DialogFooter>
     </DialogContent>
   );
