@@ -40,8 +40,8 @@ export default function DashboardEditPage() {
     dashboardPending || dashboardError || invitationError;
 
   return (
-    <ScrollArea className="overflow-auto">
-      <div className="min-h-screen bg-[var(--gray-FAFAFA)] p-[20px]">
+    <ScrollArea className="w-full overflow-auto">
+      <div className="mt-[119px] min-h-screen bg-[var(--gray-FAFAFA)] p-[20px] md:mt-[59px]">
         {/* 뒤로가기 */}
         <nav className="mb-[10px] md:mb-[25px]">
           <Link

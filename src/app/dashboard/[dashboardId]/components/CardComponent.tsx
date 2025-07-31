@@ -23,7 +23,7 @@ const CardComponent = ({
   return (
     <button
       type="button"
-      className="bg-taskify-neutral-0 border-taskify-neutral-300 hover:bg-taskify-neutral-200 my-4 flex w-full cursor-pointer flex-col gap-1 rounded-lg border-1 p-4 md:flex-row lg:flex-col"
+      className="bg-taskify-neutral-0 border-taskify-neutral-300 hover:bg-taskify-neutral-200 relative my-4 flex w-full cursor-pointer flex-col gap-1 rounded-lg border-1 p-4 md:flex-row md:gap-2 lg:flex-col"
       onClick={() =>
         openDialog({
           dialogComponent: (
@@ -38,46 +38,46 @@ const CardComponent = ({
       }
     >
       {card.imageUrl && (
-        <div className="relative h-[152px] w-[260px] md:h-[53px] md:w-[91px] lg:h-[160px] lg:w-[274px]">
+        <div className="relative m-auto h-[152px] w-[260px] shrink-0 lg:h-[160px] lg:w-[274px]">
           <Image
             src={card.imageUrl}
             alt="카드 이미지"
             fill
-            className="object-cover"
+            className="rounded-md object-cover"
           />
         </div>
       )}
-      <div className="flex w-full flex-col items-start gap-[6px]">
+      <div className="flex w-full min-w-0 flex-col items-start justify-between gap-[6px]">
         <span>{card.title}</span>
-        <div className="flex w-full flex-col gap-[6px] md:flex-row md:gap-4 lg:flex-col lg:gap-[6px]">
-          <div className="flex gap-1">
-            {card.tags && card.tags.map((tag) => <TagChip>{tag}</TagChip>)}
-          </div>
-          <div className="flex flex-1 items-center justify-between">
-            <div className="text-taskify-xs-medium text-taskify-neutral-500 flex flex-1 items-center gap-[6px]">
-              <Image
-                src={caleandar}
-                alt="caleandar"
-                className="h-[14px] w-[14px] md:h-[18px] md:w-[18px]"
-                width={14}
-                height={14}
-              />
-              <div>{card.dueDate}</div>
-            </div>
-            {card.assignee?.profileImageUrl ? (
-              <Image
-                src={card.assignee.profileImageUrl}
-                alt="작성자 프로필 이미지"
-                className="h-[22px] w-[22px] md:h-6 md:w-6"
-                width={22}
-                height={22}
-              />
-            ) : (
-              <div className="h-[22px] w-[22px] shrink-0 rounded-full bg-green-500 md:h-6 md:w-6" />
-            )}
-          </div>
+
+        <div className="flex flex-wrap gap-1">
+          {card.tags && card.tags.map((tag) => <TagChip>{tag}</TagChip>)}
         </div>
+
+        {card.dueDate && (
+          <div className="text-taskify-xs-medium text-taskify-neutral-500 flex flex-1 items-end gap-[6px]">
+            <Image
+              src={caleandar}
+              alt="caleandar"
+              className="h-[14px] w-[14px] md:h-[18px] md:w-[18px]"
+              width={14}
+              height={14}
+            />
+            <div>{card.dueDate}</div>
+          </div>
+        )}
       </div>
+      {card.assignee?.profileImageUrl ? (
+        <Image
+          src={card.assignee.profileImageUrl}
+          alt="작성자 프로필 이미지"
+          className="absolute right-4 bottom-4 h-[22px] w-[22px] md:h-6 md:w-6"
+          width={22}
+          height={22}
+        />
+      ) : (
+        <div className="bg-taskify-neutral-400 h-[22px] w-[22px] shrink-0 rounded-full md:h-6 md:w-6" />
+      )}
     </button>
   );
 };

@@ -3,10 +3,11 @@
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import addIcon from '@/../public/images/icon/addBox.svg';
 import { getDashboards } from '@/lib/api/dashboardService';
+import { useDashboardStore } from '@/stores/useDashboardStore';
 import { useDialogStore } from '@/stores/useDialogStore';
 import { Dashboard, DashboardResponse } from '@/types/Dashboard';
 
@@ -24,6 +25,7 @@ const Sidebar = () => {
   const itemsSize = 15;
 
   const { openDialog } = useDialogStore();
+  const { setDashboards } = useDashboardStore();
 
   const {
     data, // API 응답 데이터 (DashboardResponse 타입)
@@ -42,6 +44,10 @@ const Sidebar = () => {
     staleTime: 5 * 60 * 1000, // 5분 동안 fresh 상태 유지 (선택 사항)
     placeholderData: (prev) => prev, // 이전 데이터를 유지하며 새 데이터 로딩 (UX 개선)
   });
+
+  useEffect(() => {
+    if (data) setDashboards(data.dashboards);
+  }, [data]);
 
   if (isLoading) {
     return (

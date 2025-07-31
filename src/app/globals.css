@@ -757,3 +757,28 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  /* 스크롤바를 숨기는 클래스 */
+  .hide-scrollbar {
+    -ms-overflow-style: none; /* IE 및 Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge (WebKit) */
+    width: 0;
+    height: 0;
+  }
+
+  /* 스크롤바가 항상 보이게 하는 클래스 */
+  .show-scrollbar {
+    overflow: scroll; /* 항상 스크롤바를 보이게 함 */
+    -ms-overflow-style: scrollbar; /* IE 및 Edge */
+    scrollbar-width: auto; /* Firefox */
+  }
+  .show-scrollbar::-webkit-scrollbar {
+    display: block; /* Chrome, Safari, Edge (WebKit) */
+    /* 필요하다면 여기에 웹킷 스크롤바의 너비, 색상 등을 추가할 수 있습니다. */
+    /* 예시: width: 8px; background: #f1f1f1; */
+  }
+}
