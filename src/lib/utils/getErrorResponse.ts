@@ -18,3 +18,11 @@ export const getErrorStatus = (error: unknown): number | undefined => {
   }
   return undefined;
 };
+
+// 에러 코드
+export const getErrorCode = (error: unknown): unknown | undefined => {
+  if (isAxiosError(error)) {
+    return error.code;
+  }
+  return undefined;
+};

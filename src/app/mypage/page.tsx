@@ -12,6 +12,7 @@ export default function MyPage() {
   const router = useRouter();
 
   const { isPending, isError } = useMyInfo();
+
   const isSkeletonVisible = isPending || isError;
 
   return (

@@ -6,9 +6,9 @@ import { useDialogStore } from '@/stores/useDialogStore';
 import DetailCard from '@/types/DetailCard';
 import closeBtn from 'public/images/icon/closeBtn.svg';
 
-import { KebobMenu } from '../../KebobMenu';
-import ConfirmTaskCardDeletionDialog from '../ConfirmTaskCardDeletionDialog';
-import TodoEditDialog from '../TodoDialog/TodoEditDialog';
+import ConfirmTaskCardDeletionDialog from '../../components/common/dialog/ConfirmTaskCardDeletionDialog';
+import TodoEditDialog from '../../components/common/dialog/TodoDialog/TodoEditDialog';
+import { KebobMenu } from '../../components/common/KebobMenu';
 
 interface TaskCardDialogControlAreaProps
   extends HTMLAttributes<HTMLDivElement> {
