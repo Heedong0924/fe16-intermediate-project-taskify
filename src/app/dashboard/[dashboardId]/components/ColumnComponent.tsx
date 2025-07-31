@@ -11,6 +11,7 @@ import ColumnSettingsDialog from '@/components/common/dialog/ColumnSettingsDialo
 import TodoEditDialog from '@/components/common/dialog/TodoDialog/TodoEditDialog';
 import Button from '@/components/ui/Buttons';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import SkeletonParagraph from '@/components/ui/SkeletonParagraph';
 import { getCardList } from '@/lib/api/cardService';
 import { useDialogStore } from '@/stores/useDialogStore';
 import Column from '@/types/Column';
@@ -87,7 +88,13 @@ const ColumnComponent = ({
   }, [hasNextPage, fetchNextPage, isFetchingNextPage]);
 
   if (isLoading) {
-    return <div>카드를 불러오는 중입니다...</div>;
+    return (
+      <SkeletonParagraph
+        lines={3}
+        lineClassName="bg-taskify-neutral-300 w-full h-20 my-4"
+        isFadingOut
+      />
+    );
   }
 
   if (isError) {
@@ -108,9 +115,9 @@ const ColumnComponent = ({
   const totalCount = totalCountRes ?? 0;
 
   return (
-    <section className="shrink-0 border-r-1 px-5 xl:max-w-[354px]">
+    <section className="shrink-0 border-r-1 px-5 lg:max-w-[354px]">
       <div className="border-taskify-neutral-300 flex h-full shrink-0 flex-col border-t-1 pt-[22px]">
-        <div className="bg-taskify-neutral-100 xl:statick sticky top-15 z-2">
+        <div className="bg-taskify-neutral-100 lg:statick sticky top-15 z-2">
           <div className="flex shrink-0 items-center justify-between">
             <div className="flex items-center">
               <p className="bg-taskify-violet-primary h-2 w-2 shrink-0 rounded-full" />
@@ -126,12 +133,19 @@ const ColumnComponent = ({
                       src={arrowDropDown}
                       className="scale-y-[-1] transform"
                       alt="open the toggle"
+                      width={26}
+                      height={26}
                     />
                   </div>
                 ) : (
                   <div className="text-taskify-sm-medium text-taskify-neutral-500 flex cursor-pointer items-center">
                     OPEN
-                    <Image src={arrowDropDown} alt="close the toggle" />
+                    <Image
+                      src={arrowDropDown}
+                      alt="close the toggle"
+                      width={26}
+                      height={26}
+                    />
                   </div>
                 )}
               </button>
@@ -153,6 +167,8 @@ const ColumnComponent = ({
                   src={settingIcon}
                   alt="칼럼 수정 버튼"
                   className="lx:w-6 lx:h-6 h-5 w-5 md:h-[22px] md:w-[22px]"
+                  width={22}
+                  height={22}
                 />
               </button>
             </div>
