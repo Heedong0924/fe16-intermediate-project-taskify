@@ -290,7 +290,7 @@
 
   /*  아바타, 프로필 CSS */
   .profile-avatar {
-    @apply cursor-default border-2 border-solid border-white font-bold text-white;
+    @apply cursor-default font-bold text-white;
   }
 
   /* 칩 CSS */
