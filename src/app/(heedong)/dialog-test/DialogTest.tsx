@@ -6,8 +6,6 @@ import CreateColumnDialog from '@/components/common/dialog/CreateColumnDialog';
 import CreateDashboardDialog from '@/components/common/dialog/CreateDashboardDialog';
 import SendInvitationDialog from '@/components/common/dialog/SendInvitationDialog';
 import TaskCardDialog from '@/components/common/dialog/TaskCardDialog';
-import { MOCK_CARD_DATA } from '@/components/common/dialog/TodoDialog/Dummy';
-import TodoEditDialog from '@/components/common/dialog/TodoDialog/TodoEditDialog';
 import { Button } from '@/components/ui/Button';
 import { useDialogStore } from '@/stores/useDialogStore';
 
@@ -98,30 +96,7 @@ const DialogTest = () => {
       >
         글로벌 다이얼로그: 할 일 카드 테스트
       </Button>
-      <Button
-        onClick={() =>
-          openDialog({
-            dialogComponent: (
-              <TodoEditDialog
-                columnId={52469}
-                cardData={MOCK_CARD_DATA}
-                mode="edit"
-              />
-            ),
-          })
-        }
-      >
-        글로벌 다이얼로그: 편집모드 테스트
-      </Button>
-      <Button
-        onClick={() =>
-          openDialog({
-            dialogComponent: <TodoEditDialog columnId={52469} mode="create" />,
-          })
-        }
-      >
-        글로벌 다이얼로그: 생성모드 테스트
-      </Button>
+
       <Button
         onClick={() => {
           openDialog({
