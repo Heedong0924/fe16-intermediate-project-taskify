@@ -20,6 +20,8 @@ interface UserSelectorProps {
   assigneeUserId?: number;
   /** 선택이 바뀔 때 호출됩니다. id (number) 로 전달 */
   onChange: (assigneeUserId: number) => void;
+  /** 선택 변경 후 감지 */
+  onBlur?: () => void;
   /** 선택된 User 가 없을 때 표시할 placeholder */
   placeholder?: string;
   /** 추가적인 클래스 이름 */
@@ -29,6 +31,7 @@ interface UserSelectorProps {
 export const UserSelector = ({
   assigneeUserId,
   onChange,
+  onBlur,
   placeholder,
   className,
 }: UserSelectorProps) => {
@@ -37,6 +40,7 @@ export const UserSelector = ({
   // const users = mockMembers;
 
   const selected = users.find((user) => user.userId === assigneeUserId);
+  console.log('Selected User:', selected);
   // todo: 선택된 User 가 없을 때의 처리
   if (!selected && assigneeUserId) {
     console.warn(
@@ -57,7 +61,7 @@ export const UserSelector = ({
         value={selected?.userId.toString() ?? ''}
         onValueChange={(val) => onChange(parseInt(val, 10))}
       >
-        <SelectTrigger className="w-full">
+        <SelectTrigger className="w-full" onBlur={onBlur}>
           {/* 현재 선택값이 있으면 Chip, 없으면 placeholder */}
           {selected ? (
             <div className="flex items-center gap-3">

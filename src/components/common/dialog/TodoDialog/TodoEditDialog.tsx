@@ -226,13 +226,22 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
             name="assigneeUserId"
             control={control}
             defaultValue={defaultVals.assigneeUserId}
-            render={({ field }) => (
-              <UserSelector
-                assigneeUserId={field.value}
-                onChange={field.onChange}
-                placeholder="담당자를 선택하세요"
-                className="flex flex-col gap-2 md:gap-[10px]"
-              />
+            rules={{ required: '담당자는 필수 입력입니다.' }}
+            render={({ field, fieldState }) => (
+              <div className="flex flex-col gap-1">
+                <UserSelector
+                  assigneeUserId={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                  placeholder="담당자를 선택하세요"
+                  className="flex flex-col gap-2 md:gap-[10px]"
+                />
+                {fieldState.error && ( // ▶ 에러 메시지 표시
+                  <p className="text-xs text-red-600">
+                    {fieldState.error.message}
+                  </p>
+                )}
+              </div>
             )}
           />
         </div>
