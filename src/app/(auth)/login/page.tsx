@@ -27,7 +27,6 @@ type FormValues = {
 
 const LoginPage = () => {
   const {
-    reset,
     register,
     handleSubmit,
     formState: { errors, dirtyFields, isValid, isSubmitting },
@@ -40,9 +39,7 @@ const LoginPage = () => {
   const togglePassword = () => setShowPassword((prev) => !prev);
   const { login, isLoading } = useAuth();
   const onSubmit = (data: FormValues) => {
-    login(data, {
-      onSettled: () => reset(), // 로그인 후 폼 리셋
-    });
+    login(data);
   };
 
   return (

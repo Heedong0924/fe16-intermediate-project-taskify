@@ -136,7 +136,9 @@ export function TagChip({ size, children }: ContentChipProps) {
       };
   const { bgClass, textClass } = getTextBasedColorClasses(trimmed, 'chip');
   return (
-    <span className={`${bgClass} ${textClass} ${tagContainer} chip-tag`}>
+    <span
+      className={`${bgClass} ${textClass} ${tagContainer} chip-tag shrink-0`}
+    >
       {trimmed}
     </span>
   );
