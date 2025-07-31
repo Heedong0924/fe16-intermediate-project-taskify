@@ -62,7 +62,7 @@ const CardComponent = ({
                 className="h-[22px] w-[22px] md:h-6 md:w-6"
               />
             ) : (
-              <div className="h-[22px] w-[22px] shrink-0 rounded-full bg-green-500 md:h-6 md:w-6" />
+              <div className="bg-taskify-neutral-400 h-[22px] w-[22px] shrink-0 rounded-full md:h-6 md:w-6" />
             )}
           </div>
         </div>
