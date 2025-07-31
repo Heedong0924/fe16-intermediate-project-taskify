@@ -41,30 +41,6 @@ const UploadImageButton = ({
   }, [value]);
 
   /**
-   * URL에서 파일 확장자를 정규화
-   * @param url - 원본 URL (문자열 또는 객체)
-   * @returns 정규화된 URL
-   */
-  const normalizeImageUrl = (url: string | { imageUrl: string }): string => {
-    // url이 객체인 경우 imageUrl 속성 추출
-    const urlString = typeof url === 'string' ? url : url.imageUrl;
-
-    // .svg+xml을 .svg로 변경 (파일명 어디에 있든 상관없이)
-    return urlString.replace(/\.svg\+xml/g, '.svg');
-  };
-
-  /**
-   * 파일이 SVG인지 확인
-   * @param url - 이미지 URL
-   * @returns SVG 여부
-   */
-  const isSvgImage = (url: string): boolean => {
-    const urlString = normalizeImageUrl(url);
-    const lowerUrl = urlString.toLowerCase();
-    return lowerUrl.includes('.svg') || lowerUrl.includes('.svg+xml');
-  };
-
-  /**
    * 파일 변경 핸들러
    * @param e - 파일 입력 이벤트
    */
@@ -87,20 +63,35 @@ const UploadImageButton = ({
       return;
     }
 
+    if (
+      file.type === 'image/svg+xml' ||
+      file.name.toLowerCase().endsWith('.svg')
+    ) {
+      openDialog({
+        dialogComponent: (
+          <AlertDialog
+            description="SVG 파일은 업로드할 수 없습니다."
+            closeBtnText="확인"
+            isGoBack
+          />
+        ),
+        isNewOpen: true,
+      });
+      return;
+    }
+
     setIsLoading(true);
     setImageError(false);
 
     try {
       const uploadedUrl = await onUpload(file);
-      console.log('Uploaded URL:', uploadedUrl);
-      console.log('URL type:', typeof uploadedUrl);
 
-      const normalizedUrl = normalizeImageUrl(uploadedUrl);
-      console.log('Normalized URL:', normalizedUrl);
-      console.log('Is SVG:', isSvgImage(normalizedUrl));
+      // URL 추출 (객체인 경우 imageUrl 속성 사용)
+      const finalUrl =
+        typeof uploadedUrl === 'string' ? uploadedUrl : uploadedUrl.imageUrl;
 
-      setImageUrl(normalizedUrl);
-      onChange(normalizedUrl);
+      setImageUrl(finalUrl);
+      onChange(finalUrl);
     } catch (err) {
       openDialog({
         dialogComponent: (
@@ -128,7 +119,7 @@ const UploadImageButton = ({
     openDialog({
       dialogComponent: (
         <AlertDialog
-          description="이미지 로드에 실패했습니다."
+          description="이미지 미리보기를 실패했습니다."
           closeBtnText="확인"
           isGoBack
         />
@@ -176,26 +167,15 @@ const UploadImageButton = ({
       >
         {imageUrl && !imageError ? (
           <div className="relative h-full w-full">
-            {isSvgImage(imageUrl) ? (
-              // SVG는 img 태그 사용 (Next.js Image 컴포넌트가 SVG를 완전히 지원하지 않음)
-              <img
-                src={imageUrl}
-                alt="업로드된 이미지 미리보기"
-                className="h-full w-full object-contain"
-                onError={handleImageError}
-              />
-            ) : (
-              // 일반 이미지는 Next.js Image 컴포넌트 사용
-              <Image
-                src={imageUrl}
-                alt="업로드된 이미지 미리보기"
-                fill
-                className="object-cover"
-                onError={handleImageError}
-                sizes="(max-width: 768px) 56px, 76px"
-                unoptimized={process.env.NODE_ENV === 'development'} // 개발 환경에서는 최적화 비활성화
-              />
-            )}
+            <Image
+              src={imageUrl}
+              alt="업로드된 이미지 미리보기"
+              fill
+              className="object-cover"
+              onError={handleImageError}
+              sizes="(max-width: 768px) 56px, 76px"
+              unoptimized={process.env.NODE_ENV === 'development'}
+            />
 
             {/* 호버 오버레이 */}
             <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
