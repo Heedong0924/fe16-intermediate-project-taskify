@@ -77,8 +77,8 @@ const DashboardList = () => {
 
   return (
     <>
-      <div className="mx-auto w-full max-w-[1000px] px-3 lg:mt-1">
-        <div className="mt-4.5 grid grid-cols-1 gap-2.5 md:grid-cols-2 lg:grid-cols-5">
+      <div className="mx-auto w-full max-w-[1000px] lg:mt-1">
+        <div className="mt-4.5 grid grid-cols-1 justify-items-center gap-2.5 md:grid-cols-2 lg:grid-cols-5">
           <NewDashboardCard />
           {dashboards.map((dashboard) => (
             <DashboardListItem
@@ -89,7 +89,7 @@ const DashboardList = () => {
           ))}
         </div>
       </div>
-      <div className="absolute top-[495px] left-[220px] flex justify-center md:top-[395px] md:left-[630px] lg:top-[370px] lg:left-[1190px]">
+      <div className="absolute top-[645px] left-1/2 flex -translate-x-1/2 transform justify-center md:top-[408px] md:left-[660px] md:translate-x-0 md:transform-none lg:top-[370px] lg:left-[1190px]">
         <PaginationButton
           page={page}
           size={itemsPerPage}

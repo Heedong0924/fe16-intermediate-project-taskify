@@ -75,57 +75,59 @@ const InvitationList = ({ searchTerm }: InvitationProps) => {
       />
     ))
   ) : (
-    <table className="w-full text-left">
-      <thead className="bg-taskify-neutral-0 sticky top-0 z-10">
-        <tr>
-          <th
-            colSpan={4}
-            aria-hidden="true"
-            className="bg-taskify-neutral-0 sticky h-6 border-none"
-          >
-            &nbsp;
-          </th>
-        </tr>
-        <tr>
-          <th className="text-taskify-lg-regular text-taskify-neutral-400 md:pl-[50px] lg:pl-[76px]">
-            이름
-          </th>
-          <th className="text-taskify-lg-regular text-taskify-neutral-400">
-            초대자
-          </th>
-          <th className="text-taskify-lg-regular text-taskify-neutral-400 hidden lg:table-cell">
-            초대한 시점
-          </th>
-          <th className="text-taskify-lg-regular text-taskify-neutral-400 pl-[65px]">
-            수락 여부
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {allInvitations.map((invitation, i) => {
-          const isLast = i === allInvitations.length - 1;
-          return (
-            <InvitationListItem
-              key={invitation.id}
-              invitation={invitation}
-              searchTerm={searchTerm}
-              observerRef={isLast ? observerEl : null}
-            />
-          );
-        })}
-        <tr ref={observerEl}>
-          <td colSpan={4} aria-hidden="true">
-            <div style={{ height: '10px' }} />
-          </td>
-        </tr>
-
-        {isFetching && (
+    <div className="px-4">
+      <table className="w-full table-fixed text-left">
+        <thead className="bg-taskify-neutral-0 sticky top-0 z-10">
           <tr>
-            <td colSpan={4}>로딩 중...</td>
+            <th
+              colSpan={4}
+              aria-hidden="true"
+              className="bg-taskify-neutral-0 sticky h-6 border-none"
+            >
+              &nbsp;
+            </th>
           </tr>
-        )}
-      </tbody>
-    </table>
+          <tr>
+            <th className="text-taskify-lg-regular text-taskify-neutral-400 md:w-2/4 lg:w-3/6">
+              이름
+            </th>
+            <th className="text-taskify-lg-regular text-taskify-neutral-400 md:w-1/4 lg:w-1/6">
+              초대자
+            </th>
+            <th className="text-taskify-lg-regular text-taskify-neutral-400 hidden lg:table-cell lg:w-1/6">
+              초대한 시점
+            </th>
+            <th className="text-taskify-lg-regular text-taskify-neutral-400 md:w-1/4 lg:w-1/6">
+              수락 여부
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {allInvitations.map((invitation, i) => {
+            const isLast = i === allInvitations.length - 1;
+            return (
+              <InvitationListItem
+                key={invitation.id}
+                invitation={invitation}
+                searchTerm={searchTerm}
+                observerRef={isLast ? observerEl : null}
+              />
+            );
+          })}
+          <tr ref={observerEl}>
+            <td colSpan={4} aria-hidden="true">
+              <div style={{ height: '10px' }} />
+            </td>
+          </tr>
+
+          {isFetching && (
+            <tr>
+              <td colSpan={4}>로딩 중...</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

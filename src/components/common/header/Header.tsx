@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
 import MemberAvatars from '@/app/mydashboard/components/dashboard/MemberAvatars';
+import useIsMobile from '@/hooks/useIsMobile';
 import { getMyInfo } from '@/lib/api/auth';
 import { getDashboardMembers } from '@/lib/api/dashboardMemberService';
 import { getDashboardById } from '@/lib/api/dashboardService';
@@ -64,31 +65,6 @@ const Header = () => {
     }
   }, [userQuery.data]);
 
-  // 2 액세스 토큰
-
-  // const accessToken =
-  //   typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
-
-  // useQuery({
-  //   queryKey: ['my-info'],
-  //   queryFn: getMyInfo,
-  //   enabled: !!accessToken,
-  //   select: (data) => {
-  //     useAuthStore.getState().setUser(data);
-  //     return data;
-  //   },
-  // });
-
-  // 1 로그인 문제
-  // useQuery({
-  //   queryKey: ['my-info'],
-  //   queryFn: getMyInfo,
-  //   select: (data) => {
-  //     useAuthStore.getState().setUser(data);
-  //     return data;
-  //   },
-  // });
-
   useQuery<{ members: Member[] }>({
     queryKey: ['dashboard-members', dashboardId],
     queryFn: () => getDashboardMembers({ dashboardId }),
@@ -109,10 +85,11 @@ const Header = () => {
     },
   });
 
+  const isMobile = useIsMobile();
+
   return (
     <header className="border-b-taskify-neutral-300 bg-taskify-neutral-0 fixed z-10 flex h-[60px] w-full items-center justify-between border-[1px]">
-      {/* xl로 우선 지정 -> lg로 논의 후 조건 수정해야함. */}
-      <div className="flex h-full w-full items-center justify-between px-4 md:ml-[160px] md:px-7 xl:ml-[300px]">
+      <div className="flex h-full w-full items-center justify-between px-4 md:ml-[160px] md:px-7 lg:ml-[300px]">
         <div className="flex gap-2">
           {/* 모바일에서만 로고 보이기 */}
           <div className="md:hidden">
@@ -136,7 +113,7 @@ const Header = () => {
           {/* 관리와 초대하기 버튼은 대시보드 생성자만 볼 수 있음 */}
           {config.showManageButton && isOwner && <ManageButton />}
           {config.showInviteButton && isOwner && <InviteButton />}
-          {config.showMemberAvatars && (
+          {config.showMemberAvatars && !isMobile && (
             <MemberAvatars members={members} type="header" />
           )}
           {/* 구분선 */}

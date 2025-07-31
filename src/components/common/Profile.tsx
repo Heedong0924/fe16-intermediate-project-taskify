@@ -48,7 +48,7 @@ export function AvatarProfile({
       };
   const { bgClass } = getTextBasedColorClasses(userName, 'profile');
   return (
-    <Avatar className={`${container} profile-avatar`}>
+    <Avatar className={`${container} profile-avatar cursor-pointer`}>
       <AvatarImage src={profileImg ?? undefined} />
       <AvatarFallback className={`${bgClass} ${textSize}`}>
         {userName.toUpperCase().slice(0, 1)}

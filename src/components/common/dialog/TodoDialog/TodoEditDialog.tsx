@@ -1,6 +1,6 @@
 'use client';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { format } from 'date-fns';
 import React, { useCallback, useMemo, useEffect } from 'react';
@@ -47,6 +47,7 @@ interface TodoEditDialogProps {
 const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
   const { openDialog, goBack } = useDialogStore();
   const { dashboardId } = useDashboardStore();
+  const queryClient = useQueryClient();
 
   // 폼 데이터를 관리
   const defaultVals = useMemo<TodoFormData>(
@@ -95,6 +96,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
     mutationFn: (data) => createCard(data),
     onSuccess: (data) => {
       console.log('카드 생성 성공:', data);
+      queryClient.invalidateQueries({ queryKey: ['cards'] });
       goBack();
     },
     onError: (error) => {
@@ -123,6 +125,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
     },
     onSuccess: (data) => {
       console.log('카드 수정 성공:', data);
+      queryClient.invalidateQueries({ queryKey: ['cards'] });
     },
     onError: (error) => {
       reset(defaultVals);
