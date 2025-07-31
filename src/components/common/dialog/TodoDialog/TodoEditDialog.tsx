@@ -66,7 +66,6 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
     [cardData, columnId],
   );
   const {
-    reset,
     control,
     setFocus,
     register,
@@ -128,8 +127,18 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
       queryClient.invalidateQueries({ queryKey: ['cards'] });
     },
     onError: (error) => {
-      reset(defaultVals);
       console.error('카드 수정 실패:', error);
+      const axiosError = error as AxiosError<ServerErrorResponse>;
+      openDialog({
+        isNewOpen: true,
+        dialogComponent: (
+          <AlertDialog
+            description={axiosError.response?.data.message || '알 수 없는 에러'}
+            closeBtnText="확인"
+            isGoBack
+          />
+        ),
+      });
     },
   });
 
