@@ -3,7 +3,7 @@ import SkeletonParagraph from '@/components/ui/SkeletonParagraph';
 
 const ColumnComponentSkeleton = () => {
   return (
-    <div className="mt-[59px] flex h-full max-w-full grow flex-col lg:flex-row">
+    <div className="mt-[119px] flex h-full max-w-full grow flex-col md:mt-[59px] lg:flex-row">
       {[...Array(3)].map((_) => (
         <section className="shrink-0 border-r-1 px-5 lg:w-[354px]">
           <div className="flex h-full shrink-0 flex-col pt-[22px]">

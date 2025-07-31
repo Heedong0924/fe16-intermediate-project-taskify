@@ -14,7 +14,7 @@ const MobailSizeHeader = () => {
   const { dashboards } = useDashboardStore();
 
   return (
-    <div className="hide-scrollbar bg-taskify-neutral-0 fixed top-15 left-0 z-10 flex h-[60px] w-full items-center gap-1 overflow-x-auto border-b-1 px-3 md:hidden">
+    <div className="hide-scrollbar bg-taskify-neutral-0 fixed top-15 left-0 z-9 flex h-[60px] w-full items-center gap-1 overflow-x-auto border-b-1 px-3 md:hidden">
       <button
         type="button"
         onClick={() =>
@@ -26,7 +26,7 @@ const MobailSizeHeader = () => {
       >
         <Image src={addBox} alt="add dashboard" width={24} height={24} />
       </button>
-      <div className="flex items-center gap-2 pr-5">
+      <div className="flex min-w-0 items-center gap-2 pr-5">
         {dashboards &&
           dashboards.map((dashboard) => (
             <div
