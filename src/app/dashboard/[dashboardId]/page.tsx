@@ -2,23 +2,27 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { AddCountChip } from '@/components/common/Chips';
 import CreateColumnDialog from '@/components/common/dialog/CreateColumnDialog';
 import Button from '@/components/ui/Buttons';
 import { getColumn } from '@/lib/api/columnService';
 import { getDashboardById } from '@/lib/api/dashboardService';
+import { useColumnStore } from '@/stores/useColumnStore';
 import { useDashboardStore } from '@/stores/useDashboardStore';
 import { useDialogStore } from '@/stores/useDialogStore';
 import { ColumnResponse } from '@/types/Column';
 
 import ColumnComponent from './components/ColumnComponent';
+import ColumnComponentSkeleton from './components/ColumnComponentSkeleton';
 
 // 헤더 내 상세페이지 상태 연결(타이틀, 아이디)
 const DashboardIdPage = () => {
+  const [ShowAddColumnButton, setShowAddColumnButton] = useState<boolean>();
   const Params = useParams();
   const { openDialog } = useDialogStore();
+  const { setColumns } = useColumnStore();
 
   const rawDashboardId = Params.dashboardId as string;
 
@@ -59,18 +63,33 @@ const DashboardIdPage = () => {
     placeholderData: (prev) => prev,
   });
 
+  const columns = data?.data;
+
+  useEffect(() => {
+    if (columns) setColumns(columns);
+  }, [columns]);
+
+  useEffect(() => {
+    if (!isLoading) {
+      const timer = setTimeout(() => {
+        setShowAddColumnButton(true);
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+    return undefined;
+  }, [isLoading]);
+
   if (isLoading) {
-    return <div>로딩중...</div>;
+    return <ColumnComponentSkeleton />;
   }
 
   if (isError) {
     return <div>칼럼 불러오기 실패: {error?.message || '알 수 없는 에러'}</div>;
   }
 
-  const columns = data?.data;
-
   return (
-    <div className="flex h-full max-w-full grow flex-col pt-[119px] md:pt-[59px] xl:flex-row">
+    <div className="flex h-full max-w-full grow flex-col pt-[119px] md:pt-[59px] lg:flex-row">
       {columns?.map((column) =>
         column ? (
           <ColumnComponent
@@ -80,19 +99,30 @@ const DashboardIdPage = () => {
           />
         ) : null,
       )}
-      <div className="h-24 shrink-0 xl:hidden" />
-      <Button
-        onClick={() =>
-          openDialog({
-            dialogComponent: <CreateColumnDialog dashboardId={dashboardId} />,
-          })
-        }
-        color="violet-white"
-        className="btn-addCol fixed right-5 bottom-0 left-5 z-5 my-5 flex shrink-0 md:ml-[160px] xl:static xl:mx-5 xl:w-[534px]"
-      >
-        <span className="mr-3">새로운 컬럼 시작하기</span>
-        <AddCountChip size="sm" />
-      </Button>
+
+      {columns?.length === 0 && (
+        <div className="text-taskify-gray-400 flex h-full w-[354px] shrink-0 items-center justify-center p-4 text-center">
+          아직 컬럼이 없습니다.
+          <br />
+          새로운 컬럼을 추가해보세요!
+        </div>
+      )}
+      <div className="h-24 shrink-0 lg:hidden" />
+
+      {ShowAddColumnButton && (
+        <Button
+          onClick={() =>
+            openDialog({
+              dialogComponent: <CreateColumnDialog dashboardId={dashboardId} />,
+            })
+          }
+          color="violet-white"
+          className="btn-addCol fixed right-5 bottom-0 left-5 z-5 my-5 flex shrink-0 md:ml-[160px] lg:static lg:mx-5 lg:w-[534px]"
+        >
+          <span className="mr-3">새로운 컬럼 시작하기</span>
+          <AddCountChip size="sm" />
+        </Button>
+      )}
     </div>
   );
 };

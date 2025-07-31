@@ -23,7 +23,7 @@ const CardComponent = ({
   return (
     <button
       type="button"
-      className="bg-taskify-neutral-0 border-taskify-neutral-300 hover:bg-taskify-neutral-200 my-4 flex w-full cursor-pointer flex-col gap-1 rounded-lg border-1 p-4 md:flex-row xl:flex-col"
+      className="bg-taskify-neutral-0 border-taskify-neutral-300 hover:bg-taskify-neutral-200 my-4 flex w-full cursor-pointer flex-col gap-1 rounded-lg border-1 p-4 md:flex-row lg:flex-col"
       onClick={() =>
         openDialog({
           dialogComponent: (
@@ -38,11 +38,18 @@ const CardComponent = ({
       }
     >
       {card.imageUrl && (
-        <Image src={card.imageUrl} alt="카드 이미지" className="xl:w-40" />
+        <div className="relative h-[152px] w-[260px] md:h-[53px] md:w-[91px] lg:h-[160px] lg:w-[274px]">
+          <Image
+            src={card.imageUrl}
+            alt="카드 이미지"
+            fill
+            className="object-cover"
+          />
+        </div>
       )}
       <div className="flex w-full flex-col items-start gap-[6px]">
         <span>{card.title}</span>
-        <div className="flex w-full flex-col gap-[6px] md:flex-row md:gap-4 xl:flex-col xl:gap-[6px]">
+        <div className="flex w-full flex-col gap-[6px] md:flex-row md:gap-4 lg:flex-col lg:gap-[6px]">
           <div className="flex gap-1">
             {card.tags && card.tags.map((tag) => <TagChip>{tag}</TagChip>)}
           </div>
@@ -52,6 +59,8 @@ const CardComponent = ({
                 src={caleandar}
                 alt="caleandar"
                 className="h-[14px] w-[14px] md:h-[18px] md:w-[18px]"
+                width={14}
+                height={14}
               />
               <div>{card.dueDate}</div>
             </div>
@@ -60,6 +69,8 @@ const CardComponent = ({
                 src={card.assignee.profileImageUrl}
                 alt="작성자 프로필 이미지"
                 className="h-[22px] w-[22px] md:h-6 md:w-6"
+                width={22}
+                height={22}
               />
             ) : (
               <div className="bg-taskify-neutral-400 h-[22px] w-[22px] shrink-0 rounded-full md:h-6 md:w-6" />

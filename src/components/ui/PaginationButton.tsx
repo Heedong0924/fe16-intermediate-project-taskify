@@ -36,7 +36,7 @@ const PaginationButton = ({
   };
 
   const buttonBaseStyle =
-    'text-taskify-neutral-700 disabled:cursor-default cursor-pointer btn-bass-white-black bg-taskify-neutral-0 disabled:bg-taskify-neutral-0 flex h-9 w-9 items-center justify-center border-1 border-gray-400 disabled:text-gray-400 md:h-10 md:w-10';
+    'text-taskify-neutral-700 disabled:cursor-default cursor-pointer btn-bass-white-black bg-taskify-neutral-0 disabled:bg-taskify-neutral-0 flex h-9 w-9 items-center justify-center border-1 border-gray-300 disabled:text-gray-400 md:h-10 md:w-10';
 
   const baseWarraperStyle = `flex flex-row items-center text-taskify-neutral-500 gap-3 md:gap-4 ${className || ''}`;
 

@@ -16,6 +16,8 @@ import PaginationButton from '../ui/PaginationButton';
 import { LogoMd } from '../ui/SVGLogo';
 import CreateDashboardDialog from './dialog/CreateDashboardDialog';
 import { ScrollArea, ScrollBar } from '../ui/scroll-area';
+import { Skeleton } from '../ui/skeleton';
+import SkeletonParagraph from '../ui/SkeletonParagraph';
 
 const Sidebar = () => {
   const [page, setPage] = useState<number>(1);
@@ -49,9 +51,22 @@ const Sidebar = () => {
 
   if (isLoading) {
     return (
-      <div className="p-4 text-center text-lg font-medium">
-        대시보드를 불러오는 중...
-      </div>
+      <aside className="text-taskify-neutral-500 bg-taskify-neutral-0 fixed z-40 hidden h-screen w-[160px] animate-pulse rounded-md shadow-md transition-all duration-300 md:block lg:w-[300px]">
+        <div className="px-2 py-5">
+          <Skeleton className="h-[34px] w-[110px] rounded-xl" />
+
+          <div className="mt-10">
+            <Skeleton className="mb-1 h-10 w-full rounded-xl" />
+
+            <SkeletonParagraph
+              paragraphClassName="gap-2"
+              lineClassName="h-[36px] w-full rounded-xl"
+              isFadingOut
+              lines={10}
+            />
+          </div>
+        </div>
+      </aside>
     );
   }
 
@@ -65,33 +80,38 @@ const Sidebar = () => {
   const totalCount: number = data?.totalCount || 0;
 
   return (
-    <aside className="text-taskify-neutral-500 bg-taskify-neutral-0 left-0ntop-0 fixed z-40 hidden h-screen w-[160px] shadow-md transition-all duration-300 md:block xl:w-[300px]">
+    <aside className="text-taskify-neutral-500 bg-taskify-neutral-0 left-0ntop-0 fixed z-40 hidden h-screen w-[160px] shadow-md transition-all duration-300 md:block lg:w-[300px]">
       <div className="px-2 py-5">
         <Link href="/">
-          <LogoMd />
+          <LogoMd width={110} height={34} />
         </Link>
-        <div className="mt-14">
+        <div className="mt-10">
           <button
             onClick={() =>
               openDialog({
                 dialogComponent: <CreateDashboardDialog />,
               })
             }
-            className="hover:bg-taskify-neutral-200 mb-[15px] flex h-5 w-full cursor-pointer items-center justify-between"
+            className="hover:bg-taskify-violet-light mb-1 flex h-10 w-full cursor-pointer items-center justify-between rounded-sm"
             type="button"
           >
-            <div className="text-taskify-md-semibold my-4 flex justify-between">
+            <div className="text-taskify-md-semibold flex justify-between">
               Dash Boards
             </div>
-            <Image src={addIcon} alt="add to dashboard" />
+            <Image
+              src={addIcon}
+              alt="add to dashboard"
+              width={20}
+              height={20}
+            />
           </button>
           <ScrollArea className="h-screen pb-40">
-            <div className="w-[144px] transition-all duration-300 xl:w-[284px]">
+            <div className="w-[144px] transition-all duration-300 lg:w-[284px]">
               {dashboards.map((dashboard) => (
                 <DashboardCard
                   key={dashboard.id}
                   dashboard={dashboard}
-                  className="hover:bg-taskify-neutral-200 h-[42px]"
+                  className="hover:bg-taskify-violet-light h-[42px] rounded-sm"
                 />
               ))}
             </div>
@@ -101,7 +121,7 @@ const Sidebar = () => {
                 size={itemsSize}
                 totalCount={totalCount}
                 onPageChange={setPage}
-                className="mt-6 flex justify-end xl:mr-2"
+                className="mt-6 flex justify-end lg:mr-2"
               />
             )}
             <ScrollBar className="hidden" />
