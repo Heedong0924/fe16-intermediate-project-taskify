@@ -89,10 +89,10 @@ const UploadImageButton = ({
       )}
       <input
         type="file"
-        accept="image/*"
         className="hidden"
         ref={fileInputRef}
         onChange={handleFileChange}
+        accept="image/jpeg, image/png, image/gif"
       />
     </div>
   );

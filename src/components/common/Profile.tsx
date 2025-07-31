@@ -7,6 +7,7 @@ type AvatarProfileProps = {
   profileImg?: string | null;
   userName: string;
   size?: 'sm' | 'md' | 'lg';
+  isBorder?: boolean;
 } & HTMLAttributes<HTMLDivElement>;
 
 type UserProfileProps = AvatarProfileProps;
@@ -39,6 +40,7 @@ export function AvatarProfile({
   profileImg = null,
   userName,
   size,
+  isBorder = true,
 }: AvatarProfileProps) {
   const { container, textSize } = size
     ? ChipSizeMap[size]
@@ -47,8 +49,13 @@ export function AvatarProfile({
         textSize: 'text-12px md:text-base',
       };
   const { bgClass } = getTextBasedColorClasses(userName, 'profile');
+
+  const borderStyle = isBorder ? 'border-2 border-solid border-white' : '';
+
   return (
-    <Avatar className={`${container} profile-avatar cursor-pointer`}>
+    <Avatar
+      className={`${container} ${borderStyle} profile-avatar cursor-pointer`}
+    >
       <AvatarImage src={profileImg ?? undefined} />
       <AvatarFallback className={`${bgClass} ${textSize}`}>
         {userName.toUpperCase().slice(0, 1)}
@@ -72,10 +79,16 @@ export function UserProfile({
   profileImg = null,
   userName = '',
   size,
+  isBorder = true,
 }: UserProfileProps) {
   return (
     <div className="flex cursor-pointer items-center gap-3 text-base">
-      <AvatarProfile profileImg={profileImg} userName={userName} size={size} />
+      <AvatarProfile
+        profileImg={profileImg}
+        userName={userName}
+        size={size}
+        isBorder={isBorder}
+      />
       {size !== 'md' && <span className="font-medium">{userName}</span>}
     </div>
   );

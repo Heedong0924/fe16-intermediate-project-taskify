@@ -55,13 +55,17 @@ export default function DashboardInvitations({
           <SkeletonLine className="h-10 w-[135px]" isFadingOut={isFadingOut} />
         ) : (
           <>
-            <PaginationButton
-              className="ml-auto"
-              page={page}
-              size={size}
-              totalCount={data?.totalCount}
-              onPageChange={setPage}
-            />
+            {data?.invitations.length ? (
+              <PaginationButton
+                className="ml-auto"
+                page={page}
+                size={size}
+                totalCount={data?.totalCount}
+                onPageChange={setPage}
+              />
+            ) : (
+              ''
+            )}
             <Button
               color="violet-white"
               className="col-start-2 row-start-2 h-[26px] gap-2 justify-self-end !rounded-[4px] px-3 text-[12px] md:col-start-3 md:row-start-1 md:h-[32px] md:px-4 md:!text-[14px]"
@@ -79,7 +83,7 @@ export default function DashboardInvitations({
                 height={16}
                 width={16}
               />
-              <span>초대하기</span>
+              <span className="h-36px">초대하기</span>
             </Button>
             <h2 className="col-start-1 row-start-2 text-base text-[var(--gray-D9D9D9)] md:text-[16px]">
               이메일
