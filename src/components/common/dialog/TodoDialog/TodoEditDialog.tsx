@@ -99,7 +99,6 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
       goBack();
     },
     onError: (error) => {
-      console.error('카드 생성 실패:', error);
       const axiosError = error as AxiosError<ServerErrorResponse>;
       openDialog({
         isNewOpen: true,
@@ -125,9 +124,9 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
     onSuccess: (data) => {
       console.log('카드 수정 성공:', data);
       queryClient.invalidateQueries({ queryKey: ['cards'] });
+      goBack();
     },
     onError: (error) => {
-      console.error('카드 수정 실패:', error);
       const axiosError = error as AxiosError<ServerErrorResponse>;
       openDialog({
         isNewOpen: true,
@@ -168,14 +167,14 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
       delete payload.imageUrl;
     }
 
+    console.log('Submit data:', payload);
     if (mode === 'create') {
       // 생성 모드에서 새로운 할 일 생성
-      console.log('Create Submit data:', payload);
       createCardMutation(payload);
     } else {
       // 수정 모드에서 기존 할 일 수정
       updateCardMutation({
-        cardId: cardData?.id || 0, // cardData가 없을 경우 0으로 설정
+        cardId: cardData!.id,
         data: payload,
       });
     }
@@ -325,6 +324,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
                 onChange={field.onChange}
                 placeholder="태그를 입력하고 ENTER을 눌러주세요"
                 maxTags={7}
+                maxTagLength={10}
                 size="sm"
               />
             )}

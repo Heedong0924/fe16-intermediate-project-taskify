@@ -15,6 +15,8 @@ interface TagInputProps {
   placeholder?: string;
   /** 최대 태그 개수 */
   maxTags?: number;
+  /** 태그당 최대 글자수 */
+  maxTagLength?: number;
   /** 컨테이너 클래스명 */
   className?: string;
 }
@@ -28,6 +30,7 @@ interface TagInputProps {
  * @param size - TagChip 크기 (기본값: 'sm')
  * @param placeholder - 입력 필드 placeholder
  * @param maxTags - 최대 태그 개수
+ * @param maxTagLength - 태그당 최대 글자수 (기본값: 10)
  * @param className - 추가 CSS 클래스
  */
 export function TagInput({
@@ -36,6 +39,7 @@ export function TagInput({
   size = 'sm',
   placeholder = '태그를 입력하고 Enter를 눌러주세요',
   maxTags,
+  maxTagLength = 10,
   className = '',
 }: TagInputProps) {
   const [inputValue, setInputValue] = useState('');
@@ -51,6 +55,10 @@ export function TagInput({
 
     // 빈 문자열이거나 이미 존재하는 태그인 경우 추가하지 않음
     if (!trimmedTag || currentTags.includes(trimmedTag)) {
+      return;
+    }
+    // 태그 길이 제한
+    if (maxTagLength && trimmedTag.length > maxTagLength) {
       return;
     }
 
@@ -95,7 +103,12 @@ export function TagInput({
    * 입력값 변경 핸들러
    */
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+    let { value } = e.target;
+    // 입력 중에도 글자 수 제한 적용
+    if (maxTagLength) {
+      value = value.slice(0, maxTagLength);
+    }
+    setInputValue(value);
   };
 
   /**

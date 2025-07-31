@@ -46,7 +46,7 @@ export function ColumnSelector({
     <div className={className}>
       <label
         htmlFor="column-selector"
-        className="mb-1 block text-sm font-medium text-gray-700"
+        className="block text-sm font-medium text-gray-700"
       >
         상태
       </label>
