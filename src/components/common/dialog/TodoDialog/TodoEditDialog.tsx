@@ -124,6 +124,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
     onSuccess: (data) => {
       console.log('카드 수정 성공:', data);
       queryClient.invalidateQueries({ queryKey: ['cards'] });
+      queryClient.invalidateQueries({ queryKey: ['detailCard', data.id] });
       goBack();
     },
     onError: (error) => {

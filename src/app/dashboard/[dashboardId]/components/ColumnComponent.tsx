@@ -189,7 +189,7 @@ const ColumnComponent = ({
         </div>
 
         <ScrollArea
-          className={`max-h-full ${isOpen ? 'max-h-full opacity-100' : 'max-h-0'} w-full grow flex-col overflow-auto transition-all duration-300 ease-in-out`}
+          className={`${isOpen ? 'max-h-full opacity-100' : 'max-h-0'} transition-height w-full grow flex-col overflow-auto duration-300 ease-in-out`}
         >
           {cards?.map((card) => (
             <CardComponent
