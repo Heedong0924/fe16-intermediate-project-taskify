@@ -72,7 +72,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
     handleSubmit,
     formState: { errors, dirtyFields, isSubmitting, isValid },
   } = useForm<TodoFormData>({
-    mode: 'onBlur',
+    mode: 'onTouched',
     reValidateMode: 'onBlur',
     defaultValues: defaultVals,
   });
