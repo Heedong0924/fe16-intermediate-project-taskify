@@ -45,7 +45,7 @@ const DashboardIdPage = () => {
       setDashboardId(dashboardId);
       fetchDashboardTitle();
     }
-  }, [dashboardId]);
+  }, [dashboardId, setDashboardId, setDashboardTitle]);
 
   // 메타데이터 동적 페이지 타이틀 설정
 
@@ -67,7 +67,7 @@ const DashboardIdPage = () => {
 
   useEffect(() => {
     if (columnsData) setColumns(columnsData);
-  }, [columnsData]);
+  }, [columnsData, setColumns]);
 
   useEffect(() => {
     if (!isLoading) {

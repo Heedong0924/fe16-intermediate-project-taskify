@@ -47,7 +47,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     if (data) setDashboards(data.dashboards);
-  }, [data]);
+  }, [data, setDashboards]);
 
   if (isLoading) {
     return (
