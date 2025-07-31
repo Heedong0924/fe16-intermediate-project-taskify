@@ -44,7 +44,7 @@ export function AvatarProfile({
     ? ChipSizeMap[size]
     : {
         container: 'size-[34px] transition-all md:size-[38px]',
-        textSize: 'text-base',
+        textSize: 'text-12px md:text-base',
       };
   const { bgClass } = getTextBasedColorClasses(userName, 'profile');
   return (
