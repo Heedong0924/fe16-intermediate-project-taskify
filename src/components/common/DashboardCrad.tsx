@@ -33,7 +33,12 @@ const DashboardCard = ({
             {dashboard.title}
           </span>
           {dashboard.createdByMe && (
-            <Image src={crownIcon} alt="crown icon - createByMe" />
+            <Image
+              src={crownIcon}
+              alt="crown icon - createByMe"
+              width={18}
+              height={26}
+            />
           )}
         </div>
       </div>

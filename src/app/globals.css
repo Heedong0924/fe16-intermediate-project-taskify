@@ -265,15 +265,15 @@
   }
   .btn-db {
     /**버튼 2개짜리 (e.x.수락,거절 같이 짝으로 있는 버튼)*/
-    @apply text-taskify-xs-medium md:text-taskify-md-medium h-8 w-[109px] md:w-[72px] xl:w-[84px];
+    @apply text-taskify-xs-medium md:text-taskify-md-medium h-8 w-[109px] md:w-[72px] lg:w-[84px];
   }
   .btn-addCol {
     /**칼럼 추가 버튼*/
-    @apply text-taskify-lg-bold md:text-taskify-2lg-bold h-[66px] xl:w-[534px];
+    @apply text-taskify-lg-bold md:text-taskify-2lg-bold h-[66px] lg:w-[534px];
   }
   .btn-addDash {
     /**대시보드 추가 버튼*/
-    @apply text-taskify-md-semibold md:text-taskify-lg-semibold h-[58px] w-[260px] md:h-[68px] md:w-[247px] xl:h-[70px] xl:w-[332px];
+    @apply text-taskify-md-semibold md:text-taskify-lg-semibold h-[58px] w-[260px] md:h-[68px] md:w-[247px] lg:h-[70px] lg:w-[332px];
   }
   .btn-removeDash {
     /**대시보드 삭제 버튼*/
@@ -281,11 +281,11 @@
   }
   .btn-dash {
     /**대시보드 리스트?*/
-    @apply text-taskify-md-semibold md:text-taskify-lg-semibold h-[58px] w-[260px] md:h-[68px] md:w-[247px] xl:h-[70px] xl:w-[332px];
+    @apply text-taskify-md-semibold md:text-taskify-lg-semibold h-[58px] w-[260px] md:h-[68px] md:w-[247px] lg:h-[70px] lg:w-[332px];
   }
   .btn-addTodo {
     /**투두 추가 버튼*/
-    @apply h-8 w-full md:h-10 xl:w-[314px];
+    @apply h-8 w-full md:h-10 lg:w-[314px];
   }
 
   /*  아바타, 프로필 CSS */
