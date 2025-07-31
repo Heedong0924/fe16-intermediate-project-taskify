@@ -79,7 +79,7 @@ export const useAuth = () => {
       setToken(data.accessToken);
       setUser(data.user);
 
-      router.push('/');
+      router.replace('/mydashboard');
     },
     onError: (err) => {
       errorDialog('로그인에 실패했습니다.', err);

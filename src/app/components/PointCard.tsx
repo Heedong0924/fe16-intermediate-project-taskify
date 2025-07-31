@@ -2,11 +2,14 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import { HTMLAttributes, ReactNode } from 'react';
 
+import { AOSProps } from '@/types/AOSProps';
+
 interface PointCardProps extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
   pointNum: number;
   imageUrl?: string;
   imagePosition: 'bottom-right' | 'bottom';
+  aos?: AOSProps;
 }
 
 const PointCard = ({
@@ -15,6 +18,7 @@ const PointCard = ({
   pointNum,
   imageUrl = '',
   imagePosition,
+  aos,
 }: PointCardProps) => {
   let imageSizes;
   if (imagePosition === 'bottom-right') {
@@ -37,6 +41,14 @@ const PointCard = ({
         'bg-taskify-neutral-800 flex flex-col items-center rounded-sm xl:grid xl:grid-cols-2 xl:pt-21',
         className,
       )}
+      data-aos={aos?.['data-aos']}
+      data-aos-offset={aos?.['data-aos-offset']}
+      data-aos-delay={aos?.['data-aos-delay']}
+      data-aos-duration={aos?.['data-aos-duration']}
+      data-aos-easing={aos?.['data-aos-easing']}
+      data-aos-mirror={aos?.['data-aos-mirror']}
+      data-aos-once={aos?.['data-aos-once']}
+      data-aos-anchor-placement={aos?.['data-aos-anchor-placement']}
     >
       <div
         className={clsx(
