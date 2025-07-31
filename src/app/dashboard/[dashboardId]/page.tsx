@@ -22,7 +22,7 @@ const DashboardIdPage = () => {
   const [ShowAddColumnButton, setShowAddColumnButton] = useState<boolean>();
   const Params = useParams();
   const { openDialog } = useDialogStore();
-  const { setColumns } = useColumnStore();
+  const { setColumns, columns } = useColumnStore();
 
   const rawDashboardId = Params.dashboardId as string;
 
@@ -63,11 +63,11 @@ const DashboardIdPage = () => {
     placeholderData: (prev) => prev,
   });
 
-  const columns = data?.data;
+  const columnsData = data?.data;
 
   useEffect(() => {
-    if (columns) setColumns(columns);
-  }, [columns]);
+    if (columnsData) setColumns(columnsData);
+  }, [columnsData]);
 
   useEffect(() => {
     if (!isLoading) {
@@ -88,9 +88,12 @@ const DashboardIdPage = () => {
     return <div>칼럼 불러오기 실패: {error?.message || '알 수 없는 에러'}</div>;
   }
 
+  const currentColumnCount = columns?.length || 0;
+  const isDisabled = currentColumnCount >= 10;
+
   return (
     <div className="flex h-full max-w-full grow flex-col pt-[119px] md:pt-[59px] lg:flex-row">
-      {columns?.map((column) =>
+      {columnsData?.map((column) =>
         column ? (
           <ColumnComponent
             dashboardId={dashboardId}
@@ -100,7 +103,7 @@ const DashboardIdPage = () => {
         ) : null,
       )}
 
-      {columns?.length === 0 && (
+      {columnsData?.length === 0 && (
         <div className="text-taskify-gray-400 flex h-full w-[354px] shrink-0 items-center justify-center p-4 text-center">
           아직 컬럼이 없습니다.
           <br />
@@ -118,9 +121,16 @@ const DashboardIdPage = () => {
           }
           color="violet-white"
           className="btn-addCol fixed right-5 bottom-0 left-5 z-5 my-5 flex shrink-0 md:ml-[160px] lg:static lg:mx-5 lg:w-[534px]"
+          disabled={isDisabled}
         >
-          <span className="mr-3">새로운 컬럼 시작하기</span>
-          <AddCountChip size="sm" />
+          {isDisabled ? (
+            '컬럼의 개수는 10개를 초과할 수 없습니다.'
+          ) : (
+            <>
+              <span className="mr-3">새로운 컬럼 시작하기</span>
+              <AddCountChip size="sm" />
+            </>
+          )}
         </Button>
       )}
     </div>
