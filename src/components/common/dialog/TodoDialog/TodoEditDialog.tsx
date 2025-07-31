@@ -3,7 +3,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { format } from 'date-fns';
-import React, { useCallback, useMemo, useEffect } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
 
@@ -66,14 +66,13 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
     [cardData, columnId],
   );
   const {
-    reset,
     control,
     setFocus,
     register,
     handleSubmit,
     formState: { errors, dirtyFields, isSubmitting, isValid },
   } = useForm<TodoFormData>({
-    mode: 'onBlur',
+    mode: 'onTouched',
     reValidateMode: 'onBlur',
     defaultValues: defaultVals,
   });
@@ -100,7 +99,6 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
       goBack();
     },
     onError: (error) => {
-      console.error('카드 생성 실패:', error);
       const axiosError = error as AxiosError<ServerErrorResponse>;
       openDialog({
         isNewOpen: true,
@@ -126,10 +124,20 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
     onSuccess: (data) => {
       console.log('카드 수정 성공:', data);
       queryClient.invalidateQueries({ queryKey: ['cards'] });
+      goBack();
     },
     onError: (error) => {
-      reset(defaultVals);
-      console.error('카드 수정 실패:', error);
+      const axiosError = error as AxiosError<ServerErrorResponse>;
+      openDialog({
+        isNewOpen: true,
+        dialogComponent: (
+          <AlertDialog
+            description={axiosError.response?.data.message || '알 수 없는 에러'}
+            closeBtnText="확인"
+            isGoBack
+          />
+        ),
+      });
     },
   });
 
@@ -159,23 +167,18 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
       delete payload.imageUrl;
     }
 
+    console.log('Submit data:', payload);
     if (mode === 'create') {
       // 생성 모드에서 새로운 할 일 생성
-      console.log('Create Submit data:', payload);
       createCardMutation(payload);
     } else {
       // 수정 모드에서 기존 할 일 수정
       updateCardMutation({
-        cardId: cardData?.id || 0, // cardData가 없을 경우 0으로 설정
+        cardId: cardData!.id,
         data: payload,
       });
     }
   };
-
-  // 디버깅용 콘솔 로그
-  useEffect(() => {
-    console.log('defaultVals', defaultVals);
-  }, []);
 
   const loading = isCreating || isUpdating;
   const content = (
@@ -218,13 +221,22 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
             name="assigneeUserId"
             control={control}
             defaultValue={defaultVals.assigneeUserId}
-            render={({ field }) => (
-              <UserSelector
-                assigneeUserId={field.value}
-                onChange={field.onChange}
-                placeholder="담당자를 선택하세요"
-                className="flex flex-col gap-2 md:gap-[10px]"
-              />
+            rules={{ required: '담당자는 필수 입력입니다.' }}
+            render={({ field, fieldState }) => (
+              <div className="flex flex-col gap-1">
+                <UserSelector
+                  assigneeUserId={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                  placeholder="담당자를 선택하세요"
+                  className="flex flex-col gap-2 md:gap-[10px]"
+                />
+                {fieldState.error && ( // ▶ 에러 메시지 표시
+                  <p className="text-xs text-red-600">
+                    {fieldState.error.message}
+                  </p>
+                )}
+              </div>
             )}
           />
         </div>
@@ -316,6 +328,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
                 onChange={field.onChange}
                 placeholder="태그를 입력하고 ENTER을 눌러주세요"
                 maxTags={7}
+                maxTagLength={10}
                 size="sm"
               />
             )}
