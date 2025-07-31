@@ -54,21 +54,21 @@ const InvitationListItem = ({
           isRemoving ? 'opacity-0' : 'opacity-100'
         }`}
       >
-        <td className="text-taskify-lg-regular text-taskify-neutral-700 truncate pr-5 md:max-w-[160px] md:pl-[50px] lg:pl-[76px]">
+        <td className="text-taskify-lg-regular text-taskify-neutral-700 truncate md:w-2/4 lg:w-3/6">
           {highlightText(dashboard.title, searchTerm)}
         </td>
-        <td className="text-taskify-lg-regular text-taskify-neutral-700">
+        <td className="text-taskify-lg-regular text-taskify-neutral-700 md:w-1/4 lg:w-1/6">
           {inviter.nickname}
         </td>
-        <td className="text-taskify-lg-regular text-taskify-neutral-700 hidden lg:table-cell">
+        <td className="text-taskify-lg-regular text-taskify-neutral-700 hidden lg:table-cell lg:w-1/6">
           {timeAgo}
         </td>
-        <td className="py-1">
-          <div className="flex md:ml-4 md:gap-0 lg:gap-2.5">
+        <td className="py-2 md:w-1/4 lg:w-1/6">
+          <div className="flex gap-2">
             <Button
               type="button"
               color="violet-white"
-              className="text-taskify-md-medium m-1.5 md:px-[23px] md:py-[6px] lg:px-[29px] lg:py-[7px]"
+              className="text-taskify-md-medium mt-1.5 px-8 py-2 whitespace-nowrap"
               onClick={() => {
                 setIsRemoving(true);
                 setTimeout(() => {
@@ -92,7 +92,7 @@ const InvitationListItem = ({
             <Button
               type="button"
               color="white-violet"
-              className="border-taskify-neutral-300 text-taskify-md-medium m-1.5 border-[1px] md:px-[23px] md:py-[6px] lg:px-[29px] lg:py-[7px]"
+              className="border-taskify-neutral-300 text-taskify-md-medium mt-1.5 border-[1px] px-8 py-2 whitespace-nowrap"
               onClick={() => {
                 setIsRemoving(true);
                 setTimeout(() => {
