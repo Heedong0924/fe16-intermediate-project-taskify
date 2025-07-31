@@ -39,7 +39,6 @@ const SignupPage = () => {
     register,
     handleSubmit,
     getValues,
-    reset,
     formState: { errors, dirtyFields, isValid, isSubmitting },
   } = useForm<FormValues>({
     mode: 'onChange',
@@ -50,14 +49,11 @@ const SignupPage = () => {
   const togglePassword = (): void => setShowPassword((prev) => !prev);
   const { signup, isLoading } = useAuth();
   const onSubmit = (data: FormValues) => {
-    signup(
-      {
-        email: data.email,
-        nickname: data.nickname,
-        password: data.password,
-      },
-      { onSettled: () => reset() },
-    ); // 회원가입 후 폼 리셋
+    signup({
+      email: data.email,
+      nickname: data.nickname,
+      password: data.password,
+    });
   };
 
   return (
