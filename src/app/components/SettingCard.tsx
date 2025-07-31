@@ -2,9 +2,12 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import { HTMLAttributes } from 'react';
 
+import { AOSProps } from '@/types/AOSProps';
+
 interface SettingCardProps extends HTMLAttributes<HTMLDivElement> {
   title: string;
   imageUrl: string;
+  aos?: AOSProps;
 }
 
 const SettingCard = ({
@@ -12,6 +15,7 @@ const SettingCard = ({
   children,
   title,
   imageUrl,
+  aos,
 }: SettingCardProps) => {
   return (
     <div
@@ -19,6 +23,14 @@ const SettingCard = ({
         'bg-taskify-neutral-800 max-w-[378px] rounded-sm',
         className,
       )}
+      data-aos={aos?.['data-aos']}
+      data-aos-offset={aos?.['data-aos-offset']}
+      data-aos-delay={aos?.['data-aos-delay']}
+      data-aos-duration={aos?.['data-aos-duration']}
+      data-aos-easing={aos?.['data-aos-easing']}
+      data-aos-mirror={aos?.['data-aos-mirror']}
+      data-aos-once={aos?.['data-aos-once']}
+      data-aos-anchor-placement={aos?.['data-aos-anchor-placement']}
     >
       <div className="relative aspect-3/2 w-full">
         <Image
