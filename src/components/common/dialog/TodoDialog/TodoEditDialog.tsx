@@ -3,7 +3,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { format } from 'date-fns';
-import React, { useCallback, useMemo, useEffect } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
 
@@ -179,11 +179,6 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
       });
     }
   };
-
-  // 디버깅용 콘솔 로그
-  useEffect(() => {
-    console.log('defaultVals', defaultVals);
-  }, []);
 
   const loading = isCreating || isUpdating;
   const content = (

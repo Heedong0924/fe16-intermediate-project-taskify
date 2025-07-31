@@ -40,7 +40,6 @@ export const UserSelector = ({
   // const users = mockMembers;
 
   const selected = users.find((user) => user.userId === assigneeUserId);
-  console.log('Selected User:', selected);
   // todo: 선택된 User 가 없을 때의 처리
   if (!selected && assigneeUserId) {
     console.warn(
