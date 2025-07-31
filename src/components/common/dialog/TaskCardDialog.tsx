@@ -114,8 +114,8 @@ const TaskCardDialog = ({
           {data?.imageUrl && (
             <Image
               className="mt-4 mb-2 overflow-hidden rounded-lg"
-              src="https://picsum.photos/id/684/600/400"
-              alt="test"
+              src={data?.imageUrl}
+              alt="할 일 카드 이미지"
               width={600}
               height={400}
             />
