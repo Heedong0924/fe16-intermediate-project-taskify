@@ -7,9 +7,9 @@ import { getUserStateFromLocalstorage } from '@/lib/utils/getUserStateFromLocals
 import { useDialogStore } from '@/stores/useDialogStore';
 import CommentType from '@/types/Comment.types';
 
-import { AvatarProfile } from '../../Profile';
-import AlertDialog from '../AlertDialog';
 import TaskDialogUpdateCommentForm from './TaskDialogUpdateCommentForm';
+import AlertDialog from '../../components/common/dialog/AlertDialog';
+import { AvatarProfile } from '../../components/common/Profile';
 
 interface CommentProps extends HTMLAttributes<HTMLDivElement> {
   comment: CommentType;

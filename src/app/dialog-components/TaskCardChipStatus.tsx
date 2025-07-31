@@ -1,6 +1,6 @@
 import { HTMLAttributes } from 'react';
 
-import { StatusChip, TagChip } from '../../Chips';
+import { StatusChip, TagChip } from '../../components/common/Chips';
 
 interface TaskCardChipStatusProps extends HTMLAttributes<HTMLDivElement> {
   columnName: string;

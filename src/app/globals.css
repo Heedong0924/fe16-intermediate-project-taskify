@@ -324,10 +324,10 @@
 
   /* 대시보드 상세 페이지 */
   .dashboard-update-title label {
-    @apply !text-[16px] sm:!text-[18px];
+    @apply !text-[16px] md:!text-[18px];
   }
   .dashboard-update-title input {
-    @apply !text-[14px] sm:!text-[16px];
+    @apply !text-[14px] md:!text-[16px];
   }
 
   /* .dashboard-section-action-item2 > div.class-flex {
@@ -335,7 +335,7 @@
   } */
 
   .dashboard-section-action-item > div.class-grid {
-    @apply grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-3 sm:grid-cols-[1fr_auto] sm:gap-y-[32px];
+    @apply grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-3 transition-all md:grid-cols-[1fr_auto] md:gap-y-[32px];
   }
 
   /* 마이페이지 이메일 인풋 스타일 */

@@ -6,14 +6,36 @@ import { useEffect } from 'react';
 import AlertDialog from '@/components/common/dialog/AlertDialog';
 import { getMyInfo, changePassword } from '@/lib/api/auth';
 import { updateMyInfo, uploadProfileImage } from '@/lib/api/users';
-import { getErrorMessage, getErrorStatus } from '@/lib/utils/getErrorResponse';
+import {
+  getErrorCode,
+  getErrorMessage,
+  getErrorStatus,
+} from '@/lib/utils/getErrorResponse';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useDialogStore } from '@/stores/useDialogStore';
 
 // 이미지 업로드
 export const useUploadProfileImage = () => {
+  const { openDialog } = useDialogStore();
+
   return useMutation<string, Error, File>({
     mutationFn: async (file: File) => uploadProfileImage({ image: file }),
+    onError: (error) => {
+      const errorMessage = getErrorMessage(error);
+      const code = getErrorCode(error);
+      openDialog({
+        dialogComponent: (
+          <AlertDialog
+            description={
+              code !== 'ECONNABORTED'
+                ? errorMessage
+                : '요청 시간이 초과되었습니다.'
+            }
+            closeBtnText="확인"
+          />
+        ),
+      });
+    },
   });
 };
 
@@ -48,7 +70,7 @@ export const useMyInfo = () => {
     });
   }, [query.error]);
 
-  return query;
+  return { ...query };
 };
 
 // 내 정보 업데이트

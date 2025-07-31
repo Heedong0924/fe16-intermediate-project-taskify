@@ -4,7 +4,7 @@ import { ContentSection } from '@/components/common/ContentSection';
 import Input from '@/components/common/Input';
 import Button from '@/components/ui/Buttons';
 import SkeletonLine from '@/components/ui/SkeletonLIne';
-import { useChangePassword } from '@/hooks/useMyInfoEdit';
+import { useChangePassword, useMyInfo } from '@/hooks/useMyInfoEdit';
 import { useSkeleton } from '@/hooks/useSkeleton';
 import {
   passwordValidation,
@@ -35,7 +35,9 @@ export default function MyInfoPassword({
 
   const { mutate: changePassword } = useChangePassword();
 
+  const { data: myInfoData } = useMyInfo();
   const { showSkeleton, isFadingOut } = useSkeleton(isSkeletonVisible, 1200);
+  const shouldShowSkeleton = showSkeleton || !myInfoData;
 
   const onSubmit = (data: FormValues) => {
     changePassword(data);
@@ -49,7 +51,7 @@ export default function MyInfoPassword({
   return (
     <ContentSection
       title={
-        showSkeleton ? (
+        shouldShowSkeleton ? (
           <SkeletonLine className="h-10 w-full" isFadingOut={isFadingOut} />
         ) : (
           '비밀번호 변경'
@@ -57,7 +59,7 @@ export default function MyInfoPassword({
       }
     >
       <form onSubmit={handleSubmit(onSubmit)} className="mt-10">
-        {showSkeleton ? (
+        {shouldShowSkeleton ? (
           <SkeletonLine
             className="mb-[24px] h-[255px] w-full"
             isFadingOut={isFadingOut}
@@ -102,7 +104,7 @@ export default function MyInfoPassword({
             />
           </div>
         )}
-        {showSkeleton ? (
+        {shouldShowSkeleton ? (
           <SkeletonLine className="h-13 w-full" isFadingOut={isFadingOut} />
         ) : (
           <Button

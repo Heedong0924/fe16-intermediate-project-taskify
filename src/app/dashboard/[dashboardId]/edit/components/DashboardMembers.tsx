@@ -6,12 +6,12 @@ import { UserProfile } from '@/components/common/Profile';
 import Button from '@/components/ui/Buttons';
 import PaginationButton from '@/components/ui/PaginationButton';
 import SkeletonLine from '@/components/ui/SkeletonLIne';
+import { useDashboard } from '@/hooks/useDashboardEdit';
 import {
   useDashboardMember,
   useDeleteMember,
 } from '@/hooks/useDashboardMember';
 import { useSkeleton } from '@/hooks/useSkeleton';
-// import { useDashboard } from '@/hooks/useDashboardEdit';
 
 export default function DashboardMembers({
   dashboardId,
@@ -29,24 +29,24 @@ export default function DashboardMembers({
     dashboardId,
   });
 
-  // const { isPending, isError } = useDashboard(dashboardId);
-
+  const { data: dashboardData } = useDashboard(dashboardId);
   const { showSkeleton, isFadingOut } = useSkeleton(isSkeletonVisible, 1200);
+  const shouldShowSkeleton = showSkeleton || !dashboardData;
 
   const deleteMutation = useDeleteMember();
 
   return (
     <ContentSectionWithAction
-      className="dashboard-section-action-item !pb-[16px] sm:!pb-[20px]"
+      className="dashboard-section-action-item !pb-[16px] md:!pb-[20px]"
       title={
-        showSkeleton ? (
+        shouldShowSkeleton ? (
           <SkeletonLine className="h-10 w-[100%]" isFadingOut={isFadingOut} />
         ) : (
           '구성원'
         )
       }
       titleRight={
-        showSkeleton ? (
+        shouldShowSkeleton ? (
           <SkeletonLine className="h-10 w-[135px]" isFadingOut={isFadingOut} />
         ) : (
           <PaginationButton
@@ -58,21 +58,21 @@ export default function DashboardMembers({
         )
       }
     >
-      <div className="mt-[18px] h-[264px] sm:mt-[27px] sm:h-[291px]">
-        {showSkeleton ? (
-          <div className="h-full px-[20px] sm:px-[28px]">
+      <div className="mt-[18px] h-[264px] md:mt-[27px] md:h-[291px]">
+        {shouldShowSkeleton ? (
+          <div className="h-full px-[20px] md:px-[28px]">
             <SkeletonLine className="h-full w-full" isFadingOut={isFadingOut} />
           </div>
         ) : (
           <>
-            <h2 className="px-[20px] text-base text-[var(--gray-D9D9D9)] sm:px-[28px] sm:text-[16px]">
+            <h2 className="px-[20px] text-base text-[var(--gray-D9D9D9)] md:px-[28px] md:text-[16px]">
               이름
             </h2>
             <ul className="divide-y">
               {data?.members.map((member) => (
                 <li
                   key={member.id}
-                  className="flex items-center justify-between px-[20px] py-[12px] last:pb-0 sm:px-[28px] sm:py-[16px]"
+                  className="flex items-center justify-between px-[20px] py-[12px] last:pb-0 md:px-[28px] md:py-[16px]"
                 >
                   <UserProfile
                     profileImg={member.profileImageUrl}
@@ -83,17 +83,19 @@ export default function DashboardMembers({
                       // 경고 모달창 추가하기
                       onClick={() => deleteMutation.mutate(member.id)}
                       color="white-violet"
-                      className="btn-one !rounded-[4px] border border-[var(--gray-D9D9D9)] text-[12px] sm:!text-[14px]"
+                      className="btn-one !rounded-[4px] border border-[var(--gray-D9D9D9)] text-[12px] md:!text-[14px]"
                     >
                       삭제
                     </Button>
                   ) : (
-                    <Image
-                      src="/images/icon/crown.svg"
-                      alt="방장"
-                      width={20}
-                      height={20}
-                    />
+                    <span className="flex w-[52px] justify-center">
+                      <Image
+                        src="/images/icon/crown.svg"
+                        alt="방장"
+                        width={20}
+                        height={20}
+                      />
+                    </span>
                   )}
                 </li>
               ))}

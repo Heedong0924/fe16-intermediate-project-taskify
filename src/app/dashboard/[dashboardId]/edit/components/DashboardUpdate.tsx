@@ -37,8 +37,8 @@ export default function DashboardUpdate({
   });
 
   const { data } = useDashboard(dashboardId);
-
   const { showSkeleton, isFadingOut } = useSkeleton(isSkeletonVisible, 1200);
+  const shouldShowSkeleton = showSkeleton || !data;
 
   const mutation = useUpdateDashboard(dashboardId);
 
@@ -60,7 +60,7 @@ export default function DashboardUpdate({
   return (
     <ContentSection
       title={
-        showSkeleton ? (
+        shouldShowSkeleton ? (
           <SkeletonLine className="h-10 w-full" isFadingOut={isFadingOut} />
         ) : (
           data?.title
@@ -68,7 +68,7 @@ export default function DashboardUpdate({
       }
     >
       <div className="mt-[24px] mb-[40px]">
-        {showSkeleton ? (
+        {shouldShowSkeleton ? (
           <SkeletonLine className="h-32 w-full" isFadingOut={isFadingOut} />
         ) : (
           <>
@@ -89,7 +89,7 @@ export default function DashboardUpdate({
         )}
       </div>
 
-      {showSkeleton ? (
+      {shouldShowSkeleton ? (
         <SkeletonLine className="h-13 w-full" isFadingOut={isFadingOut} />
       ) : (
         <Button

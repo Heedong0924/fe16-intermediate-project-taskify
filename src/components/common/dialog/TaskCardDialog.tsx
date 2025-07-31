@@ -13,11 +13,11 @@ import SkeletonParagraph from '@/components/ui/SkeletonParagraph';
 import { useSkeleton } from '@/hooks/useSkeleton';
 import { getCard } from '@/lib/api/cardService';
 
-import CardAuthor from './dialog-components/CardAuthor';
-import Comments from './dialog-components/Comments';
-import TaskCardChipStatus from './dialog-components/TaskCardChipStatus';
-import TaskCardDialogControlArea from './dialog-components/TaskCardDialogControlArea';
-import TaskDialogCreateCommentForm from './dialog-components/TaskDialogCreateCommentForm';
+import CardAuthor from '../../../app/dialog-components/CardAuthor';
+import Comments from '../../../app/dialog-components/Comments';
+import TaskCardChipStatus from '../../../app/dialog-components/TaskCardChipStatus';
+import TaskCardDialogControlArea from '../../../app/dialog-components/TaskCardDialogControlArea';
+import TaskDialogCreateCommentForm from '../../../app/dialog-components/TaskDialogCreateCommentForm';
 
 interface TaskCardDialogProps {
   dashboardId: number;
