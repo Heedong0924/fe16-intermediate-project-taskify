@@ -89,7 +89,9 @@ export function UserProfile({
         size={size}
         isBorder={isBorder}
       />
-      {size !== 'md' && <span className="font-medium">{userName}</span>}
+      {size !== 'md' && (
+        <span className="text-taskify- max-w-[120px] truncate">{userName}</span>
+      )}
     </div>
   );
 }
