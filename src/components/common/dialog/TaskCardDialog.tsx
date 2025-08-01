@@ -33,7 +33,7 @@ const TaskCardDialog = ({
   columnName,
 }: TaskCardDialogProps) => {
   const { data, isPending } = useQuery({
-    queryKey: ['detailCard', cardId],
+    queryKey: ['cards', cardId],
     queryFn: () => getCard(cardId),
   });
 
@@ -82,6 +82,7 @@ const TaskCardDialog = ({
           className="border-taskify-neutral-300 col-start-1 col-end-5 rounded-lg border-1 md:col-start-5 md:col-end-6 md:row-span-3 md:mt-15 md:h-[155px] md:w-[181px]"
           author={data?.assignee.nickname}
           dueDate={data?.dueDate}
+          profileImg={data?.assignee.profileImageUrl}
         />
       )}
 
