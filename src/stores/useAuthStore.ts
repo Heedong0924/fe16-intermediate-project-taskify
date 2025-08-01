@@ -9,6 +9,7 @@ export interface AuthState {
   isAuth: boolean;
   hydrated: boolean; // Zustand의 hydrated 상태를 관리하기 위한 변수
   setHydrated: (hydrated: boolean) => void;
+  setUser: (user: User) => void;
   setToken: (token: string) => void;
   logout: () => void;
 }
