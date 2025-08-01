@@ -93,8 +93,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
     TodoFormData
   >({
     mutationFn: (data) => createCard(data),
-    onSuccess: (data) => {
-      console.log('카드 생성 성공:', data);
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cards'] });
       goBack();
     },
@@ -121,8 +120,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
     mutationFn: ({ cardId, data }) => {
       return updateCard(cardId, data);
     },
-    onSuccess: (data) => {
-      console.log('카드 수정 성공:', data);
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cards'] });
       goBack();
     },
@@ -167,7 +165,6 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
       delete payload.imageUrl;
     }
 
-    console.log('Submit data:', payload);
     if (mode === 'create') {
       // 생성 모드에서 새로운 할 일 생성
       createCardMutation(payload);
