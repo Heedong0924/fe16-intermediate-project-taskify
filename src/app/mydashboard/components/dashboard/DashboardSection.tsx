@@ -28,11 +28,9 @@ const DashboardSection = () => {
   if (isPending) {
     return (
       <div className="bg-taskify-neutral-0 mb-10 flex h-[550px] w-[330px] flex-col rounded-2xl p-6 px-[15px] md:mt-3 md:h-[360px] md:w-[620px] lg:mt-5 lg:h-[330px] lg:w-[1022px]">
-        {/* 1. h1 대시보드 제목 스켈레톤 */}
-        <SkeletonLine
-          className="mb-6 h-8 w-32 md:ml-4 lg:ml-4"
-          isFadingOut={false}
-        />
+        <h1 className="text-taskify-2xl-bold text-taskify-neutral-700 mb-6 md:ml-4 lg:ml-4">
+          대시보드
+        </h1>
 
         {/* 대시보드 카드들 */}
         <div className="mx-auto w-full max-w-[1000px] lg:mt-1">
@@ -71,7 +69,7 @@ const DashboardSection = () => {
 
   // 기존 대시보드 목록이 없을 시 새로운 대시보드 만들 수 있는 버튼 출력
   return (
-    <div className="bg-taskify-neutral-0 mb-10 flex h-[550px] w-[330px] flex-col rounded-2xl p-6 px-[15px] md:mt-3 md:h-[360px] md:w-[620px] lg:mt-5 lg:h-[330px] lg:w-[1022px]">
+    <div className="bg-taskify-neutral-0 relative mb-10 flex h-[550px] w-[330px] flex-col rounded-2xl p-6 px-[15px] md:mt-3 md:h-[360px] md:w-[620px] lg:mt-5 lg:h-[330px] lg:w-[1022px]">
       <h1 className="text-taskify-2xl-bold text-taskify-neutral-700 md:ml-4 lg:ml-4">
         대시보드
       </h1>

@@ -1,17 +1,25 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 
 import { getInvitations } from '@/lib/api/invitations';
+import { Invitation } from '@/types/Invitation';
 
 import InvitationListItem from './InvitationListItem';
 import MobileInvitationList from './MobileInvitationList';
 import NoResult from './Noresult';
+import { SortOption, SortOrder } from './SortDropdown';
 
 type InvitationProps = {
   searchTerm: string;
+  sortOption: SortOption;
+  sortOrder: SortOrder;
 };
 
-const InvitationList = ({ searchTerm }: InvitationProps) => {
+const InvitationList = ({
+  searchTerm,
+  sortOption,
+  sortOrder,
+}: InvitationProps) => {
   const observerEl = useRef<HTMLTableRowElement | null>(null);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -42,10 +50,39 @@ const InvitationList = ({ searchTerm }: InvitationProps) => {
     };
   }, [hasNextPage, fetchNextPage]);
 
-  const allInvitations =
-    data?.pages.flatMap((page) =>
-      Array.isArray(page.invitations) ? page.invitations : [page.invitations],
-    ) ?? [];
+  const allInvitations = useMemo(
+    () =>
+      data?.pages.flatMap((page) =>
+        Array.isArray(page.invitations) ? page.invitations : [page.invitations],
+      ) ?? [],
+    [data],
+  );
+
+  // 정렬 로직
+  const sortedInvitations = useMemo(() => {
+    const sorted = [...allInvitations].sort((a: Invitation, b: Invitation) => {
+      let comparison = 0;
+
+      switch (sortOption) {
+        case 'name':
+          comparison = a.dashboard.title.localeCompare(b.dashboard.title);
+          break;
+        case 'inviter':
+          comparison = a.inviter.nickname.localeCompare(b.inviter.nickname);
+          break;
+        case 'date':
+          comparison =
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+          break;
+        default:
+          return 0;
+      }
+
+      return sortOrder === 'asc' ? comparison : -comparison;
+    });
+
+    return sorted;
+  }, [allInvitations, sortOption, sortOrder]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -64,16 +101,18 @@ const InvitationList = ({ searchTerm }: InvitationProps) => {
   }
 
   return isMobile ? (
-    // 모바일 카드형 UI
-    allInvitations.map((invitation, index) => (
-      <MobileInvitationList
-        key={invitation.id}
-        invitation={invitation}
-        observerRef={
-          index === allInvitations.length - 1 ? observerEl : undefined
-        }
-      />
-    ))
+    <div>
+      {/* 모바일 카드형 UI */}
+      {sortedInvitations.map((invitation, index) => (
+        <MobileInvitationList
+          key={invitation.id}
+          invitation={invitation}
+          observerRef={
+            index === sortedInvitations.length - 1 ? observerEl : undefined
+          }
+        />
+      ))}
+    </div>
   ) : (
     <div className="px-4">
       <table className="w-full table-fixed text-left">
@@ -103,8 +142,8 @@ const InvitationList = ({ searchTerm }: InvitationProps) => {
           </tr>
         </thead>
         <tbody>
-          {allInvitations.map((invitation, i) => {
-            const isLast = i === allInvitations.length - 1;
+          {sortedInvitations.map((invitation, i) => {
+            const isLast = i === sortedInvitations.length - 1;
             return (
               <InvitationListItem
                 key={invitation.id}

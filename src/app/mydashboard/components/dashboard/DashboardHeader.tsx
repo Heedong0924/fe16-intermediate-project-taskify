@@ -26,7 +26,16 @@ const DashboardHeader = ({
 
     {/* 자신이 만든 대시보드일 경우 왕관 아이콘 출력 */}
     <div className="shrink-0">
-      {createdByMe && <Image src={crownIcon} alt="owner" />}
+      {createdByMe && (
+        <Image
+          src={crownIcon}
+          alt="owner"
+          width={18}
+          height={14}
+          className="h-[14px] w-[18px]"
+          priority={false}
+        />
+      )}
     </div>
   </div>
 );

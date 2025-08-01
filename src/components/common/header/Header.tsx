@@ -65,31 +65,40 @@ const Header = () => {
     }
   }, [userQuery.data]);
 
-  useQuery<{ members: Member[] }>({
+  const membersQuery = useQuery<{ members: Member[] }>({
     queryKey: ['dashboard-members', dashboardId],
     queryFn: () => getDashboardMembers({ dashboardId }),
     enabled: !!dashboardId,
-    select: (data) => {
-      useMemberStore.getState().setMembers(data.members);
-      return data;
-    },
   });
 
-  useQuery({
+  const dashboardQuery = useQuery({
     queryKey: ['dashboard', dashboardId],
     queryFn: () => getDashboardById(dashboardId!),
     enabled: !!dashboardId,
-    select: (data) => {
-      useDashboardStore.getState().setCreatedByMe(data.createdByMe);
-      useDashboardStore.getState().setDashboardTitle(data.title);
-    },
   });
+
+  // 멤버 데이터를 스토어에 업데이트
+  useEffect(() => {
+    if (membersQuery.data?.members) {
+      useMemberStore.getState().setMembers(membersQuery.data.members);
+    }
+  }, [membersQuery.data?.members]);
+
+  // 대시보드 데이터를 스토어에 업데이트
+  useEffect(() => {
+    if (dashboardQuery.data) {
+      useDashboardStore
+        .getState()
+        .setCreatedByMe(dashboardQuery.data.createdByMe);
+      useDashboardStore.getState().setDashboardTitle(dashboardQuery.data.title);
+    }
+  }, [dashboardQuery.data]);
 
   const isMobile = useIsMobile();
 
   return (
-    <header className="border-b-taskify-neutral-300 bg-taskify-neutral-0 fixed z-10 flex h-[60px] w-full items-center justify-between border-[1px]">
-      <div className="flex h-full w-full items-center justify-between px-4 md:ml-[160px] md:px-7 lg:ml-[300px]">
+    <header className="border-b-taskify-neutral-300 bg-taskify-neutral-0 fixed z-10 flex h-[60px] w-full items-center justify-between border-[1px] md:w-[calc(100%-160px)] lg:w-[calc(100%-300px)]">
+      <div className="flex h-full w-full items-center justify-between px-4 md:px-7">
         <div className="flex gap-2">
           {/* 모바일에서만 로고 보이기 */}
           <div className="md:hidden">
