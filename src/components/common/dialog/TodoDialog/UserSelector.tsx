@@ -2,7 +2,6 @@
 
 'use client';
 
-import Image from 'next/image';
 import React from 'react';
 
 import {
@@ -14,6 +13,8 @@ import {
 } from '@/components/ui/Select';
 import { useMemberStore } from '@/stores/useMemberStore';
 import { Member } from '@/types/DashboardMember';
+
+import { AvatarProfile } from '../../Profile';
 
 interface UserSelectorProps {
   /** 현재 선택된 User 의 정보 */
@@ -47,6 +48,7 @@ export const UserSelector = ({
       assigneeUserId,
     );
   }
+
   return (
     <div className={className}>
       <label
@@ -64,17 +66,12 @@ export const UserSelector = ({
           {/* 현재 선택값이 있으면 Chip, 없으면 placeholder */}
           {selected ? (
             <div className="flex items-center gap-3">
-              {selected.profileImageUrl ? (
-                <Image
-                  src={selected.profileImageUrl}
-                  alt={selected.nickname}
-                  width={24}
-                  height={24}
-                  className="h-6 w-6 rounded-full"
-                />
-              ) : (
-                <div className="h-6 w-6 rounded-full bg-gray-100" />
-              )}
+              <AvatarProfile
+                profileImg={selected.profileImageUrl}
+                userName={selected.nickname}
+                size="sm"
+                isBorder={false}
+              />
               <span>{selected.nickname}</span>
             </div>
           ) : (
@@ -86,17 +83,12 @@ export const UserSelector = ({
           {users.map((user) => (
             <SelectItem key={user.userId} value={user.userId.toString()}>
               <div className="flex items-center gap-3">
-                {user.profileImageUrl ? (
-                  <Image
-                    src={user.profileImageUrl}
-                    alt={user.nickname}
-                    width={24}
-                    height={24}
-                    className="h-6 w-6 rounded-full"
-                  />
-                ) : (
-                  <div className="h-6 w-6 rounded-full bg-gray-100" />
-                )}
+                <AvatarProfile
+                  profileImg={user.profileImageUrl}
+                  userName={user.nickname}
+                  size="sm"
+                  isBorder={false}
+                />
                 <span>{user.nickname}</span>
               </div>
             </SelectItem>
