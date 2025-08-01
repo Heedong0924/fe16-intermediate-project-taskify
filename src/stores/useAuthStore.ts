@@ -35,7 +35,7 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       // 로컬 스토리지 키
-      name: 'taskify-user-storage',
+      name: 'user-storage',
       // 로컬 스토리지 사용
       storage: createJSONStorage(() => localStorage),
       // 로컬 스토리지 복원 감지
