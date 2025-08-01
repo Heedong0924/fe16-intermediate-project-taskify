@@ -33,7 +33,7 @@ const TaskCardDialog = ({
   columnName,
 }: TaskCardDialogProps) => {
   const { data, isPending } = useQuery({
-    queryKey: ['detailCard', cardId],
+    queryKey: ['cards', cardId],
     queryFn: () => getCard(cardId),
   });
 
@@ -41,7 +41,7 @@ const TaskCardDialog = ({
 
   return (
     <DialogContent
-      className="md:grid-cols-[repeat(4, 1fr)_181px] dialog-scrollable-content grid h-[50vh] max-h-[710px] max-w-[327px] grid-cols-4 gap-4 overflow-auto px-4 md:max-h-[766px] md:max-w-[678px] md:gap-6 md:px-8 lg:max-w-[732px]"
+      className="md:grid-cols-[repeat(4, 1fr)_181px] dialog-scrollable-content grid h-[50vh] max-h-[710px] max-w-[327px] grid-cols-4 grid-rows-[min-content_min-content_min-content_1fr_min-content] gap-4 overflow-auto px-4 md:max-h-[766px] md:max-w-[678px] md:gap-6 md:px-8 lg:max-w-[732px] lg:grid-rows-[min-content_auto_1fr_min-content]"
       showCloseButton={false}
     >
       {/** Header 영역 */}
@@ -82,6 +82,7 @@ const TaskCardDialog = ({
           className="border-taskify-neutral-300 col-start-1 col-end-5 rounded-lg border-1 md:col-start-5 md:col-end-6 md:row-span-3 md:mt-15 md:h-[155px] md:w-[181px]"
           author={data?.assignee.nickname}
           dueDate={data?.dueDate}
+          profileImg={data?.assignee.profileImageUrl}
         />
       )}
 

@@ -7,9 +7,15 @@ import { AvatarProfile } from '../../components/common/Profile';
 interface CardAuthorProps extends HTMLAttributes<HTMLDivElement> {
   author?: string;
   dueDate?: string;
+  profileImg?: string;
 }
 
-const CardAuthor = ({ className, author, dueDate }: CardAuthorProps) => {
+const CardAuthor = ({
+  className,
+  author,
+  dueDate,
+  profileImg,
+}: CardAuthorProps) => {
   const baseStyles =
     'grid px-4 py-2 text-left grid-cols-2 grid-rows-[min-content_auto] gap-x-4 gap-y-2';
 
@@ -29,20 +35,29 @@ const CardAuthor = ({ className, author, dueDate }: CardAuthorProps) => {
       >
         담당자
       </span>
+
       <span
         className={`${colHeaderFtStyles} col-start-2 col-end-3 row-start-1 row-end-2 md:col-start-1 md:col-end-2 md:row-start-3 md:row-end-4`}
       >
         마감일
       </span>
-
       <div className="col-start-1 col-end-2 row-start-2 row-end-3 flex items-center gap-2 md:col-start-1 md:col-end-2 md:row-start-2 md:row-end-3">
-        <AvatarProfile userName={author || ''} size="sm" />
+        <AvatarProfile
+          userName={author || ''}
+          size="sm"
+          profileImg={profileImg}
+        />
         <span className={cellFtStyles}>{author}</span>
       </div>
+
       <div
         className={`${cellFtStyles} col-start-2 col-end-3 row-start-2 row-end-3 flex self-center md:col-start-1 md:col-end-2 md:row-start-4 md:row-end-5`}
       >
-        {dueDate && formattedDate(dueDate)}
+        {dueDate ? (
+          formattedDate(dueDate)
+        ) : (
+          <span className="text-taskify-neutral-400">마감일 미정</span>
+        )}
       </div>
     </div>
   );
