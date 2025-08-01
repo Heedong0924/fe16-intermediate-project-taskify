@@ -41,7 +41,7 @@ const TaskCardDialog = ({
 
   return (
     <DialogContent
-      className="md:grid-cols-[repeat(4, 1fr)_181px] dialog-scrollable-content grid h-[50vh] max-h-[710px] max-w-[327px] grid-cols-4 gap-4 overflow-auto px-4 md:max-h-[766px] md:max-w-[678px] md:gap-6 md:px-8 lg:max-w-[732px]"
+      className="md:grid-cols-[repeat(4, 1fr)_181px] dialog-scrollable-content grid h-[50vh] max-h-[710px] max-w-[327px] grid-cols-4 grid-rows-[min-content_min-content_min-content_1fr_min-content] gap-4 overflow-auto px-4 md:max-h-[766px] md:max-w-[678px] md:gap-6 md:px-8 lg:max-w-[732px] lg:grid-rows-[min-content_auto_1fr_min-content]"
       showCloseButton={false}
     >
       {/** Header 영역 */}
