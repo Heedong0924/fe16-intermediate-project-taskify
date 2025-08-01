@@ -17,8 +17,8 @@ export default function MypageLayout({
   return (
     <div className="relative flex min-h-screen">
       <Sidebar />
-      <Header />
-      <main className="flex-1 md:mt-[60px] md:ml-[160px] lg:ml-[300px]">
+      <main className="bg-taskify-neutral-100 flex-1 transition-all duration-300 md:ml-[160px] md:w-[calc(100%-160px)] lg:ml-[300px] lg:w-[calc(100%-300px)]">
+        <Header />
         {children}
       </main>
     </div>
