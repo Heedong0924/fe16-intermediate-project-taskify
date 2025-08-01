@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Header from '@/components/common/header/Header';
+import MobailSizeHeader from '@/components/common/header/MobailSizeHeader';
 import Sidebar from '@/components/common/Sidebar';
 
 export const metadata = {
@@ -19,6 +20,7 @@ export default function DashboardLayout({
       <Sidebar />
       <main className="bg-taskify-neutral-100 flex-1 transition-all duration-300 md:ml-[160px] md:w-[calc(100%-160px)] lg:ml-[300px] lg:w-[calc(100%-300px)]">
         <Header />
+        <MobailSizeHeader />
         {children}
       </main>
     </div>
