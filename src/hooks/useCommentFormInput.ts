@@ -63,6 +63,7 @@ export const useCommentFormInput = ({
   const handleCommentSubmit = () => {
     if (!commentValue) return;
     if (initialCommentValue === commentValue) return;
+    if (isPending) return;
     if (
       type === 'create' &&
       createMutate &&
