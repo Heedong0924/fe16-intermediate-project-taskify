@@ -7,9 +7,15 @@ import { AvatarProfile } from '../../components/common/Profile';
 interface CardAuthorProps extends HTMLAttributes<HTMLDivElement> {
   author?: string;
   dueDate?: string;
+  profileImg?: string;
 }
 
-const CardAuthor = ({ className, author, dueDate }: CardAuthorProps) => {
+const CardAuthor = ({
+  className,
+  author,
+  dueDate,
+  profileImg,
+}: CardAuthorProps) => {
   const baseStyles =
     'grid px-4 py-2 text-left grid-cols-2 grid-rows-[min-content_auto] gap-x-4 gap-y-2';
 
@@ -36,7 +42,11 @@ const CardAuthor = ({ className, author, dueDate }: CardAuthorProps) => {
       </span>
 
       <div className="col-start-1 col-end-2 row-start-2 row-end-3 flex items-center gap-2 md:col-start-1 md:col-end-2 md:row-start-2 md:row-end-3">
-        <AvatarProfile userName={author || ''} size="sm" />
+        <AvatarProfile
+          userName={author || ''}
+          size="sm"
+          profileImg={profileImg}
+        />
         <span className={cellFtStyles}>{author}</span>
       </div>
       <div
