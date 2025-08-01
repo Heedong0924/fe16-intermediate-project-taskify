@@ -37,7 +37,7 @@ const DashboardListItem = ({ dashboard, members }: DashboardListItemProps) => {
         color={dashboard.color}
         createdByMe={dashboard.createdByMe}
       />
-      <div className="hidden transition-all duration-200 group-hover:opacity-100 md:absolute md:top-5 md:left-44 md:group-hover:block lg:relative lg:top-auto lg:left-auto lg:-mt-6 lg:block">
+      <div className="hidden transition-all duration-200 group-hover:opacity-100 md:absolute md:top-5 md:left-44 md:group-hover:block lg:relative lg:top-auto lg:left-auto lg:-mt-5 lg:block">
         <MemberAvatars members={members} />
       </div>
       <div className="hidden lg:mb-2 lg:block">
