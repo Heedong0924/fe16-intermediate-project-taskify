@@ -83,7 +83,7 @@ export default function DashboardUpdate({
               {...register('dashboardTitle', dashboardTitleValidation)}
             />
             <div className="mt-[16px]">
-              <ColorPickerChip value={color} onChange={setColor} size="md" />
+              <ColorPickerChip value={color} onChange={setColor} />
             </div>
           </>
         )}
