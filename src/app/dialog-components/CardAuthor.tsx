@@ -35,12 +35,12 @@ const CardAuthor = ({
       >
         담당자
       </span>
+
       <span
         className={`${colHeaderFtStyles} col-start-2 col-end-3 row-start-1 row-end-2 md:col-start-1 md:col-end-2 md:row-start-3 md:row-end-4`}
       >
         마감일
       </span>
-
       <div className="col-start-1 col-end-2 row-start-2 row-end-3 flex items-center gap-2 md:col-start-1 md:col-end-2 md:row-start-2 md:row-end-3">
         <AvatarProfile
           userName={author || ''}
@@ -49,10 +49,15 @@ const CardAuthor = ({
         />
         <span className={cellFtStyles}>{author}</span>
       </div>
+
       <div
         className={`${cellFtStyles} col-start-2 col-end-3 row-start-2 row-end-3 flex self-center md:col-start-1 md:col-end-2 md:row-start-4 md:row-end-5`}
       >
-        {dueDate && formattedDate(dueDate)}
+        {dueDate ? (
+          formattedDate(dueDate)
+        ) : (
+          <span className="text-taskify-neutral-400">마감일 미정</span>
+        )}
       </div>
     </div>
   );
