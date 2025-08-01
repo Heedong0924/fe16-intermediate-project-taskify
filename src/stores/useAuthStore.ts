@@ -7,7 +7,8 @@ export interface AuthState {
   user: User | null;
   accessToken: string | null;
   isAuth: boolean;
-  setUser: (user: User) => void;
+  hydrated: boolean; // Zustand의 hydrated 상태를 관리하기 위한 변수
+  setHydrated: (hydrated: boolean) => void;
   setToken: (token: string) => void;
   logout: () => void;
 }
@@ -20,10 +21,12 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       accessToken: null,
       isAuth: false,
+      hydrated: false, // 초기 hydrated 상태
 
       // 상태 설정 함수
-      setUser: (user: User) => set({ user, isAuth: true }), // 변경: 로그인 시 isAuth=true
-      setToken: (token: string) => set({ accessToken: token }), // 변경: 토큰 저장
+      setUser: (user: User) => set({ user, isAuth: true }),
+      setToken: (token: string) => set({ accessToken: token }),
+      setHydrated: (hydrated: boolean) => set({ hydrated }),
 
       // 로그아웃 액션
       logout: () => {
@@ -31,8 +34,14 @@ export const useAuthStore = create<AuthState>()(
       },
     }),
     {
-      name: 'user-storage', // 로컬 스토리지 키
-      storage: createJSONStorage(() => localStorage), // 로컬 스토리지 사용
+      // 로컬 스토리지 키
+      name: 'taskify-user-storage',
+      // 로컬 스토리지 사용
+      storage: createJSONStorage(() => localStorage),
+      // 로컬 스토리지 복원 감지
+      onRehydrateStorage: () => (state) => {
+        state?.setHydrated(true);
+      },
     },
   ),
 );
