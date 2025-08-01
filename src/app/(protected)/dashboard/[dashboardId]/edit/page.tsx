@@ -79,7 +79,7 @@ export default function DashboardEditPage() {
         {/*  대시보드 삭제하기 */}
         <Button
           color="white-black"
-          className="btn-removeDash w-full border border-[#D9D9D9] bg-transparent md:w-[320px]"
+          className="btn-removeDash w-full border border-[#D9D9D9] bg-transparent md:max-w-[700px]"
           onClick={() => {
             openDialog({
               dialogComponent: (

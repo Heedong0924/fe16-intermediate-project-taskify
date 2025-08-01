@@ -1,5 +1,7 @@
 import Image from 'next/image';
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, useEffect, useRef, useState } from 'react';
+import { ColorPicker, useColor } from 'react-color-palette';
+import 'react-color-palette/css';
 
 import { getTextBasedColorClasses } from '@/lib/utils/colorUtils';
 
@@ -165,8 +167,38 @@ export function ColorPickerChip({
         colorPickerContainer: 'transition-all size-[28px] md:size-[30px]',
         colorPickerImage: 'size-[22px] md:size-[24px]',
       };
+  const [togglePicker, setTogglePicker] = useState(false);
+
+  // 사용자 커스텀 색상 초기값, 상태관리
+  const [customColor, setCustomColor] = useState('#cccccc');
+
+  // 사용자가 지정된 색상과 기본 색상 확인
+  const exists = ColorPickerChips.some((chip) => chip.value === value);
+  const [color, setColor] = useColor(exists ? customColor : value);
+
+  const colorPickerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        colorPickerRef.current &&
+        !colorPickerRef.current.contains(event.target as Node)
+      ) {
+        setTogglePicker(false);
+      }
+    };
+
+    if (togglePicker) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [togglePicker]);
+
   return (
-    <form className="chip-colorPick">
+    <div className="chip-colorPick">
       {ColorPickerChips.map(({ id, value: val, label }) => (
         <label
           key={val}
@@ -191,6 +223,46 @@ export function ColorPickerChip({
           </span>
         </label>
       ))}
-    </form>
+      <label
+        htmlFor="color-pick"
+        aria-label="사용자 선택 색상"
+        className={`${colorPickerContainer} relative`}
+        style={{ backgroundColor: color.hex }}
+      >
+        <input
+          id="color-pick"
+          name="color"
+          type="radio"
+          value={color.hex}
+          checked={value === color.hex}
+          onChange={() => onChange(color.hex)}
+          onClick={() => setTogglePicker(true)}
+          className="peer hidden"
+        />
+        <span
+          className={`${colorPickerImage} relative opacity-0 transition-opacity duration-200 peer-checked:opacity-100`}
+        >
+          <Image src="/images/check-white.svg" alt="색상 체크" fill />
+        </span>
+        {togglePicker && (
+          <div
+            className="absolute top-[35px] right-0 sm:top-0 sm:right-auto sm:left-[40px]"
+            ref={colorPickerRef}
+          >
+            <ColorPicker
+              height={80}
+              hideInput={['rgb', 'hsv']}
+              color={color}
+              onChange={(newColor) => {
+                setColor(newColor);
+                onChange(newColor.hex);
+                setCustomColor(newColor.hex);
+              }}
+              hideAlpha
+            />
+          </div>
+        )}
+      </label>
+    </div>
   );
 }

@@ -45,7 +45,7 @@ const MobileInvitationList = ({
           <Button
             type="button"
             color="violet-white"
-            className="text-taskify-md-medium m-1.5 px-[45px] py-[5px]"
+            className="text-taskify-md-medium m-1.5 px-[45px] py-[5px] whitespace-nowrap"
             onClick={() => {
               mutate({ invitationId: invitation.id, inviteAccepted: true });
             }}
@@ -56,7 +56,7 @@ const MobileInvitationList = ({
           <Button
             type="button"
             color="white-violet"
-            className="border-taskify-neutral-300 text-taskify-md-medium m-1.5 border-[1px] px-[45px] py-[5px]"
+            className="border-taskify-neutral-300 text-taskify-md-medium m-1.5 border-[1px] px-[45px] py-[5px] whitespace-nowrap"
             onClick={() => {
               mutate({ invitationId: invitation.id, inviteAccepted: false });
             }}

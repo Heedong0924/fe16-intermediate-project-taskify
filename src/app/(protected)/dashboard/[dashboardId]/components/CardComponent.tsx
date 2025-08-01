@@ -22,7 +22,7 @@ const CardComponent = ({
   return (
     <button
       type="button"
-      className="bg-taskify-neutral-0 border-taskify-neutral-300 hover:bg-taskify-neutral-200 relative my-4 flex w-full cursor-pointer flex-col gap-1 rounded-lg border-1 p-4 md:flex-row md:gap-2 lg:flex-col"
+      className="bg-taskify-neutral-0 border-taskify-neutral-300 hover:bg-taskify-neutral-200 relative my-4 flex w-full cursor-pointer flex-col gap-4 rounded-lg border-1 p-4 md:flex-row md:gap-2 lg:flex-col"
       onClick={() =>
         openDialog({
           dialogComponent: (
@@ -37,7 +37,7 @@ const CardComponent = ({
       }
     >
       {card.imageUrl && (
-        <div className="relative m-auto h-[152px] w-[260px] shrink-0 lg:h-[160px] lg:w-[274px]">
+        <div className="relative m-auto aspect-video w-[calc(100%-32px)] shrink-0 md:w-[260px] lg:h-[160px] lg:w-[274px]">
           <Image
             src={card.imageUrl}
             alt="카드 이미지"

@@ -16,7 +16,7 @@ export default function MyPage() {
   const isSkeletonVisible = isPending || isError;
 
   return (
-    <div className="min-h-screen bg-[var(--gray-FAFAFA)] p-[20px]">
+    <div className="min-h-screen bg-[var(--gray-FAFAFA)] p-[20px] pt-[80px]">
       {/* 뒤로가기 */}
       <nav className="mb-[10px] sm:mb-[25px]">
         <button

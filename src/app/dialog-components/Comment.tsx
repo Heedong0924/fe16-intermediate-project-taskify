@@ -54,7 +54,11 @@ const Comment = ({ className, comment, cardId }: CommentProps) => {
 
   return (
     <div className={className}>
-      <AvatarProfile userName={comment.author.nickname} size="sm" />
+      <AvatarProfile
+        userName={comment.author.nickname}
+        size="sm"
+        profileImg={comment.author.profileImageUrl}
+      />
       <div className="flex grow-1 flex-col gap-2">
         <div className="flex items-end gap-2">
           <span className="text-taskify-xs-semibold md:text-taskify-md-semibold text-taskify-neutral-700">

@@ -120,8 +120,9 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
     mutationFn: ({ cardId, data }) => {
       return updateCard(cardId, data);
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['cards'] });
+      queryClient.invalidateQueries({ queryKey: ['detailCard', data.id] });
       goBack();
     },
     onError: (error) => {

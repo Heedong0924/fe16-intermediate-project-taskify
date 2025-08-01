@@ -76,20 +76,18 @@ const DashboardList = () => {
   }, []);
 
   return (
-    <>
-      <div className="mx-auto w-full max-w-[1000px] lg:mt-1">
-        <div className="mt-4.5 grid grid-cols-1 justify-items-center gap-2.5 md:grid-cols-2 lg:grid-cols-5">
-          <NewDashboardCard />
-          {dashboards.map((dashboard) => (
-            <DashboardListItem
-              key={dashboard.id}
-              dashboard={dashboard}
-              members={membersMap[dashboard.id] ?? []}
-            />
-          ))}
-        </div>
+    <div className="mx-auto w-full max-w-[1000px] lg:mt-1">
+      <div className="mt-4.5 grid grid-cols-1 justify-items-center gap-2.5 md:grid-cols-2 lg:grid-cols-5">
+        <NewDashboardCard />
+        {dashboards.map((dashboard) => (
+          <DashboardListItem
+            key={dashboard.id}
+            dashboard={dashboard}
+            members={membersMap[dashboard.id] ?? []}
+          />
+        ))}
       </div>
-      <div className="absolute top-[645px] left-1/2 flex -translate-x-1/2 transform justify-center md:top-[408px] md:left-[660px] md:translate-x-0 md:transform-none lg:top-[370px] lg:left-[1190px]">
+      <div className="justfy-end absolute right-5.5 bottom-4 flex md:bottom-3 lg:bottom-5">
         <PaginationButton
           page={page}
           size={itemsPerPage}
@@ -97,7 +95,7 @@ const DashboardList = () => {
           onPageChange={setPage}
         />
       </div>
-    </>
+    </div>
   );
 };
 
