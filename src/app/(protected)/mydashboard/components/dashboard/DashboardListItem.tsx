@@ -32,13 +32,15 @@ const DashboardListItem = ({ dashboard, members }: DashboardListItemProps) => {
       }}
       className="group relative flex min-h-[58px] w-[290px] cursor-pointer flex-col items-start justify-between gap-2 rounded-lg border p-4 transition hover:shadow-sm md:min-h-[68px] md:w-[275px] md:flex-row lg:min-h-[175px] lg:w-[175px] lg:flex-col"
     >
-      <DashboardHeader
-        title={dashboard.title}
-        color={dashboard.color}
-        createdByMe={dashboard.createdByMe}
-      />
-      <div className="hidden transition-all duration-200 group-hover:opacity-100 md:absolute md:top-5 md:left-44 md:group-hover:block lg:relative lg:top-auto lg:left-auto lg:-mt-6 lg:block">
-        <MemberAvatars members={members} />
+      <div className="flex w-full items-center justify-between md:flex-row lg:h-full lg:flex-col lg:items-start lg:justify-between">
+        <DashboardHeader
+          title={dashboard.title}
+          color={dashboard.color}
+          createdByMe={dashboard.createdByMe}
+        />
+        <div className="hidden transition-all duration-200 group-hover:opacity-100 md:group-hover:block lg:mt-auto lg:block">
+          <MemberAvatars members={members} />
+        </div>
       </div>
       <div className="hidden lg:mb-2 lg:block">
         <MemberCountText count={members?.length ?? 0} />

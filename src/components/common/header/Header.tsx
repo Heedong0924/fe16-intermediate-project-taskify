@@ -113,7 +113,7 @@ const Header = () => {
           </div>
 
           {/* 페이지 타이틀 */}
-          <h1 className="text-taskify-lg-bold lg:text-taskify-xl-bold text-taskify-neutral-700">
+          <h1 className="text-taskify-lg-bold lg:text-taskify-xl-bold text-taskify-neutral-700 max-w-[200px] truncate md:max-w-[300px] lg:max-w-[400px]">
             {headerTitle}
           </h1>
         </div>
