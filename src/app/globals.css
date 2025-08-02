@@ -28,6 +28,26 @@
   --color-taskify-neutral-200: var(--gray-EEEEEE);
   --color-taskify-neutral-100: var(--gray-FAFAFA);
   --color-taskify-neutral-0: var(--white-FFFFFF);
+
+  --color-taskify-dark-bg: #1b1a1f;
+  --color-taskify-dark-modal: #242429;
+  --color-taskify-dark-stroke: #676975;
+  --color-taskify-black-100: #000000;
+  --color-taskify-black-200: #131215;
+  --color-taskify-black-300: #201f23;
+  --color-taskify-black-400: #262629;
+  --color-taskify-black-500: #333236;
+  --color-taskify-black-600: #4b4b4b;
+
+  --color-taskify-gray-100: #3c3c41;
+  --color-taskify-gray-200: #49474f;
+  --color-taskify-gray-300: #524f5b;
+  --color-taskify-gray-400: #5b5964;
+  --color-taskify-gray-500: #787486;
+  --color-taskify-gray-600: #a39fb2;
+  --color-taskify-gray-700: #d6d5d9;
+  --color-taskify-gray-800: #ececee;
+  --color-taskify-gray-900: #f8f7fa;
 }
 
 /*
