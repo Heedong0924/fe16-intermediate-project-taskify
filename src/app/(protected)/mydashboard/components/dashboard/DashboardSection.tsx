@@ -27,7 +27,7 @@ const DashboardSection = () => {
 
   if (isPending) {
     return (
-      <div className="bg-taskify-neutral-0 mb-10 flex h-[550px] w-[330px] flex-col rounded-2xl p-6 px-[15px] md:mt-3 md:h-[360px] md:w-[620px] lg:mt-5 lg:h-[330px] lg:w-[1022px]">
+      <div className="bg-taskify-neutral-0 mb-10 flex h-[550px] w-full max-w-[330px] flex-col rounded-2xl p-6 px-[15px] md:mt-3 md:h-[360px] md:w-full md:max-w-[620px] lg:mt-5 lg:h-[330px] lg:w-full lg:max-w-[1022px]">
         <h1 className="text-taskify-2xl-bold text-taskify-neutral-700 mb-6 md:ml-4 lg:ml-4">
           대시보드
         </h1>
@@ -40,7 +40,7 @@ const DashboardSection = () => {
               (id) => (
                 <div
                   key={id}
-                  className="flex min-h-[58px] w-[290px] flex-col items-start justify-between gap-2 rounded-lg border p-4 md:min-h-[68px] md:w-[275px] md:flex-row lg:min-h-[175px] lg:w-[175px] lg:flex-col"
+                  className="flex min-h-[58px] w-full max-w-[290px] flex-col items-start justify-between gap-2 rounded-lg border p-4 md:min-h-[68px] md:w-full md:max-w-[275px] md:flex-row lg:min-h-[165px] lg:w-[165px] lg:flex-col"
                 >
                   {/* 2. 대시보드 카드 타이틀 스켈레톤 */}
                   <div className="flex items-center gap-2 md:flex-1 lg:w-full">
@@ -69,7 +69,7 @@ const DashboardSection = () => {
 
   // 기존 대시보드 목록이 없을 시 새로운 대시보드 만들 수 있는 버튼 출력
   return (
-    <div className="bg-taskify-neutral-0 relative mb-10 flex h-[550px] w-[330px] flex-col rounded-2xl p-6 px-[15px] md:mt-3 md:h-[360px] md:w-[620px] lg:mt-5 lg:h-[330px] lg:w-[1022px]">
+    <div className="bg-taskify-neutral-0 relative mb-10 flex h-[550px] w-full max-w-[330px] flex-col rounded-2xl p-6 px-[15px] md:mt-3 md:h-[360px] md:w-full md:max-w-[620px] lg:mt-5 lg:h-[330px] lg:w-full lg:max-w-[1022px]">
       <h1 className="text-taskify-2xl-bold text-taskify-neutral-700 md:ml-4 lg:ml-4">
         대시보드
       </h1>

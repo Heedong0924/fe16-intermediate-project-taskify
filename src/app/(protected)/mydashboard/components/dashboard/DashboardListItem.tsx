@@ -30,7 +30,7 @@ const DashboardListItem = ({ dashboard, members }: DashboardListItemProps) => {
           router.push(`/dashboard/${dashboard.id}`);
         }
       }}
-      className="group relative flex min-h-[58px] w-[290px] cursor-pointer flex-col items-start justify-between gap-2 rounded-lg border p-4 transition hover:shadow-sm md:min-h-[68px] md:w-[275px] md:flex-row lg:min-h-[175px] lg:w-[175px] lg:flex-col"
+      className="group relative flex min-h-[58px] w-full max-w-[290px] cursor-pointer flex-col items-start justify-between gap-2 rounded-lg border p-4 transition hover:shadow-sm md:min-h-[68px] md:w-full md:max-w-[275px] md:flex-row lg:min-h-[165px] lg:w-[165px] lg:flex-col"
     >
       <div className="flex w-full items-center justify-between md:flex-row lg:h-full lg:flex-col lg:items-start lg:justify-between">
         <DashboardHeader

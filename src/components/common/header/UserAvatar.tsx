@@ -97,7 +97,9 @@ const UserAvatar = () => {
 
       {isOpen && (
         <div
-          className="absolute top-full left-0 z-[9999] mt-2.5 rounded-md border border-gray-200 bg-white shadow-md"
+          className={`absolute top-full z-[9999] mt-2.5 rounded-md border border-gray-200 bg-white shadow-md ${
+            isMobile ? 'right-0' : 'left-0'
+          }`}
           style={{ width: `${menuWidth}px` }}
         >
           {menuItems.map((item) => (
