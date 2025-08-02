@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
-import MemberAvatars from '@/app/mydashboard/components/dashboard/MemberAvatars';
+import MemberAvatars from '@/app/(protected)/mydashboard/components/dashboard/MemberAvatars';
 import useIsMobile from '@/hooks/useIsMobile';
 import { getMyInfo } from '@/lib/api/auth';
 import { getDashboardMembers } from '@/lib/api/dashboardMemberService';
@@ -113,7 +113,7 @@ const Header = () => {
           </div>
 
           {/* 페이지 타이틀 */}
-          <h1 className="text-taskify-lg-bold lg:text-taskify-xl-bold text-taskify-neutral-700">
+          <h1 className="text-taskify-lg-bold lg:text-taskify-xl-bold text-taskify-neutral-700 max-w-[200px] truncate md:max-w-[300px] lg:max-w-[400px]">
             {headerTitle}
           </h1>
         </div>

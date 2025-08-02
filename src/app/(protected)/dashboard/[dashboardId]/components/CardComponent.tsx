@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 
-import caleandar from '@/../public/images/icon/calendar.svg';
 import { TagChip } from '@/components/common/Chips';
 import TaskCardDialog from '@/components/common/dialog/TaskCardDialog';
 import { useDialogStore } from '@/stores/useDialogStore';
@@ -11,12 +10,12 @@ import DetailCard from '@/types/DetailCard';
 const CardComponent = ({
   card,
   dashboardId,
-  columId,
+  columnId,
   columnName,
 }: {
   card: DetailCard;
   dashboardId: number;
-  columId: number;
+  columnId: number;
   columnName: string;
 }) => {
   const { openDialog } = useDialogStore();
@@ -29,7 +28,7 @@ const CardComponent = ({
           dialogComponent: (
             <TaskCardDialog
               dashboardId={dashboardId}
-              columnId={columId}
+              columnId={columnId}
               cardId={card.id}
               columnName={columnName}
             />
@@ -57,8 +56,8 @@ const CardComponent = ({
         {card.dueDate && (
           <div className="text-taskify-xs-medium text-taskify-neutral-500 flex flex-1 items-end gap-[6px]">
             <Image
-              src={caleandar}
-              alt="caleandar"
+              src="/images/icon/calendar.svg"
+              alt="calendar"
               className="h-[14px] w-[14px] md:h-[18px] md:w-[18px]"
               width={14}
               height={14}
