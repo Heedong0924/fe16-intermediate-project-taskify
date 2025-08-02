@@ -12,6 +12,7 @@ interface InvitationProps {
   invitation: Invitation;
   searchTerm: string;
   observerRef: React.Ref<HTMLTableRowElement>;
+  tableColumns?: string;
 }
 
 // 검색 시 키워드 두꺼운 보라색으로 하이라이팅
@@ -36,6 +37,7 @@ const InvitationListItem = ({
   invitation,
   searchTerm,
   observerRef,
+  tableColumns = 'md:w-2/4 lg:w-3/6',
 }: InvitationProps) => {
   const { dashboard, inviter, createdAt } = invitation;
   const timeAgo = useTimeAgo(createdAt);
@@ -54,7 +56,9 @@ const InvitationListItem = ({
           isRemoving ? 'opacity-0' : 'opacity-100'
         }`}
       >
-        <td className="text-taskify-lg-regular text-taskify-neutral-700 truncate md:w-2/4 lg:w-3/6">
+        <td
+          className={`text-taskify-lg-regular text-taskify-neutral-700 truncate ${tableColumns}`}
+        >
           {highlightText(dashboard.title, searchTerm)}
         </td>
         <td className="text-taskify-lg-regular text-taskify-neutral-700 md:w-1/4 lg:w-1/6">

@@ -15,6 +15,7 @@ import NewDashboardCard from './NewDashboardCard';
 const DashboardList = () => {
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(4);
+  const [gridCols, setGridCols] = useState('lg:grid-cols-5');
   const [membersMap, setMembersMap] = useState<Record<number, Member[]>>({});
 
   const { data, isPending, isError, error } = useQuery({
@@ -65,8 +66,14 @@ const DashboardList = () => {
         setItemsPerPage(5); // 모바일
       } else if (width < 1024) {
         setItemsPerPage(5); // 태블릿
+      } else if (width >= 1300) {
+        // PC 큰 화면: 새로운 버튼 + 카드 4개
+        setItemsPerPage(4);
+        setGridCols('lg:grid-cols-5');
       } else {
-        setItemsPerPage(4); // 데스크탑
+        // PC 작은 화면: 새로운 버튼 + 카드 3개
+        setItemsPerPage(3);
+        setGridCols('lg:grid-cols-4');
       }
     };
 
@@ -77,7 +84,9 @@ const DashboardList = () => {
 
   return (
     <div className="mx-auto w-full max-w-[1000px] lg:mt-1">
-      <div className="mt-4.5 grid grid-cols-1 justify-items-center gap-2.5 md:grid-cols-2 lg:grid-cols-5">
+      <div
+        className={`mt-4.5 grid grid-cols-1 justify-items-center gap-2.5 md:grid-cols-2 ${gridCols}`}
+      >
         <NewDashboardCard />
         {dashboards.map((dashboard) => (
           <DashboardListItem
@@ -87,7 +96,7 @@ const DashboardList = () => {
           />
         ))}
       </div>
-      <div className="justfy-end absolute right-5.5 bottom-4 flex md:bottom-3 lg:bottom-5">
+      <div className="absolute right-5.5 bottom-4 flex justify-end md:bottom-3 lg:bottom-5">
         <PaginationButton
           page={page}
           size={itemsPerPage}

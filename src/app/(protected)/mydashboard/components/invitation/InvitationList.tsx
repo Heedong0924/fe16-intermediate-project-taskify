@@ -22,6 +22,7 @@ const InvitationList = ({
 }: InvitationProps) => {
   const observerEl = useRef<HTMLTableRowElement | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [tableColumns, setTableColumns] = useState('md:w-2/4 lg:w-3/6');
 
   const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteQuery({
     queryKey: ['invitations', searchTerm],
@@ -86,7 +87,19 @@ const InvitationList = ({
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      const width = window.innerWidth;
+      setIsMobile(width < 768);
+
+      // 테이블 컬럼 너비 조정
+      if (width >= 1024) {
+        if (width >= 1200) {
+          // 큰 화면: 더 넓은 간격
+          setTableColumns('md:w-2/4 lg:w-4/6');
+        } else {
+          // 작은 PC 화면: 좁은 간격
+          setTableColumns('md:w-2/4 lg:w-3/6');
+        }
+      }
     };
 
     checkMobile(); // 초기 실행
@@ -127,7 +140,9 @@ const InvitationList = ({
             </th>
           </tr>
           <tr>
-            <th className="text-taskify-lg-regular text-taskify-neutral-400 md:w-2/4 lg:w-3/6">
+            <th
+              className={`text-taskify-lg-regular text-taskify-neutral-400 ${tableColumns}`}
+            >
               이름
             </th>
             <th className="text-taskify-lg-regular text-taskify-neutral-400 md:w-1/4 lg:w-1/6">
@@ -150,6 +165,7 @@ const InvitationList = ({
                 invitation={invitation}
                 searchTerm={searchTerm}
                 observerRef={isLast ? observerEl : null}
+                tableColumns={tableColumns}
               />
             );
           })}
