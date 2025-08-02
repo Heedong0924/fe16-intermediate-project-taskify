@@ -22,6 +22,7 @@ interface DialogStateContent {
 interface DialogState extends DialogStateContent {
   isOpen: boolean;
   stateHistory: DialogStateContent[];
+  openCount: number;
 
   /**
    * @method openDialog Dialog를 활성화하는 액션 함수
@@ -38,15 +39,21 @@ interface DialogState extends DialogStateContent {
 
   /** @method goback 이전 Dialog로 이동하는 액션 함수 */
   goBack: () => void;
+
+  popStateGoBack: () => void;
+  popStateCloseDialog: () => void;
 }
 
-export const useDialogStore = create<DialogState>((set) => ({
+export const useDialogStore = create<DialogState>((set, get) => ({
   isOpen: false,
   dialogComponent: null,
   stateHistory: [],
+  openCount: 0,
   data: null,
 
   openDialog: ({ dialogComponent, isNewOpen = false }) => {
+    window.history.pushState({ isDialog: true }, '', null);
+
     set((prev) => {
       const newHistory = {
         isOpen: prev.isOpen,
@@ -66,14 +73,28 @@ export const useDialogStore = create<DialogState>((set) => ({
         stateHistory: prev.isOpen
           ? [...prev.stateHistory, newHistory]
           : prev.stateHistory,
+        openCount: prev.openCount + 1,
       };
     });
   },
 
   closeDialog: () => {
+    const { openCount } = get();
+
+    if (
+      window.history.state &&
+      window.history.state.isDialog &&
+      openCount > 0
+    ) {
+      window.history.go(-openCount);
+    }
+  },
+
+  popStateCloseDialog: () => {
     set({
       isOpen: false,
       stateHistory: [],
+      openCount: 0,
     });
     setTimeout(() => {
       set({
@@ -83,20 +104,27 @@ export const useDialogStore = create<DialogState>((set) => ({
   },
 
   goBack: () => {
+    window.history.back();
+  },
+
+  popStateGoBack: () => {
     set((prev) => {
+      if (prev.stateHistory.length === 0) {
+        return {
+          isOpen: false,
+          dialogComponent: null,
+          stateHistory: [],
+          openCount: 0,
+        };
+      }
+
       const history = [...prev.stateHistory];
       const lastState = history.pop();
 
-      if (lastState) {
-        return {
-          ...lastState,
-          stateHistory: history,
-        };
-      }
       return {
-        isOpen: false,
-        dialogComponent: null,
-        stateHistory: [],
+        ...lastState,
+        stateHistory: history,
+        openCount: prev.openCount - 1,
       };
     });
   },

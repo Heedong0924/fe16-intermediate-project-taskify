@@ -109,7 +109,7 @@ const TaskCardDialog = ({
         />
       ) : (
         <div className="col-start-1 col-end-5 gap-4">
-          <div className="text-taskify-xs-normal md:text-taskify-md-regular">
+          <div className="text-taskify-xs-normal md:text-taskify-md-regular whitespace-pre-wrap">
             {data?.description}
           </div>
           {data?.imageUrl && (

@@ -52,7 +52,7 @@ export default function Home() {
             <PointCard
               className="md:mx-auto md:w-full md:max-w-192 xl:h-150 xl:max-w-none"
               pointNum={1}
-              imageUrl="https://placehold.co/600x500/F1EFFD/760DDE.jpg?text=<Task Management>"
+              imageUrl="/images/point1.png"
               imagePosition="bottom-right"
               aos={{
                 'data-aos': 'zoom-out-right',
@@ -66,7 +66,7 @@ export default function Home() {
             <PointCard
               className="md:mx-auto md:w-full md:max-w-192 xl:h-150 xl:max-w-none"
               pointNum={2}
-              imageUrl="https://placehold.co/440x500/F1EFFD/760DDE.jpg?text=<Add a task>"
+              imageUrl="/images/point2.png"
               imagePosition="bottom"
               aos={{
                 'data-aos': 'zoom-out-left',
@@ -91,7 +91,7 @@ export default function Home() {
             <SettingCard
               className="w-full"
               title="대시보드 설정"
-              imageUrl="https://placehold.co/600x400/F1EFFD/760DDE.jpg?text=<Dashboard>&bg=0000FF&text_color=FFFFFF"
+              imageUrl="/images/setting1.png"
               aos={{
                 'data-aos': 'fade-down',
                 'data-aos-delay': '200',
@@ -103,7 +103,7 @@ export default function Home() {
             <SettingCard
               className="w-full"
               title="초대"
-              imageUrl="https://placehold.co/600x400/F1EFFD/760DDE.jpg?text=<Invitation>"
+              imageUrl="/images/setting2.png"
               aos={{
                 'data-aos': 'fade-down',
                 'data-aos-delay': '400',
@@ -115,7 +115,7 @@ export default function Home() {
             <SettingCard
               className="w-full"
               title="구성원"
-              imageUrl="https://placehold.co/600x400/F1EFFD/760DDE.jpg?text=<Member>"
+              imageUrl="/images/setting3.png"
               aos={{
                 'data-aos': 'fade-down',
                 'data-aos-delay': '600',
