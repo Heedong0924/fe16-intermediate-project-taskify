@@ -29,6 +29,7 @@ export default function MyPage() {
             alt="돌아가기"
             width={20}
             height={20}
+            className="dark:opacity-80 dark:invert"
           />
           돌아가기
         </button>

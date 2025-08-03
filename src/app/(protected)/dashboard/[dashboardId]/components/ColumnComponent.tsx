@@ -182,7 +182,7 @@ const ColumnComponent = ({
               })
             }
             color="white-black"
-            className="btn-addTodo mt-5 mb-4 shrink-0 cursor-pointer"
+            className="btn-addTodo dark:bg-taskify-black-400 hover:dark:bg-taskify-gray-100 dark:border-taskify-gray-200 mt-5 mb-4 shrink-0 cursor-pointer"
           >
             <AddCountChip size="sm" />
           </Button>

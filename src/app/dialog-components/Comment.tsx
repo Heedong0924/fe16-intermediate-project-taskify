@@ -61,7 +61,7 @@ const Comment = ({ className, comment, cardId }: CommentProps) => {
       />
       <div className="flex grow-1 flex-col gap-2">
         <div className="flex items-end gap-2">
-          <span className="text-taskify-xs-semibold md:text-taskify-md-semibold text-taskify-neutral-700">
+          <span className="text-taskify-xs-semibold md:text-taskify-md-semibold text-taskify-neutral-700 dark:text-taskify-gray-700">
             {comment.author.nickname}
           </span>
           <span className="text-taskify-xs-normal md:text-taskify-xs-normal text-taskify-neutral-400 text-[10px]">

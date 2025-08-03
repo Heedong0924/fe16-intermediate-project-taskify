@@ -112,7 +112,7 @@ export default function DashboardInvitations({
                     <Button
                       onClick={() => deleteMutation.mutate(invitation.id)}
                       color="white-violet"
-                      className="btn-one border-taskify-neutral-300 !rounded-[4px] border text-[12px] md:!text-[14px]"
+                      className="btn-one border-taskify-neutral-300 dark:bg-taskify-gray-100 dark:hover:bg-taskify-gray-100 dark:text-taskify-gray-700 !rounded-[4px] border text-[12px] md:!text-[14px] dark:border-none"
                     >
                       취소
                     </Button>

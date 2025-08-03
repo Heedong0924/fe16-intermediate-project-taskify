@@ -64,7 +64,7 @@ const TaskDialogCreateCommentForm = ({
       </p>
       <form onSubmit={handleCommentSubmit}>
         <textarea
-          className="border-taskify-neutral-300 text-taskify-xs-normal md:text-taskify-md-regular dialog-scrollable-content w-full resize-none rounded-lg border px-3 py-3"
+          className="border-taskify-neutral-300 text-taskify-xs-normal md:text-taskify-md-regular dialog-scrollable-content dark:border-taskify-gray-300 w-full resize-none rounded-lg border px-3 py-3"
           placeholder="댓글 작성하기"
           rows={3}
           value={commentValue}
@@ -72,12 +72,14 @@ const TaskDialogCreateCommentForm = ({
           onKeyDown={handleKeyDown}
         />
         <Button
-          className="bg-taskify-neutral-0 hover:bg-taskify-neutral-0 text-taskify-violet-primary border-taskify-neutral-300 absolute right-4 bottom-4 cursor-pointer border"
+          className="bg-taskify-neutral-0 hover:bg-taskify-neutral-0 text-taskify-violet-primary border-taskify-neutral-300 dark:bg-taskify-gray-100 dark:hover:bg-taskify-gray-100 absolute right-4 bottom-4 cursor-pointer border dark:border-none"
           type="submit"
           disabled={isPending}
           onClick={handleCommentSubmitClick}
         >
-          <span className="text-taskify-xs-medium">입력</span>
+          <span className="text-taskify-xs-medium dark:text-taskify-gray-700">
+            입력
+          </span>
         </Button>
       </form>
     </div>

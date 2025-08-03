@@ -62,7 +62,7 @@ const TaskCardDialogControlArea = ({
       />
       <DialogClose>
         <Image
-          className="cursor-pointer"
+          className="cursor-pointer dark:opacity-80 dark:invert"
           src={closeBtn}
           alt="다이얼로그 닫기"
         />

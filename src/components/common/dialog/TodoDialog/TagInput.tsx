@@ -121,7 +121,7 @@ export function TagInput({
   return (
     <div className={`tag-input-container ${className}`}>
       {/* 태그 표시 영역 */}
-      <div className="flex min-h-[44px] flex-wrap gap-2 rounded-lg border border-gray-200 bg-white p-3 focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500">
+      <div className="dark:bg-taskify-black-300 dark:text-taskify-gray-700 flex min-h-[44px] flex-wrap gap-2 rounded-lg border border-gray-200 bg-white p-3 focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500">
         {/* 기존 태그들 렌더링 */}
         {currentTags.map((tag) => (
           <button

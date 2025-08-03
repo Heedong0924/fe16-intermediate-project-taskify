@@ -360,7 +360,7 @@
 
   /* 마이페이지 이메일 인풋 스타일 */
   .input-email label {
-    @apply text-taskify-gray-300!;
+    @apply text-taskify-gray-300! dark:text-taskify-gray-700!;
   }
   .input-email input {
     @apply text-taskify-neutral-400;
