@@ -20,9 +20,9 @@ const ThemeChanger = () => {
   }
 
   const buttonClasses = clsx(
-    'group fixed right-6 bottom-6 z-10 flex h-14 w-14 cursor-pointer items-center justify-center rounded-full border-3 shadow-lg transition-all duration-200 hover:opacity-100 md:h-16 md:w-16 overflow-hidden',
+    'group fixed right-6 bottom-6 z-10 flex h-14 w-14 cursor-pointer items-center justify-center rounded-full border-3 shadow-lg transition-all duration-200 opacity-50 hover:opacity-100 md:h-16 md:w-16 overflow-hidden',
     {
-      'border-orange-400 bg-gradient-to-br from-yellow-200 to-yellow-400 opacity-50':
+      'border-orange-400 bg-gradient-to-br from-yellow-200 to-yellow-400':
         resolvedTheme === 'light',
       'dark:border-blue-50 dark:bg-gradient-to-br dark:from-blue-400 dark:to-blue-600':
         resolvedTheme === 'dark',
