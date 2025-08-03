@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormEvent } from 'react';
 
 import { Button } from '@/components/ui/Button';
@@ -22,11 +22,15 @@ const ConfirmTaskCardDeletionDialog = ({
   cardId,
 }: ConfirmColumnDeletionDialogProps) => {
   const { openDialog, closeDialog, goBack } = useDialogStore();
+  const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
     mutationFn: deleteCard,
     onSuccess: () => {
       closeDialog();
+      queryClient.invalidateQueries({
+        queryKey: ['cards'],
+      });
     },
     onError: (_error) => {
       openDialog({
