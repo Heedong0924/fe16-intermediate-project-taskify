@@ -65,7 +65,7 @@ export default function DashboardMembers({
           </div>
         ) : (
           <>
-            <h2 className="px-[20px] text-base text-[var(--gray-D9D9D9)] md:px-[28px] md:text-[16px]">
+            <h2 className="text-taskify-neutral-300 px-[20px] text-base md:px-[28px] md:text-[16px]">
               이름
             </h2>
             <ul className="divide-y">
@@ -83,7 +83,7 @@ export default function DashboardMembers({
                       // 경고 모달창 추가하기
                       onClick={() => deleteMutation.mutate(member.id)}
                       color="white-violet"
-                      className="btn-one !rounded-[4px] border border-[var(--gray-D9D9D9)] text-[12px] md:!text-[14px]"
+                      className="btn-one border-taskify-neutral-300 !rounded-[4px] border text-[12px] md:!text-[14px]"
                     >
                       삭제
                     </Button>

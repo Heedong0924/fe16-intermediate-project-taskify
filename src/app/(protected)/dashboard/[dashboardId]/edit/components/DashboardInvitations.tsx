@@ -85,7 +85,7 @@ export default function DashboardInvitations({
               />
               <span className="h-36px">초대하기</span>
             </Button>
-            <h2 className="col-start-1 row-start-2 text-base text-[var(--gray-D9D9D9)] md:text-[16px]">
+            <h2 className="text-taskify-neutral-300 col-start-1 row-start-2 text-base md:text-[16px]">
               이메일
             </h2>
           </>
@@ -112,7 +112,7 @@ export default function DashboardInvitations({
                     <Button
                       onClick={() => deleteMutation.mutate(invitation.id)}
                       color="white-violet"
-                      className="btn-one !rounded-[4px] border border-[var(--gray-D9D9D9)] text-[12px] md:!text-[14px]"
+                      className="btn-one border-taskify-neutral-300 !rounded-[4px] border text-[12px] md:!text-[14px]"
                     >
                       취소
                     </Button>
