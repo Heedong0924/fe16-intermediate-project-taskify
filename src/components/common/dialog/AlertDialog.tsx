@@ -55,14 +55,15 @@ const AlertDialog = ({
           className="bg-taskify-violet-primary hover:bg-taskify-violet h-auto w-full cursor-pointer"
           // onClick={isGoBack ? goBack : closeDialog}
           onClick={() => {
-            if (isGoBack) return goBack();
-
+            if (isGoBack) goBack();
             if (navigate) {
-              router.push(navigate);
-              return closeDialog();
+              closeDialog();
+              setTimeout(() => {
+                router.push(navigate);
+              }, 100);
+            } else {
+              closeDialog();
             }
-
-            return closeDialog();
           }}
         >
           <span className="text-taskify-md-semibold text-taskify-neutral-0 md:text-taskify-lg-medium">
