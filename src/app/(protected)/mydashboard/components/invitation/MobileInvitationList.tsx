@@ -25,18 +25,18 @@ const MobileInvitationList = ({
   return (
     <div className="border-b px-2 py-4" ref={observerRef}>
       <div className="flex">
-        <div className="text-taskify-md-regular text-taskify-neutral-400 w-15">
+        <div className="dark:text-taskify-gray-600 text-taskify-md-regular text-taskify-neutral-400 w-15">
           이름
         </div>
-        <p className="text-taskify-md-regular text-taskify-neutral-700 max-w-48 truncate">
+        <p className="text-taskify-md-regular dark:text-taskify-gray-900 text-taskify-neutral-700 max-w-48 truncate">
           {invitation.dashboard.title}
         </p>
       </div>
       <div className="flex">
-        <div className="text-taskify-md-regular text-taskify-neutral-400 w-15">
+        <div className="dark:text-taskify-gray-600 text-taskify-md-regular text-taskify-neutral-400 w-15">
           초대자
         </div>
-        <p className="text-taskify-md-regular text-taskify-neutral-700">
+        <p className="dark:text-taskify-gray-900 text-taskify-md-regular text-taskify-neutral-700">
           {invitation.inviter.nickname}
         </p>
       </div>

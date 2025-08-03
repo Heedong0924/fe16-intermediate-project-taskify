@@ -41,7 +41,7 @@ export default function DashboardEditPage() {
 
   return (
     <ScrollArea className="w-full overflow-auto">
-      <div className="mt-[119px] min-h-screen p-[20px] md:mt-[59px]">
+      <div className="dark:bg-taskify-dark-bg bg-taskify-neutral-100 mt-[119px] min-h-screen p-[20px] md:mt-[59px]">
         {/* 뒤로가기 */}
         <nav className="mb-[10px] md:mb-[25px]">
           <Link

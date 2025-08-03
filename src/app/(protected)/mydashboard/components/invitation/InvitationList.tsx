@@ -129,29 +129,29 @@ const InvitationList = ({
   ) : (
     <div className="px-4">
       <table className="w-full table-fixed text-left">
-        <thead className="bg-taskify-neutral-0 sticky top-0 z-10">
+        <thead className="dark:bg-taskify-black-400 bg-taskify-neutral-0 sticky top-0 z-10">
           <tr>
             <th
               colSpan={4}
               aria-hidden="true"
-              className="bg-taskify-neutral-0 sticky h-6 border-none"
+              className="dark:bg-taskify-black-400 bg-taskify-neutral-0 sticky h-6 border-none"
             >
               &nbsp;
             </th>
           </tr>
           <tr>
             <th
-              className={`text-taskify-lg-regular text-taskify-neutral-400 ${tableColumns}`}
+              className={`dark:text-taskify-gray-600 text-taskify-lg-regular text-taskify-neutral-400 ${tableColumns}`}
             >
               이름
             </th>
-            <th className="text-taskify-lg-regular text-taskify-neutral-400 md:w-1/4 lg:w-1/6">
+            <th className="text-taskify-lg-regular dark:text-taskify-gray-600 text-taskify-neutral-400 md:w-1/4 lg:w-1/6">
               초대자
             </th>
-            <th className="text-taskify-lg-regular text-taskify-neutral-400 hidden lg:table-cell lg:w-1/6">
+            <th className="dark:text-taskify-gray-600 text-taskify-lg-regular text-taskify-neutral-400 hidden lg:table-cell lg:w-1/6">
               초대한 시점
             </th>
-            <th className="text-taskify-lg-regular text-taskify-neutral-400 md:w-1/4 lg:w-1/6">
+            <th className="dark:text-taskify-gray-600 text-taskify-lg-regular text-taskify-neutral-400 md:w-1/4 lg:w-1/6">
               수락 여부
             </th>
           </tr>

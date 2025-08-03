@@ -25,9 +25,9 @@ const InviteButton = () => {
       type="button"
       color="white-black"
       onClick={handleClick}
-      className="h-[30px] w-[73px] px-[12px] py-[6px] text-nowrap md:h-[40px] md:w-[116px] md:px-[16px] md:py-[10px]"
+      className="dark:bg-taskify-gray-100 dark:hover:bg-taskify-gray-100 h-[30px] w-[73px] px-[12px] py-[6px] text-nowrap md:h-[40px] md:w-[116px] md:px-[16px] md:py-[10px] dark:border-none"
     >
-      <div className="text-taskify-neutral-500 text-taskify-md-medium md:text-taskify-lg-medium flex items-center gap-2">
+      <div className="dark:text-taskify-gray-700 text-taskify-neutral-500 text-taskify-md-medium md:text-taskify-lg-medium flex items-center gap-2">
         <CgAddR className="hidden md:inline" />
         <p>초대하기</p>
       </div>

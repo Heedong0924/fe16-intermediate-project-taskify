@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 const NoInvitation = () => {
   return (
-    <div className="flex items-center justify-center">
+    <div className="dark:bg-taskify-black-400 flex items-center justify-center">
       <div className="flex-col justify-items-center">
         <Image
           src="/images/envelope.png"

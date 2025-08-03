@@ -14,7 +14,7 @@ const MobailSizeHeader = () => {
   const { dashboards } = useDashboardStore();
 
   return (
-    <div className="hide-scrollbar bg-taskify-neutral-0 fixed top-15 left-0 z-9 flex h-[60px] w-full items-center gap-1 overflow-x-auto border-b-1 px-3 md:hidden">
+    <div className="hide-scrollbar dark:bg-taskify-dark-bg bg-taskify-neutral-0 fixed top-15 left-0 z-9 flex h-[60px] w-full items-center gap-1 overflow-x-auto border-b-1 px-3 md:hidden">
       <button
         type="button"
         onClick={() =>
@@ -22,7 +22,7 @@ const MobailSizeHeader = () => {
             dialogComponent: <CreateDashboardDialog />,
           })
         }
-        className="hover:bg-taskify-violet-light flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-md"
+        className="dark:bg-taskify-gray-100 hover:bg-taskify-violet-light flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-md"
       >
         <Image src={addBox} alt="add dashboard" width={24} height={24} />
       </button>
@@ -31,7 +31,7 @@ const MobailSizeHeader = () => {
           dashboards.map((dashboard) => (
             <div
               key={dashboard.id}
-              className="hover:bg-taskify-violet-light max-w-40 shrink-0 cursor-pointer rounded-md border-1"
+              className="dark:hover:bg-taskify-gray-100 hover:bg-taskify-violet-light max-w-40 shrink-0 cursor-pointer rounded-md border-1"
             >
               <DashboardCard dashboard={dashboard} className="w-full" />
             </div>

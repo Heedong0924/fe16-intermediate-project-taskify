@@ -80,7 +80,7 @@ const Sidebar = () => {
   const totalCount: number = data?.totalCount || 0;
 
   return (
-    <aside className="text-taskify-neutral-500 bg-taskify-neutral-0 left-0ntop-0 fixed z-40 hidden h-screen w-[160px] shadow-md transition-all duration-300 md:block lg:w-[300px]">
+    <aside className="dark:text-taskify-gray-900 text-taskify-neutral-500 dark:bg-taskify-black-200 bg-taskify-neutral-0 left-0ntop-0 fixed z-40 hidden h-screen w-[160px] shadow-md transition-all duration-300 md:block lg:w-[300px]">
       <div className="px-2 py-5">
         <Link href="/">
           <LogoMd width={110} height={34} />
@@ -92,7 +92,7 @@ const Sidebar = () => {
                 dialogComponent: <CreateDashboardDialog />,
               })
             }
-            className="hover:bg-taskify-violet-light mb-1 flex h-10 w-full cursor-pointer items-center justify-between rounded-sm"
+            className="dark:hover:bg-taskify-gray-100 hover:bg-taskify-violet-light mb-1 flex h-10 w-full cursor-pointer items-center justify-between rounded-sm"
             type="button"
           >
             <div className="text-taskify-md-semibold flex justify-between">
@@ -111,7 +111,7 @@ const Sidebar = () => {
                 <DashboardCard
                   key={dashboard.id}
                   dashboard={dashboard}
-                  className="hover:bg-taskify-violet-light h-[42px] rounded-sm"
+                  className="dark:hover:bg-taskify-gray-100 hover:bg-taskify-violet-light h-[42px] rounded-sm"
                 />
               ))}
             </div>

@@ -20,7 +20,7 @@ const DashboardHeader = ({
     />
 
     {/* 타이틀. md에서 hover하면 제목 길이가 짧게 축약되며 아바타 출력 */}
-    <h2 className="text-taskify-lg-medium text-taskify-neutral-600 max-w-[200px] truncate overflow-hidden md:max-w-[180px] md:group-hover:max-w-[100px] lg:max-w-[100px]">
+    <h2 className="text-taskify-lg-medium text-taskify-neutral-600 dark:text-taskify-gray-900 max-w-[200px] truncate overflow-hidden md:max-w-[180px] md:group-hover:max-w-[100px] lg:max-w-[100px]">
       {title}
     </h2>
 

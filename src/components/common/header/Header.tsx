@@ -97,7 +97,7 @@ const Header = () => {
   const isMobile = useIsMobile();
 
   return (
-    <header className="border-b-taskify-neutral-300 bg-taskify-neutral-0 fixed z-10 flex h-[60px] w-full items-center justify-between border-[1px] md:w-[calc(100%-160px)] lg:w-[calc(100%-300px)]">
+    <header className="dark:border-b-taskify-gray-200 border-b-taskify-neutral-300 dark:bg-taskify-dark-bg bg-taskify-neutral-0 fixed z-10 flex h-[60px] w-full items-center justify-between border-[1px] md:w-[calc(100%-160px)] lg:w-[calc(100%-300px)]">
       <div className="flex h-full w-full items-center justify-between px-4 md:px-7">
         <div className="flex gap-2">
           {/* 모바일에서만 로고 보이기 */}
@@ -113,7 +113,7 @@ const Header = () => {
           </div>
 
           {/* 페이지 타이틀 */}
-          <h1 className="text-taskify-lg-bold lg:text-taskify-xl-bold text-taskify-neutral-700 max-w-[200px] truncate md:max-w-[300px] lg:max-w-[400px]">
+          <h1 className="text-taskify-lg-bold lg:text-taskify-xl-bold text-taskify-neutral-700 dark:text-taskify-gray-900 max-w-[200px] truncate md:max-w-[300px] lg:max-w-[400px]">
             {headerTitle}
           </h1>
         </div>
@@ -126,7 +126,7 @@ const Header = () => {
             <MemberAvatars members={members} type="header" />
           )}
           {/* 구분선 */}
-          <div className="bg-taskify-neutral-300 h-8 w-px" />
+          <div className="dark:bg-taskify-gray-500 bg-taskify-neutral-300 h-8 w-px" />
           {config.showUserAvatar && <UserAvatar />}
         </div>
       </div>
