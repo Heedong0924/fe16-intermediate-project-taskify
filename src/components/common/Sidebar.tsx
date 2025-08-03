@@ -51,7 +51,7 @@ const Sidebar = () => {
 
   if (isLoading) {
     return (
-      <aside className="text-taskify-neutral-500 bg-taskify-neutral-0 fixed z-40 hidden h-screen w-[160px] animate-pulse rounded-md shadow-md transition-all duration-300 md:block lg:w-[300px]">
+      <aside className="text-taskify-neutral-500 bg-taskify-neutral-0 dark:bg-taskify-black-200 fixed z-40 hidden h-screen w-[160px] animate-pulse rounded-md shadow-md transition-all duration-300 md:block lg:w-[300px]">
         <div className="px-2 py-5">
           <Skeleton className="h-[34px] w-[110px] rounded-xl" />
 
