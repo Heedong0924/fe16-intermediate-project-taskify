@@ -68,7 +68,7 @@ export function DateTimePicker({
           variant="outline"
           data-empty={!value}
           className={twMerge(
-            'data-[empty=true]:text-muted-foreground w-full justify-start px-4 py-3 text-left',
+            'data-[empty=true]:text-muted-foreground dark:bg-taskify-black-300 dark:border-taskify-gray-300 dark:text-taskify-gray-700 w-full justify-start px-4 py-3 text-left',
             className,
           )}
         >

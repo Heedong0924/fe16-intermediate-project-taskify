@@ -53,7 +53,7 @@ export const UserSelector = ({
     <div className={className}>
       <label
         htmlFor="column-selector"
-        className="block text-sm font-medium text-gray-700"
+        className="dark:text-taskify-gray-700 block text-sm font-medium text-gray-700"
       >
         담당자
       </label>

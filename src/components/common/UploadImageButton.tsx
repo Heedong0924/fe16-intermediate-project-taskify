@@ -183,7 +183,7 @@ const UploadImageButton = ({
             </div>
           </div>
         ) : (
-          <div className="flex h-full w-full flex-col items-center justify-center bg-gray-50 text-sm text-gray-500">
+          <div className="dark:bg-taskify-black-300 flex h-full w-full flex-col items-center justify-center bg-gray-50 text-sm text-gray-500">
             {isLoading ? (
               <div className="h-6 w-6 animate-spin rounded-full border-2 border-violet-500 border-t-transparent" />
             ) : (

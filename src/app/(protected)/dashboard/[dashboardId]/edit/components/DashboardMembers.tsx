@@ -83,7 +83,7 @@ export default function DashboardMembers({
                       // 경고 모달창 추가하기
                       onClick={() => deleteMutation.mutate(member.id)}
                       color="white-violet"
-                      className="btn-one border-taskify-neutral-300 !rounded-[4px] border text-[12px] md:!text-[14px]"
+                      className="btn-one border-taskify-neutral-300 dark:bg-taskify-gray-100 dark:hover:bg-taskify-gray-100 dark:text-taskify-gray-700 !rounded-[4px] border text-[12px] md:!text-[14px] dark:border-none"
                     >
                       삭제
                     </Button>

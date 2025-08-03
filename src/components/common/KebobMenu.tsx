@@ -41,18 +41,18 @@ export const KebobMenu = ({ menuItems }: KebobMenuProps) => {
       <DropdownMenuTrigger asChild>
         <button
           type="button"
-          className="flex items-center justify-center rounded-md bg-transparent p-2 transition-colors hover:bg-gray-100 focus:outline-none active:bg-gray-100"
+          className="dark:hover:bg-taskify-black-500 flex items-center justify-center rounded-md bg-transparent p-2 transition-colors hover:bg-gray-100 focus:outline-none active:bg-gray-100"
         >
           <CiMenuKebab className="h-5 w-5" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-48 border-1 border-gray-300 bg-white">
+      <DropdownMenuContent className="dark:bg-taskify-black-300 dark:border-taskify-gray-300 w-48 border-1 border-gray-300 bg-white">
         {menuItems.map((item) => (
           <DropdownMenuItem key={item.key} onSelect={item.onSelect}>
             <button
               type="button"
               className={twMerge(
-                'hover:text-bold flex w-full items-center justify-between rounded-md px-4 py-2',
+                'hover:text-bold dark:hover:bg-taskify-black-500 dark:text-taskify-gray-700 dark:hover:text-taskify-gray-700 flex w-full items-center justify-between rounded-md px-4 py-2',
                 variantClasses[item.variant || 'default'],
               )}
             >

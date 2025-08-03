@@ -41,7 +41,7 @@ export default function DashboardEditPage() {
 
   return (
     <ScrollArea className="w-full overflow-auto">
-      <div className="bg-taskify-neutral-100 mt-[119px] min-h-screen p-[20px] md:mt-[59px]">
+      <div className="mt-[119px] min-h-screen p-[20px] md:mt-[59px]">
         {/* 뒤로가기 */}
         <nav className="mb-[10px] md:mb-[25px]">
           <Link
@@ -53,6 +53,7 @@ export default function DashboardEditPage() {
               alt="돌아가기"
               width={20}
               height={20}
+              className="dark:opacity-80 dark:invert"
             />
             돌아가기
           </Link>
