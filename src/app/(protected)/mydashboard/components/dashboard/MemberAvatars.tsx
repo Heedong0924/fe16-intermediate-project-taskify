@@ -29,7 +29,7 @@ const MemberAvatars = ({
         </div>
       ))}
       {rest > 0 && (
-        <div className="bg-muted text-muted-foreground z-10 -ml-2 flex size-[34px] items-center justify-center rounded-full border border-white text-xs font-medium">
+        <div className="dark:bg-taskify-gray-700 dark:text-taskify-gray-300 bg-muted text-muted-foreground dark:border-taskify-gray-300 z-10 -ml-2 flex size-[34px] items-center justify-center rounded-full border-2 border-white text-xs font-medium">
           +{rest}
         </div>
       )}
