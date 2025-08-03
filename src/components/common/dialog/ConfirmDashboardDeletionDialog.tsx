@@ -42,17 +42,19 @@ const ConfirmDashboardDeletionDialog = ({
 
   const content = (
     <DialogContent
-      className="max-w-[327px] px-4 md:max-w-[568px] md:gap-7 md:px-6"
+      className="dark:bg-taskify-dark-modal max-w-[327px] px-4 md:max-w-[568px] md:gap-7 md:px-6"
       showCloseButton={false}
     >
       <DialogHeader className="mt-4 gap-0">
         <DialogTitle className="text-center">
           <p className="text-taskify-neutral-700 text-taskify-2lg-medium md:text-taskify-xl-medium">
-            <b className="text-[var(--violet-5534DA)]">
+            <b className="dark:text-taskify-gray-700 text-[var(--violet-5534DA)]">
               대시보드를 삭제하면 복구할 수 없습니다.
             </b>
             <br />
-            <span className="text-base">관련 데이터도 함께 사라집니다.</span>
+            <span className="dark:text-taskify-gray-700 text-base">
+              관련 데이터도 함께 사라집니다.
+            </span>
           </p>
         </DialogTitle>
         <DialogDescription />
@@ -60,14 +62,14 @@ const ConfirmDashboardDeletionDialog = ({
       <form onSubmit={handleDeleteClick}>
         <DialogFooter className="flex flex-row justify-between">
           <Button
-            className="text-taskify-neutral-500 bg-taskify-neutral-0 border-taskify-neutral-300 hover:bg-taskify-neutral-0 h-auto grow-1 cursor-pointer border-1 py-[14px]"
+            className="text-taskify-neutral-500 bg-taskify-neutral-0 border-taskify-neutral-300 hover:bg-taskify-neutral-0 dark:bg-taskify-gray-100 dark:hover:bg-taskify-gray-100 dark:text-taskify-gray-700 h-auto grow-1 cursor-pointer border-1 py-[14px] dark:border-none"
             type="button"
             onClick={goBack}
           >
             <span className="text-taskify-lg-semibold">취소</span>
           </Button>
           <Button
-            className="bg-taskify-violet-primary h-auto grow-1 cursor-pointer py-[14px] hover:bg-[var(--red-D6173A)]"
+            className="bg-taskify-violet-primary dark:text-taskify-gray-700 h-auto grow-1 cursor-pointer py-[14px] hover:bg-[var(--red-D6173A)]"
             type="submit"
           >
             <span className="text-taskify-lg-semibold">삭제</span>
