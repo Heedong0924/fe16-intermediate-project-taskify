@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { TagChip } from '@/components/common/Chips';
 import TaskCardDialog from '@/components/common/dialog/TaskCardDialog';
 import { AvatarProfile } from '@/components/common/Profile';
-import { useAuthStore } from '@/stores/useAuthStore';
 import { useDialogStore } from '@/stores/useDialogStore';
 import DetailCard from '@/types/DetailCard';
 
@@ -21,7 +20,6 @@ const CardComponent = ({
   columnName: string;
 }) => {
   const { openDialog } = useDialogStore();
-  const { user } = useAuthStore();
 
   return (
     <button
@@ -72,9 +70,9 @@ const CardComponent = ({
       </div>
       <div className="absolute right-4 bottom-4">
         <AvatarProfile
-          userName={user?.nickname || ''}
+          userName={card.assignee?.nickname || ''}
           size="sm"
-          profileImg={user?.profileImageUrl || ''}
+          profileImg={card.assignee?.profileImageUrl || ''}
         />
       </div>
     </button>
