@@ -97,7 +97,7 @@ const UserAvatar = () => {
 
       {isOpen && (
         <div
-          className={`absolute top-full z-[9999] mt-2.5 rounded-md border border-gray-200 bg-white shadow-md ${
+          className={`dark:bg-taskify-gray-100 bg-taskify-neutral-0 absolute top-full z-[9999] mt-2.5 rounded-md border border-gray-200 shadow-md dark:border-none ${
             isMobile ? 'right-0' : 'left-0'
           }`}
           style={{ width: `${menuWidth}px` }}
@@ -106,7 +106,7 @@ const UserAvatar = () => {
             <button
               key={item.id}
               type="button"
-              className="text-taskify-lg-regular text-taskify-neutral-500 w-full px-3 py-2 text-left first:rounded-t-md last:rounded-b-md hover:bg-gray-50 focus:bg-gray-50 focus:outline-none"
+              className="text-taskify-lg-regular dark:text-taskify-gray-900 text-taskify-neutral-500 dark:hover:bg-taskify-gray-200 hover:bg-taskify-neutral-200 w-full cursor-pointer px-3 py-2 text-left first:rounded-t-md last:rounded-b-md focus:bg-gray-50 focus:outline-none"
               onClick={item.onClick}
             >
               {item.label}

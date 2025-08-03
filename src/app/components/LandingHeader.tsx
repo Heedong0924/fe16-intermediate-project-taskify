@@ -21,13 +21,21 @@ const LandingHeader = ({ className }: HTMLAttributes<HTMLDivElement>) => {
     pathname === '/' && (
       <header
         className={clsx(
-          'bg-taskify-neutral-900 text-taskify-neutral-0 flex justify-between px-6 py-4 shadow-2xl shadow-black md:px-10 xl:px-20',
+          'bg-taskify-neutral-0 dark:bg-taskify-neutral-900 text-taskify-neutral-700 dark:text-taskify-neutral-0 flex justify-between px-6 py-4 shadow-2xl md:px-10 xl:px-20 dark:shadow-black',
           className,
         )}
       >
         <Link className="relative inline-block h-7 w-6 md:hidden" href="/">
           <Image
             className="object-contain"
+            src={landingLogoMobile}
+            alt="로고 이미지"
+            fill
+            sizes="24px"
+            priority
+          />
+          <Image
+            className="hidden object-contain dark:block"
             src={landingLogoMobile}
             alt="로고 이미지"
             fill

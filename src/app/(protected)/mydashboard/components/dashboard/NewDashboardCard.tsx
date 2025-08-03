@@ -17,7 +17,7 @@ const NewDashboardCard = () => {
           openDialog({ dialogComponent: <CreateDashboardDialog /> });
         }
       }}
-      className="order-0 flex min-h-[58px] w-full max-w-[290px] cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border p-3 transition hover:shadow-sm md:min-h-[68px] md:w-full md:max-w-[275px] lg:min-h-[165px] lg:w-[165px]"
+      className="dark:bg-taskify-black-400 order-0 flex min-h-[58px] w-full max-w-[290px] cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border p-3 transition hover:shadow-sm md:min-h-[68px] md:w-full md:max-w-[275px] lg:min-h-[165px] lg:w-[165px]"
     >
       <div className="flex flex-row items-center gap-2 md:flex-row lg:flex-col">
         <FaPlus className="text-taskify-neutral-400 h-[15px] w-[15px] md:h-[18px] md:w-[18px] lg:h-[35px] lg:w-[35px]" />

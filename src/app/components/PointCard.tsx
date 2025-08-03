@@ -38,7 +38,7 @@ const PointCard = ({
   return (
     <div
       className={clsx(
-        'bg-taskify-neutral-800 flex flex-col items-center rounded-sm xl:grid xl:grid-cols-2 xl:pt-21',
+        'bg-taskify-neutral-200 dark:bg-taskify-neutral-800 flex flex-col items-center rounded-sm xl:grid xl:grid-cols-2 xl:pt-21',
         className,
       )}
       data-aos={aos?.['data-aos']}
@@ -56,10 +56,10 @@ const PointCard = ({
           pointNum % 2 === 0 && 'xl:order-2',
         )}
       >
-        <h2 className="text-taskify-2lg-medium text-taskify-neutral-400 mb-15 md:mb-25 md:text-[1.375rem] md:leading-6.5">
+        <h2 className="text-taskify-2lg-medium text-taskify-purple dark:text-taskify-neutral-400 mb-15 md:mb-25 md:text-[1.375rem] md:leading-6.5">
           Point {pointNum}
         </h2>
-        <h2 className="text-taskify-neutral-0 text-4xl leading-12.5 font-bold md:mb-55 md:text-5xl md:leading-16 xl:mb-0">
+        <h2 className="text-taskify-neutral-700 dark:text-taskify-neutral-0 text-4xl leading-12.5 font-bold md:mb-55 md:text-5xl md:leading-16 xl:mb-0">
           {children}
         </h2>
       </div>

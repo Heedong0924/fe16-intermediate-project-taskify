@@ -11,7 +11,7 @@ import SettingCard from './components/SettingCard';
 
 export default function Home() {
   return (
-    <main className="bg-taskify-neutral-900 text-taskify-neutral-0 mx-auto my-0">
+    <main className="bg-taskify-neutral-0 dark:bg-taskify-neutral-900 text-taskify-900 dark:text-taskify-neutral-0 mx-auto my-0">
       {/* padding-x container */}
       <div className="px-4 md:px-10 xl:mx-auto xl:max-w-300 xl:px-0">
         {/* grid */}

@@ -69,8 +69,8 @@ const DashboardSection = () => {
 
   // 기존 대시보드 목록이 없을 시 새로운 대시보드 만들 수 있는 버튼 출력
   return (
-    <div className="bg-taskify-neutral-0 relative mb-10 flex h-[550px] w-full max-w-[330px] flex-col rounded-2xl p-6 px-[15px] md:mt-3 md:h-[360px] md:w-full md:max-w-[620px] lg:mt-5 lg:h-[330px] lg:w-full lg:max-w-[1022px]">
-      <h1 className="text-taskify-2xl-bold text-taskify-neutral-700 md:ml-4 lg:ml-4">
+    <div className="bg-taskify-neutral-0 dark:bg-taskify-dark-bg relative mb-10 flex h-[550px] w-full max-w-[330px] flex-col rounded-2xl p-6 px-[15px] md:mt-3 md:h-[360px] md:w-full md:max-w-[620px] lg:mt-5 lg:h-[330px] lg:w-full lg:max-w-[1022px] dark:border-2 dark:border-gray-600">
+      <h1 className="dark:text-taskify-gray-800 text-taskify-2xl-bold text-taskify-neutral-700 md:ml-4 lg:ml-4">
         대시보드
       </h1>
       {hasDashboards ? (

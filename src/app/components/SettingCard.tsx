@@ -20,7 +20,7 @@ const SettingCard = ({
   return (
     <div
       className={clsx(
-        'bg-taskify-neutral-800 max-w-[378px] rounded-sm',
+        'bg-taskify-neutral-200 dark:bg-taskify-neutral-800 max-w-[378px] rounded-sm',
         className,
       )}
       data-aos={aos?.['data-aos']}
@@ -32,7 +32,7 @@ const SettingCard = ({
       data-aos-once={aos?.['data-aos-once']}
       data-aos-anchor-placement={aos?.['data-aos-anchor-placement']}
     >
-      <div className="bg-taskify-neutral-700 flex w-full items-center justify-center p-6">
+      <div className="bg-taskify-neutral-300 dark:bg-taskify-neutral-700 flex w-full items-center justify-center p-6">
         <div className="relative aspect-3/2 w-full overflow-hidden rounded-lg">
           <Image
             className="rounded-lg object-contain"

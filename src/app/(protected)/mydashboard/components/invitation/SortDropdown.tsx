@@ -52,10 +52,12 @@ const SortDropdown = ({
         id="btn"
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="border-taskify-neutral-300 hover:bg-taskify-neutral-50 text-taskify-md-medium w-40 items-center gap-2 rounded-md border bg-white px-3 py-2"
+        className="dark:bg-taskify-gray-100 border-taskify-neutral-300 hover:bg-taskify-neutral-50 text-taskify-md-medium w-40 items-center gap-2 rounded-md border bg-white px-3 py-2 dark:border-none"
       >
         <div className="flex items-center justify-between">
-          <span className="text-taskify-neutral-500">{currentLabel}</span>
+          <span className="dark:text-taskify-gray-700 text-taskify-neutral-500">
+            {currentLabel}
+          </span>
           <span className="text-taskify-neutral-400">
             {currentOrder === 'asc' ? '↑' : '↓'}
           </span>
@@ -76,14 +78,16 @@ const SortDropdown = ({
       </button>
 
       {isOpen && (
-        <div className="border-taskify-neutral-300 absolute top-full left-10 z-20 mt-1 w-40 rounded-md border bg-white shadow-lg">
+        <div className="border-taskify-neutral-300 dark:bg-taskify-gray-100 absolute top-full left-10 z-20 mt-1 w-40 rounded-md border bg-white shadow-lg dark:border-gray-700">
           {sortOptions.map((option) => (
             <button
               key={option.value}
               type="button"
               onClick={() => handleSortClick(option.value)}
-              className={`hover:bg-taskify-neutral-300 text-taskify-md-regular w-full px-3 py-2 text-left first:rounded-t-md last:rounded-b-md ${
-                currentSort === option.value ? 'text-taskify-purple' : ''
+              className={`hover:bg-taskify-neutral-300 dark:hover:bg-taskify-gray-200 text-taskify-md-regular w-full px-3 py-2 text-left first:rounded-t-md last:rounded-b-md ${
+                currentSort === option.value
+                  ? 'dark:text-taskify-gray-500 text-taskify-purple'
+                  : ''
               }`}
             >
               <div className="flex items-center justify-between">

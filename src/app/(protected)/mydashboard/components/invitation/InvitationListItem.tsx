@@ -57,14 +57,14 @@ const InvitationListItem = ({
         }`}
       >
         <td
-          className={`text-taskify-lg-regular text-taskify-neutral-700 truncate ${tableColumns}`}
+          className={`text-taskify-lg-regular text-taskify-neutral-700 dark:text-taskify-gray-900 truncate ${tableColumns}`}
         >
           {highlightText(dashboard.title, searchTerm)}
         </td>
-        <td className="text-taskify-lg-regular text-taskify-neutral-700 md:w-1/4 lg:w-1/6">
+        <td className="dark:text-taskify-gray-900 text-taskify-lg-regular text-taskify-neutral-700 md:w-1/4 lg:w-1/6">
           {inviter.nickname}
         </td>
-        <td className="text-taskify-lg-regular text-taskify-neutral-700 hidden lg:table-cell lg:w-1/6">
+        <td className="text-taskify-lg-regular dark:text-taskify-gray-900 text-taskify-neutral-700 hidden lg:table-cell lg:w-1/6">
           {timeAgo}
         </td>
         <td className="py-2 md:w-1/4 lg:w-1/6">
