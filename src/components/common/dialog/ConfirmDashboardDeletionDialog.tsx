@@ -30,8 +30,10 @@ const ConfirmDashboardDeletionDialog = ({
   const deleteMutation = useDeleteDashboard({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['dashboards'] });
-      router.push('/mydashboard');
       closeDialog();
+      setTimeout(() => {
+        router.push('/mydashboard');
+      }, 100);
     },
   });
 
