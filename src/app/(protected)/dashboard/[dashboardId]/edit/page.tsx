@@ -41,7 +41,7 @@ export default function DashboardEditPage() {
 
   return (
     <ScrollArea className="w-full overflow-auto">
-      <div className="mt-[119px] min-h-screen bg-[var(--gray-FAFAFA)] p-[20px] md:mt-[59px]">
+      <div className="bg-taskify-neutral-100 mt-[119px] min-h-screen p-[20px] md:mt-[59px]">
         {/* 뒤로가기 */}
         <nav className="mb-[10px] md:mb-[25px]">
           <Link
@@ -79,7 +79,7 @@ export default function DashboardEditPage() {
         {/*  대시보드 삭제하기 */}
         <Button
           color="white-black"
-          className="btn-removeDash w-full border border-[#D9D9D9] bg-transparent md:max-w-[700px]"
+          className="btn-removeDash border-taskify-neutral-300 w-full border bg-transparent md:max-w-[700px]"
           onClick={() => {
             openDialog({
               dialogComponent: (
