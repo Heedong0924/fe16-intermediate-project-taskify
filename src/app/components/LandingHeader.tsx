@@ -1,15 +1,13 @@
 'use client';
 
 import clsx from 'clsx';
-import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { HTMLAttributes } from 'react';
 
 import UserAvatar from '@/components/common/header/UserAvatar';
+import { LogoMd, LogoSm } from '@/components/ui/SVGLogo';
 import { useAuthStore } from '@/stores/useAuthStore';
-import landingLogo from 'public/images/landingLogo.svg';
-import landingLogoMobile from 'public/images/landingLogo_mobile.svg';
 
 // interface LandingHeaderProps extends HTMLAttributes<HTMLDivElement> {}
 
@@ -25,33 +23,11 @@ const LandingHeader = ({ className }: HTMLAttributes<HTMLDivElement>) => {
           className,
         )}
       >
-        <Link className="relative inline-block h-7 w-6 md:hidden" href="/">
-          <Image
-            className="object-contain"
-            src={landingLogoMobile}
-            alt="로고 이미지"
-            fill
-            sizes="24px"
-            priority
-          />
-          <Image
-            className="hidden object-contain dark:block"
-            src={landingLogoMobile}
-            alt="로고 이미지"
-            fill
-            sizes="24px"
-            priority
-          />
+        <Link className="relative h-7 w-6 md:hidden" href="/">
+          <LogoSm className="dark:fill-white" />
         </Link>
-        <Link className="relative hidden h-10 w-30 md:block" href="/">
-          <Image
-            className="object-contain"
-            src={landingLogo}
-            alt="로고 이미지"
-            fill
-            sizes="120px"
-            priority
-          />
+        <Link className="relative top-1 hidden h-10 w-30 md:block" href="/">
+          <LogoMd className="dark:fill-white" />
         </Link>
         {isAuth ? (
           <UserAvatar />
