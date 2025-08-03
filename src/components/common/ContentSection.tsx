@@ -17,7 +17,7 @@ export function ContentSection({
 }: ContentSectionProps) {
   return (
     <section
-      className={`${className} bg-taskify-neutral-0 mb-4 max-w-[none] rounded-[16px] px-[16px] py-[20px] md:max-w-[700px] md:px-[28px] md:py-[32px]`}
+      className={`${className} bg-taskify-neutral-0 dark:bg-taskify-black-400 mb-4 max-w-[none] rounded-[16px] px-[16px] py-[20px] md:max-w-[700px] md:px-[28px] md:py-[32px]`}
     >
       <h1 className="text-[20px] font-[700] md:text-[24px]">{title}</h1>
       {children}
@@ -34,7 +34,7 @@ export function ContentSectionWithAction({
 }: ContentSectionWithActionProps) {
   return (
     <section
-      className={`${className} bg-taskify-neutral-0 mb-4 max-w-[none] rounded-[16px] py-[20px] md:max-w-[700px] md:py-[32px]`}
+      className={`${className} bg-taskify-neutral-0 dark:bg-taskify-black-400 mb-4 max-w-[none] rounded-[16px] py-[20px] md:max-w-[700px] md:py-[32px]`}
     >
       <div className="class-flex class-grid mx-[20px] mb-[12px] md:mx-[28px]">
         <h1 className="w-full text-[20px] font-[700] md:text-[24px]">

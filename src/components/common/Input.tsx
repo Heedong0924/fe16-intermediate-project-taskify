@@ -124,8 +124,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const currentState = getInputState();
     const borderClass = getInputBorderClass(currentState);
     const disabledClass = disabled
-      ? 'bg-gray-50 cursor-not-allowed'
-      : 'bg-white';
+      ? 'bg-gray-50 cursor-not-allowed dark:bg-taskify-gray-100 dark:text-taskify-gray-500'
+      : 'bg-white dark:bg-taskify-black-300';
 
     return (
       <div className={twMerge('flex w-full flex-col', className)}>
@@ -134,7 +134,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           <label
             htmlFor={id}
             className={twMerge(
-              'mb-2 text-sm font-medium text-gray-700',
+              'dark:text-taskify-gray-700 mb-2 text-sm font-medium text-gray-700',
               disabled && 'text-gray-400',
             )}
           >
@@ -177,7 +177,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             onBlur={handleBlur}
             className={twMerge(
               'w-full rounded-lg border px-4 py-3 text-sm transition-all duration-200',
-              'placeholder:text-gray-400 focus:outline-none',
+              'dark:text-taskify-gray-700 dark:border-taskify-gray-300 placeholder:text-gray-400 focus:outline-none',
               // 아이콘 위치에 따른 패딩
               leftIcon && 'pl-10',
               rightIcon && 'pr-10',

@@ -16,7 +16,7 @@ export default function MyPage() {
   const isSkeletonVisible = isPending || isError;
 
   return (
-    <div className="bg-taskify-neutral-100 min-h-screen p-[20px] pt-[80px]">
+    <div className="min-h-screen p-[20px] pt-[80px]">
       {/* 뒤로가기 */}
       <nav className="mb-[10px] sm:mb-[25px]">
         <button
@@ -29,6 +29,7 @@ export default function MyPage() {
             alt="돌아가기"
             width={20}
             height={20}
+            className="dark:opacity-80 dark:invert"
           />
           돌아가기
         </button>

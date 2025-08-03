@@ -181,7 +181,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
   const loading = isCreating || isUpdating;
   const content = (
     <DialogContent
-      className="dialog-scrollable-content"
+      className="dialog-scrollable-content dark:bg-taskify-dark-modal"
       onOpenAutoFocus={(event) => {
         event.preventDefault();
         setFocus('title'); // 모달 열릴 때 제목 입력 필드에 포커스
@@ -192,7 +192,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
       }}
     >
       <DialogHeader>
-        <DialogTitle className="text-taskify-neutral-800 text-xl font-bold">
+        <DialogTitle className="text-taskify-neutral-800 dark:text-taskify-gray-700 text-xl font-bold">
           {mode === 'edit' ? '할 일 수정' : '할 일 생성'}
         </DialogTitle>
       </DialogHeader>
@@ -260,7 +260,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
         {/* 설명 입력 */}
         <div className="flex flex-col gap-2 md:gap-[10px]">
           <label
-            className="text-taskify-neutral-800 text-sm font-medium"
+            className="text-taskify-neutral-800 dark:text-taskify-gray-700 text-sm font-medium"
             htmlFor="description"
           >
             설명 <span className="text-taskify-violet-primary">*</span>
@@ -286,7 +286,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
         {/* 마감일 입력 */}
         <div className="flex flex-col gap-2 md:gap-[10px]">
           <label
-            className="text-sm font-medium text-gray-700"
+            className="dark:text-taskify-gray-700 text-sm font-medium text-gray-700"
             htmlFor="dueDate"
           >
             마감일
@@ -313,7 +313,10 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
 
         {/* 태그 선택 */}
         <div className="flex flex-col gap-2 md:gap-[10px]">
-          <label className="text-sm font-medium text-gray-700" htmlFor="tags">
+          <label
+            className="dark:text-taskify-gray-700 text-sm font-medium text-gray-700"
+            htmlFor="tags"
+          >
             태그
           </label>
           <Controller
@@ -336,7 +339,7 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
         {/* 이미지 섹션 */}
         <div className="flex flex-col gap-2">
           <label
-            className="text-sm font-medium text-gray-700"
+            className="dark:text-taskify-gray-700 text-sm font-medium text-gray-700"
             htmlFor="imageUrl"
           >
             이미지
@@ -360,7 +363,12 @@ const TodoEditDialog = ({ columnId, cardData, mode }: TodoEditDialogProps) => {
 
       {/* 버튼 영역 */}
       <DialogFooter className="grid grid-cols-2 gap-3 pt-4">
-        <Button variant="outline" onClick={handleUndoClick} type="button">
+        <Button
+          variant="outline"
+          onClick={handleUndoClick}
+          type="button"
+          className="dark:bg-taskify-gray-100 dark:hover:bg-taskify-gray-100 cursor-pointer dark:border-none"
+        >
           취소
         </Button>
 

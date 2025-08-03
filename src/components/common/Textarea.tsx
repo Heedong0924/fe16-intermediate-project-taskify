@@ -58,7 +58,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     // 상태별 border 스타일
     const getBorderClass = (state: TextareaState): string => {
       const map: Record<TextareaState, string> = {
-        default: 'border-gray-300 hover:border-gray-400',
+        default: 'border-gray-300 hover:border-gray-400 ',
         focus: 'border-violet-500 ring-2 ring-violet-100',
         error: 'border-red-500 ring-2 ring-red-100',
         success: 'border-green-500 ring-2 ring-green-100',
@@ -108,7 +108,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           onBlur={handleBlur}
           className={twMerge(
             'w-full rounded-lg border px-4 py-3 text-sm transition-all duration-200',
-            'placeholder:text-gray-400 focus:outline-none',
+            'dark:bg-taskify-black-300 dark:text-taskify-gray-700 dark:border-taskify-gray-300 placeholder:text-gray-400 focus:outline-none',
             borderClass,
             disabledClass,
             textareaClassName,

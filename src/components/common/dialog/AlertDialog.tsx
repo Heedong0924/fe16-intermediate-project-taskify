@@ -39,12 +39,12 @@ const AlertDialog = ({
 
   const content = (
     <DialogContent
-      className="w-[272px] gap-8 px-10 py-8 md:w-[368px]"
+      className="dark:bg-taskify-dark-modal w-[272px] gap-8 px-10 py-8 md:w-[368px]"
       showCloseButton={false}
     >
       <DialogHeader className="gap-0">
         <DialogTitle className="text-center">
-          <span className="text-taskify-lg-medium text-taskify-neutral-700 md:text-taskify-xl-medium">
+          <span className="text-taskify-lg-medium text-taskify-neutral-700 md:text-taskify-xl-medium dark:text-taskify-gray-700">
             {description}
           </span>
         </DialogTitle>

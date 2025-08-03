@@ -31,13 +31,13 @@ const CardAuthor = ({
   return (
     <div className={combinedClassName}>
       <span
-        className={`${colHeaderFtStyles} col-start-1 col-end-2 row-start-1 row-end-2 md:col-start-1 md:col-end-2 md:row-start-1 md:row-end-2`}
+        className={`${colHeaderFtStyles} dark:text-taskify-gray-700 col-start-1 col-end-2 row-start-1 row-end-2 md:col-start-1 md:col-end-2 md:row-start-1 md:row-end-2`}
       >
         담당자
       </span>
 
       <span
-        className={`${colHeaderFtStyles} col-start-2 col-end-3 row-start-1 row-end-2 md:col-start-1 md:col-end-2 md:row-start-3 md:row-end-4`}
+        className={`${colHeaderFtStyles} dark:text-taskify-gray-700 col-start-2 col-end-3 row-start-1 row-end-2 md:col-start-1 md:col-end-2 md:row-start-3 md:row-end-4`}
       >
         마감일
       </span>
@@ -47,11 +47,13 @@ const CardAuthor = ({
           size="sm"
           profileImg={profileImg}
         />
-        <span className={cellFtStyles}>{author}</span>
+        <span className={`${cellFtStyles} dark:text-taskify-gray-700`}>
+          {author}
+        </span>
       </div>
 
       <div
-        className={`${cellFtStyles} col-start-2 col-end-3 row-start-2 row-end-3 flex self-center md:col-start-1 md:col-end-2 md:row-start-4 md:row-end-5`}
+        className={`${cellFtStyles} dark:text-taskify-gray-700 col-start-2 col-end-3 row-start-2 row-end-3 flex self-center md:col-start-1 md:col-end-2 md:row-start-4 md:row-end-5`}
       >
         {dueDate ? (
           formattedDate(dueDate)

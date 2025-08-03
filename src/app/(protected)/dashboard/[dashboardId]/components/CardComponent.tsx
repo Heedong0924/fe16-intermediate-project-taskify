@@ -24,7 +24,7 @@ const CardComponent = ({
   return (
     <button
       type="button"
-      className="bg-taskify-neutral-0 border-taskify-neutral-300 hover:bg-taskify-neutral-200 relative my-4 flex w-full cursor-pointer flex-col gap-4 rounded-lg border-1 p-4 md:flex-row md:gap-2 lg:flex-col"
+      className="bg-taskify-neutral-0 border-taskify-neutral-300 hover:bg-taskify-neutral-200 dark:bg-taskify-black-400 hover:dark:bg-taskify-gray-100 dark:border-taskify-gray-200 relative my-4 flex w-full cursor-pointer flex-col gap-4 rounded-lg border-1 p-4 md:flex-row md:gap-2 lg:flex-col"
       onClick={() =>
         openDialog({
           dialogComponent: (

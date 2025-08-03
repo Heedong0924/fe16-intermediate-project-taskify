@@ -64,10 +64,10 @@ const ColumnSettingsDialog = ({
   };
 
   return (
-    <DialogContent className="max-w-[327px] px-4 md:max-w-[568px] md:gap-7 md:px-6">
+    <DialogContent className="dark:bg-taskify-dark-modal max-w-[327px] px-4 md:max-w-[568px] md:gap-7 md:px-6">
       <DialogHeader className="gap-0">
         <DialogTitle className="text-left">
-          <span className="text-taskify-xl-bold md:text-taskify-2xl-bold text-taskify-neutral-700">
+          <span className="text-taskify-xl-bold md:text-taskify-2xl-bold text-taskify-neutral-700 dark:text-taskify-gray-700">
             컬럼 관리
           </span>
         </DialogTitle>
@@ -92,11 +92,11 @@ const ColumnSettingsDialog = ({
         </div>
         <DialogFooter className="flex flex-row justify-between">
           <Button
-            className="bg-taskify-neutral-0 border-taskify-neutral-300 hover:bg-taskify-neutral-0 h-auto grow-1 cursor-pointer border-1 py-[14px]"
+            className="bg-taskify-neutral-0 border-taskify-neutral-300 hover:bg-taskify-neutral-0 dark:bg-taskify-gray-100 dark:hover:bg-taskify-gray-100 h-auto grow-1 cursor-pointer border-1 py-[14px] dark:border-none"
             type="button"
             onClick={handleOpenConfirm}
           >
-            <span className="text-taskify-lg-semibold text-taskify-neutral-500">
+            <span className="text-taskify-lg-semibold text-taskify-neutral-500 dark:text-taskify-gray-700">
               삭제
             </span>
           </Button>
@@ -104,7 +104,9 @@ const ColumnSettingsDialog = ({
             className="bg-taskify-violet-primary hover:bg-taskify-violet-primary h-auto grow-1 cursor-pointer py-[14px]"
             type="submit"
           >
-            <span className="text-taskify-lg-semibold">변경</span>
+            <span className="text-taskify-lg-semibold dark:text-taskify-gray-700">
+              변경
+            </span>
           </Button>
         </DialogFooter>
       </form>

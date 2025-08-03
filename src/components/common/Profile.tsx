@@ -50,7 +50,9 @@ export function AvatarProfile({
       };
   const { bgClass } = getTextBasedColorClasses(userName, 'profile');
 
-  const borderStyle = isBorder ? 'border-2 border-solid border-white' : '';
+  const borderStyle = isBorder
+    ? 'border-2 border-solid border-white dark:border-taskify-gray-300'
+    : '';
 
   return (
     <Avatar
