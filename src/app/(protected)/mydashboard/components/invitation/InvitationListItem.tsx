@@ -52,7 +52,7 @@ const InvitationListItem = ({
     isVisible && (
       <tr
         ref={observerRef}
-        className={`border-taskify-neutral-200 border-b transition-all duration-700 ease-in-out ${
+        className={`border-taskify-neutral-200 dark:border-taskify-gray-300 border-b transition-all duration-700 ease-in-out ${
           isRemoving ? 'opacity-0' : 'opacity-100'
         }`}
       >

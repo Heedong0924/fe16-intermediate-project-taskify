@@ -29,8 +29,8 @@ const InvitationDashboard = () => {
   // 로딩중 UI 추가
   if (isPending) {
     return (
-      <div className="bg-taskify-neutral-0 flex h-[550px] w-full max-w-[330px] flex-col rounded-2xl p-6 md:h-[450px] md:w-full md:max-w-[620px] lg:h-[450px] lg:w-full lg:max-w-[1022px] lg:px-[32px]">
-        <h1 className="text-taskify-2xl-bold text-taskify-neutral-700 mb-5">
+      <div className="dark:bg-taskify-black-400 bg-taskify-neutral-0 flex h-[550px] w-full max-w-[330px] flex-col rounded-2xl p-6 md:h-[450px] md:w-full md:max-w-[620px] lg:h-[450px] lg:w-full lg:max-w-[1022px] lg:px-[32px]">
+        <h1 className="dark:text-taskify-gray-800 text-taskify-2xl-bold text-taskify-neutral-700 mb-5">
           초대받은 대시보드
         </h1>
 
@@ -54,17 +54,17 @@ const InvitationDashboard = () => {
               className="border-taskify-neutral-200 flex items-center border-b py-3"
             >
               <div className="mr-4 md:w-2/4 lg:w-3/6">
-                <div className="h-5 w-3/4 rounded bg-gray-100" />
+                <div className="dark:bg-taskify-gray-300 h-5 w-3/4 rounded bg-gray-100" />
               </div>
               <div className="mr-4 md:w-1/4 lg:w-1/6">
-                <div className="h-5 rounded bg-gray-100" />
+                <div className="dark:bg-taskify-gray-300 h-5 rounded bg-gray-100" />
               </div>
               <div className="mr-4 hidden lg:block lg:w-1/6">
-                <div className="h-5 rounded bg-gray-100" />
+                <div className="dark:bg-taskify-gray-300 h-5 rounded bg-gray-100" />
               </div>
               <div className="flex gap-2 md:w-1/4 lg:w-1/6">
-                <div className="h-8 w-16 rounded bg-gray-100" />
-                <div className="h-8 w-16 rounded bg-gray-100" />
+                <div className="dark:bg-taskify-gray-300 h-8 w-16 rounded bg-gray-100" />
+                <div className="dark:bg-taskify-gray-300 h-8 w-16 rounded bg-gray-100" />
               </div>
             </div>
           ))}
