@@ -3,6 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import addIcon from '@/../public/images/icon/addBox.svg';
@@ -26,6 +27,8 @@ const Sidebar = () => {
 
   const { openDialog } = useDialogStore();
   const { setDashboards } = useDashboardStore();
+  const Params = useParams();
+  const currentDashboard = Number(Params.dashboardId);
 
   const {
     data, // API 응답 데이터 (DashboardResponse 타입)
@@ -47,7 +50,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     if (data) setDashboards(data.dashboards);
-  }, [data]);
+  }, [data, setDashboards]);
 
   if (isLoading) {
     return (
@@ -111,7 +114,7 @@ const Sidebar = () => {
                 <DashboardCard
                   key={dashboard.id}
                   dashboard={dashboard}
-                  className="dark:hover:bg-taskify-gray-100 hover:bg-taskify-violet-light h-[42px] rounded-sm"
+                  className={`dark:hover:text-taskify-neutral-0 hover:inset-ring-taskify-violet-primary dark:hover:inset-ring-taskify-violet-light h-[42px] rounded-sm hover:inset-ring-2 ${currentDashboard === dashboard.id ? 'bg-taskify-violet-light dark:bg-taskify-gray-100' : ''}`}
                 />
               ))}
             </div>

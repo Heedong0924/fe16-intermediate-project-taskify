@@ -1,12 +1,12 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
 import MemberAvatars from '@/app/(protected)/mydashboard/components/dashboard/MemberAvatars';
+import { LogoSm } from '@/components/ui/SVGLogo';
 import useIsMobile from '@/hooks/useIsMobile';
 import { getMyInfo } from '@/lib/api/auth';
 import { getDashboardMembers } from '@/lib/api/dashboardMemberService';
@@ -103,12 +103,7 @@ const Header = () => {
           {/* 모바일에서만 로고 보이기 */}
           <div className="md:hidden">
             <Link href="/">
-              <Image
-                src="/images/LogoImage.svg"
-                alt="logo"
-                width={23}
-                height={25}
-              />
+              <LogoSm />
             </Link>
           </div>
 
