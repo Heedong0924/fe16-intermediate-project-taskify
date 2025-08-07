@@ -19,6 +19,7 @@ type ContentChipProps = BaseChipProps & {
 
 type ColorPickerChipProp = {
   size?: 'sm' | 'md';
+  name?: string;
   value: string;
   onChange: (color: string) => void;
 };
@@ -158,6 +159,7 @@ export function TagChip({ size, children }: ContentChipProps) {
  */
 export function ColorPickerChip({
   size,
+  name = 'picker-default',
   value,
   onChange,
 }: ColorPickerChipProp) {
@@ -169,12 +171,26 @@ export function ColorPickerChip({
       };
   const [togglePicker, setTogglePicker] = useState(false);
 
-  // 사용자 커스텀 색상 초기값, 상태관리
-  const [customColor, setCustomColor] = useState('#cccccc');
+  // 기본 파레트 = true, 컬러피커 = false
+  const isPreset = ColorPickerChips.some((chip) => chip.value === value);
 
-  // 사용자가 지정된 색상과 기본 색상 확인
-  const exists = ColorPickerChips.some((chip) => chip.value === value);
-  const [color, setColor] = useColor(exists ? customColor : value);
+  // 사용자 커스텀 색상 초기값, 상태관리
+  const [customColor, setCustomColor] = useState(() =>
+    isPreset ? '#cccccc' : value,
+  );
+
+  // 수정 페이지에서 커스텀 색상일 경우 customColor 초기화
+  useEffect(() => {
+    if (!isPreset && value) {
+      setCustomColor(value);
+    }
+  }, [value, isPreset]);
+
+  // 커스텀 색상
+  const [color, setColor] = useColor(isPreset ? customColor : value);
+
+  console.log(value);
+  console.log('color:', color.hex);
 
   const colorPickerRef = useRef<HTMLDivElement>(null);
 
@@ -197,19 +213,26 @@ export function ColorPickerChip({
     };
   }, [togglePicker]);
 
+  // 컬러피커 색상 밝기 체크
+  const isLightColor = () => {
+    const luminance =
+      0.2126 * color.rgb.r + 0.7152 * color.rgb.g + 0.0722 * color.rgb.b;
+    return luminance > 128;
+  };
+
   return (
     <div className="chip-colorPick">
       {ColorPickerChips.map(({ id, value: val, label }) => (
         <label
           key={val}
-          htmlFor={id}
+          htmlFor={`${id}-${name}`}
           aria-label={label}
           className={colorPickerContainer}
           style={{ backgroundColor: val }}
         >
           <input
-            id={id}
-            name="color"
+            id={`${id}-${name}`}
+            name={`radio-${name}`}
             type="radio"
             value={val}
             checked={value === val}
@@ -224,14 +247,14 @@ export function ColorPickerChip({
         </label>
       ))}
       <label
-        htmlFor="color-pick"
+        htmlFor={`user-${name}`}
         aria-label="사용자 선택 색상"
-        className={`${colorPickerContainer} relative`}
+        className={`${colorPickerContainer} dark:border-taskify-gray-200 relative border-1 border-[#ccc]`}
         style={{ backgroundColor: color.hex }}
       >
         <input
-          id="color-pick"
-          name="color"
+          id={`user-${name}`}
+          name={`radio-${name}`}
           type="radio"
           value={color.hex}
           checked={value === color.hex}
@@ -242,7 +265,12 @@ export function ColorPickerChip({
         <span
           className={`${colorPickerImage} relative opacity-0 transition-opacity duration-200 peer-checked:opacity-100`}
         >
-          <Image src="/images/check-white.svg" alt="색상 체크" fill />
+          <Image
+            src="/images/check-white.svg"
+            alt="색상 체크"
+            fill
+            className={`transition-all ${isLightColor() ? 'invert-65' : ''}`}
+          />
         </span>
         {togglePicker && (
           <div
