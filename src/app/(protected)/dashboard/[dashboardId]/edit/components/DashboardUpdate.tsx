@@ -24,7 +24,7 @@ export default function DashboardUpdate({
   dashboardId: number;
   isSkeletonVisible: boolean;
 }) {
-  const [color, setColor] = useState('');
+  const [color, setColor] = useState('#cccccc');
 
   const {
     register,
@@ -83,7 +83,11 @@ export default function DashboardUpdate({
               {...register('dashboardTitle', dashboardTitleValidation)}
             />
             <div className="mt-[16px]">
-              <ColorPickerChip value={color} onChange={setColor} />
+              <ColorPickerChip
+                value={color}
+                onChange={setColor}
+                name="dashboard"
+              />
             </div>
           </>
         )}
